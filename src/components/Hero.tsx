@@ -11,77 +11,81 @@ export const Hero: React.FC = () => {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-[300px] h-[300px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column Text Content */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             {/* Gang Badge */}
-            <div className="inline-flex items-center gap-2 bg-secondary/80 border border-primary/40 px-4 py-2 rounded-full backdrop-blur-md shadow-glass animate-bounce">
-              <span className="text-lg">Gang 🫂🫶</span>
-              <span className="h-4 w-px bg-white/20" />
-              <span className="text-xs font-bold text-primary tracking-wide uppercase">Tirunelveli Midnight Cravings</span>
+            <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 sm:gap-2 bg-secondary/80 border border-primary/40 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md shadow-glass max-w-full">
+              <span className="text-xs sm:text-base font-extrabold whitespace-nowrap">Gang 🫂🫶</span>
+              <span className="hidden sm:inline-block h-3.5 w-px bg-white/20" />
+              <span className="text-[10px] sm:text-xs font-bold text-primary tracking-wide uppercase whitespace-nowrap">Tirunelveli Midnight Cravings</span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight font-sans">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight font-sans">
               MIDNIGHT <span className="text-gradient-orange">FUEL</span>
             </h1>
 
             {/* Tagline & Subheading */}
-            <p className="text-lg sm:text-xl font-semibold text-gray-200">
+            <p className="text-sm sm:text-xl font-semibold text-gray-200 leading-normal">
               Daily Orders Available <span className="text-primary">•</span> Fresh <span className="text-primary">•</span> Hot <span className="text-primary">•</span> Fast
             </p>
 
-            <div className="inline-flex items-center gap-3 bg-secondary/90 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-300">
-              <Clock className="w-5 h-5 text-primary animate-pulse" />
-              <span>Open Every Night: <strong className="text-white font-bold">7:00 PM – 2:00 AM</strong></span>
-              <span className="text-xs text-primary-light">(Booking opens from 7:00 AM)</span>
+            <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-3 bg-secondary/90 border border-white/10 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl sm:rounded-xl text-xs sm:text-sm font-medium text-gray-300 max-w-full">
+              <div className="flex items-center gap-1.5">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary animate-pulse shrink-0" />
+                <span>Open Every Night: <strong className="text-white font-bold">7:00 PM – 2:00 AM</strong></span>
+              </div>
+              <span className="text-[10px] sm:text-xs text-primary-light">(Booking opens from 7:00 AM)</span>
             </div>
 
-            <p className="text-sm text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Serving Tirunelveli's ultimate midnight feast. Slow-cooked Arabian Mandi, spicy dum biryani, jumbo shawarmas, crispy parottas, and monster burgers delivered piping hot right to your door.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2 w-full">
               <button
                 onClick={() => setCustomerTab('menu')}
-                className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-bold px-7 py-3.5 rounded-full text-base flex items-center gap-2.5 shadow-glow-primary hover:scale-105 transition transform"
+                className="w-full sm:w-auto bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-bold px-7 py-3 rounded-full text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-primary hover:scale-105 transition transform"
               >
                 <span>Order Food Now</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
-              <button
-                onClick={() => setCustomerTab('menu')}
-                className="bg-secondary/90 hover:bg-secondary-light text-white font-semibold px-6 py-3.5 rounded-full text-base border border-white/10 hover:border-primary/50 transition backdrop-blur-md"
-              >
-                View Menu
-              </button>
+              <div className="flex items-center gap-2.5 w-full sm:w-auto justify-center">
+                <button
+                  onClick={() => setCustomerTab('menu')}
+                  className="flex-1 sm:flex-initial bg-secondary/90 hover:bg-secondary-light text-white font-semibold px-5 py-3 rounded-full text-xs sm:text-base border border-white/10 hover:border-primary/50 transition backdrop-blur-md text-center"
+                >
+                  View Menu
+                </button>
 
-              <a
-                href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-                className="bg-secondary/90 hover:bg-secondary-light text-emerald-400 font-semibold px-5 py-3.5 rounded-full text-base border border-emerald-500/30 flex items-center gap-2 hover:border-emerald-500 transition"
-              >
-                <PhoneCall className="w-4 h-4 text-emerald-400" />
-                <span>Call Now</span>
-              </a>
+                <a
+                  href={`tel:${settings.phone.replace(/\s+/g, '')}`}
+                  className="flex-1 sm:flex-initial bg-secondary/90 hover:bg-secondary-light text-emerald-400 font-semibold px-4 py-3 rounded-full text-xs sm:text-base border border-emerald-500/30 flex items-center justify-center gap-1.5 hover:border-emerald-500 transition whitespace-nowrap"
+                >
+                  <PhoneCall className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
+                  <span>Call Now</span>
+                </a>
+              </div>
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-gray-400">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-primary" />
+            <div className="pt-4 sm:pt-6 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-[11px] sm:text-xs text-gray-400">
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
                 <span>100% Halal Prepared</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>30-Min Fast Express Delivery</span>
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+                <span>30-Min Express Delivery</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Flame className="w-4 h-4 text-primary" />
+              <div className="flex items-center gap-1.5">
+                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
                 <span>Hot Thermal Sealed Box</span>
               </div>
             </div>

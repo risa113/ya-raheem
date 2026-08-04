@@ -41,8 +41,8 @@ export const MenuSection: React.FC = () => {
   };
 
   return (
-    <section id="menu-section" className="py-12 bg-darkbg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section id="menu-section" className="py-8 sm:py-12 bg-darkbg overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -85,7 +85,7 @@ export const MenuSection: React.FC = () => {
               >
                 <span>{cat.icon}</span>
                 <span>{cat.name}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'}`}>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'}`}>
                   {count}
                 </span>
               </button>

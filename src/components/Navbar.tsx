@@ -21,10 +21,10 @@ export const Navbar: React.FC = () => {
   const activeOrdersCount = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
   return (
-    <header className="sticky top-0 z-40 bg-darkbg/90 backdrop-blur-md border-b border-white/10 transition-all">
+    <header className="sticky top-0 z-40 bg-darkbg/95 backdrop-blur-md border-b border-white/10 transition-all overflow-x-hidden">
       {/* Top Notification Announcement Bar */}
-      <div className="bg-gradient-to-r from-primary/20 via-secondary to-primary/20 border-b border-primary/30 text-xs py-1.5 px-4 text-center flex items-center justify-between text-gray-300 font-medium">
-        <div className="hidden sm:flex items-center gap-2">
+      <div className="bg-gradient-to-r from-primary/20 via-secondary to-primary/20 border-b border-primary/30 text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 text-center flex items-center justify-between text-gray-300 font-medium">
+        <div className="hidden md:flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
             <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isRestaurantOpen ? 'bg-success' : 'bg-danger'} opacity-75`}></span>
             <span className={`relative inline-flex rounded-full h-2 w-2 ${isRestaurantOpen ? 'bg-success' : 'bg-danger'}`}></span>
@@ -34,9 +34,10 @@ export const Navbar: React.FC = () => {
           </span>
         </div>
 
-        <div className="flex items-center gap-4 mx-auto sm:mx-0">
-          <span className="flex items-center gap-1 text-primary-light">
-            <MapPin className="w-3.5 h-3.5 text-primary" /> Melapalayam Bazar, Tirunelveli
+        <div className="flex items-center gap-1.5 sm:gap-4 mx-0">
+          <span className="flex items-center gap-1 text-primary-light truncate max-w-[200px] sm:max-w-none text-[10px] sm:text-xs">
+            <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary shrink-0" />
+            <span className="truncate">Melapalayam, Tirunelveli</span>
           </span>
           <a 
             href={`tel:${settings.phone.replace(/\s+/g, '')}`} 
@@ -47,39 +48,39 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* View Mode Toggle (Customer vs Admin Mode) */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => setViewMode(viewMode === 'customer' ? 'admin' : 'customer')}
-            className="flex items-center gap-1 bg-primary/20 hover:bg-primary text-primary hover:text-white px-2.5 py-1 rounded-full text-xs font-bold transition border border-primary/40"
+            className="flex items-center gap-1 bg-primary/20 hover:bg-primary text-primary hover:text-white px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold transition border border-primary/40 whitespace-nowrap"
           >
             <Shield className="w-3 h-3" />
-            {viewMode === 'customer' ? 'Admin Portal' : 'Customer Site'}
+            <span>{viewMode === 'customer' ? 'Admin Portal' : 'Customer'}</span>
           </button>
         </div>
       </div>
 
       {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
           
           {/* Logo */}
           <div 
             onClick={() => setCustomerTab('home')}
-            className="flex items-center gap-2.5 cursor-pointer group select-none"
+            className="flex items-center gap-2 cursor-pointer group select-none shrink-0"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center shadow-glow-sm group-hover:scale-105 transition-transform">
-              <Flame className="w-6 h-6 text-white animate-pulse" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center shadow-glow-sm group-hover:scale-105 transition-transform">
+              <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-white animate-pulse" />
             </div>
             <div>
               <div className="flex items-center gap-1">
-                <span className="font-extrabold text-xl tracking-tight text-white font-sans">
+                <span className="font-extrabold text-base sm:text-xl tracking-tight text-white font-sans">
                   MIDNIGHT<span className="text-primary">FUEL</span>
                 </span>
-                <span className="text-[10px] bg-primary/20 text-primary border border-primary/30 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
+                <span className="hidden sm:inline-block text-[10px] bg-primary/20 text-primary border border-primary/30 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">
                   NIGHTS
                 </span>
               </div>
-              <p className="text-[10px] text-gray-400 font-medium tracking-wide">Fresh • Hot • Fast | 7 PM - 2 AM</p>
+              <p className="hidden sm:block text-[10px] text-gray-400 font-medium tracking-wide">Fresh • Hot • Fast | 7 PM - 2 AM</p>
             </div>
           </div>
 
@@ -143,7 +144,7 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* Right Action Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             
             {/* Active Order Tracker Button */}
             {activeOrdersCount > 0 && (
@@ -163,12 +164,12 @@ export const Navbar: React.FC = () => {
             {/* Wishlist Button */}
             <button
               onClick={() => setCustomerTab('wishlist')}
-              className="relative p-2 text-gray-300 hover:text-primary transition rounded-full hover:bg-secondary/60"
+              className="relative p-1.5 sm:p-2 text-gray-300 hover:text-primary transition rounded-full hover:bg-secondary/60"
               title="Wishlist"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] sm:text-[10px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
@@ -179,9 +180,9 @@ export const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="flex items-center gap-2 bg-secondary hover:bg-secondary-light border border-white/10 px-3 py-1.5 rounded-full text-xs font-semibold text-white transition"
+                  className="flex items-center gap-1.5 bg-secondary hover:bg-secondary-light border border-white/10 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold text-white transition"
                 >
-                  <div className="w-5 h-5 rounded-full bg-primary/30 text-primary flex items-center justify-center font-bold">
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary/30 text-primary flex items-center justify-center font-bold text-[10px] sm:text-xs">
                     {userName.charAt(0).toUpperCase()}
                   </div>
                   <span className="hidden sm:inline max-w-[90px] truncate">{userName}</span>
@@ -220,22 +221,22 @@ export const Navbar: React.FC = () => {
             ) : (
               <button
                 onClick={() => setIsAuthModalOpen(true)}
-                className="flex items-center gap-1.5 bg-secondary hover:bg-secondary-light text-gray-200 border border-white/10 px-3 py-1.5 rounded-full text-xs font-semibold transition"
+                className="flex items-center gap-1 bg-secondary hover:bg-secondary-light text-gray-200 border border-white/10 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition"
               >
-                <User className="w-4 h-4 text-primary" />
-                <span>Login</span>
+                <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                <span className="text-[11px] sm:text-xs">Login</span>
               </button>
             )}
 
             {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-2 shadow-glow-sm hover:shadow-glow-primary transition transform hover:scale-105"
+              className="relative bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold flex items-center gap-1 sm:gap-2 shadow-glow-sm hover:shadow-glow-primary transition transform hover:scale-105"
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Cart</span>
               {totalCartCount > 0 && (
-                <span className="bg-white text-primary font-black px-1.5 py-0.5 rounded-full text-[10px]">
+                <span className="bg-white text-primary font-black px-1.5 py-0.5 rounded-full text-[9px] sm:text-[10px]">
                   {totalCartCount}
                 </span>
               )}
