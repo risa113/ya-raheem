@@ -49,7 +49,7 @@ export const LiveOrderTracker: React.FC = () => {
   )}`;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-4 sm:space-y-6">
       
       {/* Top Header */}
       <div className="flex items-center justify-between">
@@ -66,9 +66,9 @@ export const LiveOrderTracker: React.FC = () => {
       </div>
 
       {/* Main Glass Status Hero Card */}
-      <div className="glass-panel p-6 rounded-3xl space-y-6 relative overflow-hidden">
+      <div className="glass-panel p-4 sm:p-6 rounded-3xl space-y-5 relative overflow-hidden">
         
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-white/10 pb-4">
           <div>
             <span className="text-xs text-gray-400 block">ESTIMATED DELIVERY TIME</span>
             <div className="flex items-center gap-2 mt-1">
@@ -77,68 +77,71 @@ export const LiveOrderTracker: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <a
               href={whatsappConfirmUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition"
+              className="flex-1 sm:flex-initial bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center justify-center gap-1.5 transition"
             >
-              <MessageCircle className="w-4 h-4" /> WhatsApp Us
+              <MessageCircle className="w-4 h-4" /> <span>WhatsApp Us</span>
             </a>
 
             <a
               href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-              className="bg-secondary hover:bg-secondary-light text-white text-xs font-bold px-3.5 py-2 rounded-xl border border-white/10 flex items-center gap-1.5 transition"
+              className="flex-1 sm:flex-initial bg-secondary hover:bg-secondary-light text-white text-xs font-bold px-3 py-2 rounded-xl border border-white/10 flex items-center justify-center gap-1.5 transition"
             >
-              <PhoneCall className="w-4 h-4 text-primary" /> Call Kitchen
+              <PhoneCall className="w-4 h-4 text-primary" /> <span>Call Kitchen</span>
             </a>
           </div>
         </div>
 
         {/* Status Stage Stepper Timeline */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between text-xs font-bold text-gray-300">
+          <div className="flex items-center justify-between text-xs font-bold text-gray-300 flex-wrap gap-1">
             <span>Status: <strong className="text-primary uppercase">{order.status}</strong></span>
-            <span>Placed at {order.orderTime}</span>
+            <span className="text-gray-500">Placed at {order.orderTime}</span>
           </div>
 
-          {/* Stepper Bar */}
-          <div className="grid grid-cols-6 gap-1 relative pt-2">
-            {statuses.map((st, idx) => {
-              const isPassed = idx <= currentIndex;
-              const isCurrent = idx === currentIndex;
+          {/* Stepper Bar — horizontally scrollable on mobile, always shows labels */}
+          <div className="overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
+            <div className="flex items-start gap-2 min-w-max sm:min-w-0 sm:grid sm:grid-cols-6">
+              {statuses.map((st, idx) => {
+                const isPassed = idx <= currentIndex;
+                const isCurrent = idx === currentIndex;
 
-              return (
-                <div key={st} className="flex flex-col items-center text-center space-y-1.5">
-                  <div className={`w-9 h-9 rounded-full flex items-center justify-center border transition ${
-                    isCurrent
-                      ? 'bg-primary border-white text-white shadow-glow-sm animate-pulse'
-                      : isPassed
-                      ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400'
-                      : 'bg-secondary border-white/10 text-gray-600'
-                  }`}>
-                    {getStatusIcon(st)}
+                return (
+                  <div key={st} className="flex flex-col items-center text-center space-y-1.5 w-14 sm:w-auto flex-shrink-0">
+                    <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border transition ${
+                      isCurrent
+                        ? 'bg-primary border-white text-white shadow-glow-sm animate-pulse'
+                        : isPassed
+                        ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400'
+                        : 'bg-secondary border-white/10 text-gray-600'
+                    }`}>
+                      {getStatusIcon(st)}
+                    </div>
+                    <span className={`text-[9px] sm:text-[10px] font-semibold leading-tight ${
+                      isPassed ? 'text-white' : 'text-gray-600'
+                    }`}>
+                      {st}
+                    </span>
                   </div>
-                  <span className={`text-[10px] font-semibold hidden sm:block ${
-                    isPassed ? 'text-white' : 'text-gray-600'
-                  }`}>
-                    {st}
-                  </span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Live Driver Interactive Leaflet Map */}
         <div className="space-y-2 pt-2">
-          <div className="flex items-center justify-between text-xs font-bold text-gray-300">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs font-bold text-gray-300">
             <span className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-primary" /> Live GPS Delivery Driver Tracking
+              <MapPin className="w-4 h-4 text-primary shrink-0" /> Live GPS Delivery Tracking
             </span>
-            <span className="text-[11px] text-emerald-400 font-semibold animate-pulse">
-              ● Driver En Route to Melapalayam
+            <span className="text-[11px] text-emerald-400 font-semibold animate-pulse flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+              Driver En Route
             </span>
           </div>
 
@@ -148,7 +151,7 @@ export const LiveOrderTracker: React.FC = () => {
             initialLng={order.customer.location?.lng || 77.7280}
             driverLat={order.driverLocation?.lat || 8.7120}
             driverLng={order.driverLocation?.lng || 77.7310}
-            height="260px"
+            height="200px"
           />
         </div>
 
