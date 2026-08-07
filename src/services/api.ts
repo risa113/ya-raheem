@@ -1,6 +1,7 @@
-// Frontend API Client service for MongoDB + Express + User Details Management + Razorpay
-
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+    ? `${window.location.protocol}//${window.location.host}/api`
+    : 'http://localhost:5000/api');
 
 export interface RazorpayOptions {
   key: string;
@@ -24,6 +25,61 @@ export interface RazorpayOptions {
     color: string;
   };
 }
+
+// Fetch All Shared Backend Orders across devices
+export const apiFetchOrders = async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders`);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.warn('Backend server offline for order sync:', error);
+    return { success: false, orders: [] };
+  }
+};
+
+// Create Order in Shared Backend
+export const apiCreateOrder = async (order: any) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order }),
+    });
+    return await res.json();
+  } catch (error) {
+    console.warn('Backend offline for creating order:', error);
+    return { success: false };
+  }
+};
+
+// Update Order Status in Backend
+export const apiUpdateOrderStatus = async (orderId: string, status: string) => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders/${orderId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    });
+    return await res.json();
+  } catch (error) {
+    console.warn('Backend offline for updating order status:', error);
+    return { success: false };
+  }
+};
+
+// Clear All Orders in Backend
+export const apiClearOrdersBackend = async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/orders/clear-all`, {
+      method: 'DELETE',
+    });
+    return await res.json();
+  } catch (error) {
+    console.warn('Backend offline for clearing orders:', error);
+    return { success: false };
+  }
+};
 
 // 1. Notify Restaurant Admin Phone 9080139363 when an order is placed
 export const apiNotifyAdminOrder = async (order: any) => {

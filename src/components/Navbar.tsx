@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStore } from '../context/StoreContext';
 import { 
   Flame, ShoppingBag, User, Search, Clock, 
@@ -17,6 +17,18 @@ export const Navbar: React.FC = () => {
   } = useStore();
 
   const [showProfileMenu, setShowProfileMenu] = useState<boolean>(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setShowProfileMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const activeOrdersCount = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
@@ -177,7 +189,7 @@ export const Navbar: React.FC = () => {
 
             {/* Account Profile / Login & Logout Dropdown */}
             {isLoggedIn ? (
-              <div className="relative">
+              <div className="relative" ref={profileMenuRef}>
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center gap-1.5 bg-secondary hover:bg-secondary-light border border-white/10 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold text-white transition"

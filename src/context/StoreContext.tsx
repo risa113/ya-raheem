@@ -7,7 +7,10 @@ import {
   INITIAL_CATEGORIES, INITIAL_PRODUCTS, INITIAL_COUPONS, 
   INITIAL_BANNERS, INITIAL_REVIEWS, INITIAL_SETTINGS 
 } from '../data/initialData';
-import { apiNotifyAdminOrder } from '../services/api';
+import { 
+  apiNotifyAdminOrder, apiFetchOrders, apiCreateOrder, 
+  apiUpdateOrderStatus, apiClearOrdersBackend 
+} from '../services/api';
 import confetti from 'canvas-confetti';
 
 interface StoreContextType {
@@ -305,6 +308,57 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('mf_orders', JSON.stringify(orders));
   }, [orders]);
 
+  // Sync orders periodically from backend server (shared across all phones and devices)
+  useEffect(() => {
+    const syncOrders = async () => {
+      const res = await apiFetchOrders();
+      if (res && res.success && Array.isArray(res.orders)) {
+        setOrders(prev => {
+          const existingMap = new Map(prev.map(o => [o.id || o.orderNumber, o]));
+          const newlyArrived: Order[] = [];
+
+          res.orders.forEach((remoteOrder: Order) => {
+            const key = remoteOrder.id || remoteOrder.orderNumber;
+            if (!existingMap.has(key)) {
+              newlyArrived.push(remoteOrder);
+            }
+          });
+
+          if (newlyArrived.length > 0) {
+            if (userRole === 'admin') {
+              setNewOrderAlert(newlyArrived[0]);
+              playSynthesizedChime();
+              triggerBrowserPushNotification(newlyArrived[0]);
+            }
+          }
+
+          // Merge backend list with existing local list
+          const combinedMap = new Map<string, Order>();
+          res.orders.forEach((remoteOrder: Order) => {
+            const key = remoteOrder.id || remoteOrder.orderNumber;
+            const existing = existingMap.get(key);
+            combinedMap.set(key, { ...existing, ...remoteOrder, id: key });
+          });
+
+          // Also keep any local orders not yet in backend
+          prev.forEach(localOrder => {
+            const key = localOrder.id || localOrder.orderNumber;
+            if (!combinedMap.has(key)) {
+              combinedMap.set(key, localOrder);
+            }
+          });
+
+          const newOrderList = Array.from(combinedMap.values());
+          return newOrderList;
+        });
+      }
+    };
+
+    syncOrders();
+    const intervalId = setInterval(syncOrders, 4000);
+    return () => clearInterval(intervalId);
+  }, [userRole]);
+
   // Operational Hours Check
   const checkIsRestaurantOpen = (): boolean => {
     if (settings.isClosedForced || settings.holidayMode) return false;
@@ -496,6 +550,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setOrders(prev => [newOrder, ...prev]);
     setActiveOrder(newOrder);
 
+    // Save to shared backend database so Admin Panel on any device receives it immediately
+    apiCreateOrder(newOrder).catch(err => console.warn('Order sync note:', err));
+
     // Only trigger live screen pop-up alerts and audio chimes if user is an Admin
     if (userRole === 'admin') {
       setNewOrderAlert(newOrder);
@@ -520,10 +577,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const updateOrderStatus = (orderId: string, status: OrderStatus) => {
-    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o));
-    if (activeOrder && activeOrder.id === orderId) {
+    setOrders(prev => prev.map(o => o.id === orderId || o.orderNumber === orderId ? { ...o, status } : o));
+    if (activeOrder && (activeOrder.id === orderId || activeOrder.orderNumber === orderId)) {
       setActiveOrder(prev => prev ? { ...prev, status } : null);
     }
+    // Update status in shared backend server
+    apiUpdateOrderStatus(orderId, status).catch(err => console.warn('Status update note:', err));
   };
 
   const clearAllOrders = () => {
@@ -531,6 +590,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setActiveOrder(null);
     setNewOrderAlert(null);
     localStorage.removeItem('mf_orders');
+    // Clear in shared backend server
+    apiClearOrdersBackend().catch(err => console.warn('Clear orders note:', err));
   };
 
   const dismissNewOrderAlert = () => {

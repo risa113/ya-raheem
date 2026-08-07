@@ -73,12 +73,136 @@ async function sendSmsToAdmin(order) {
   return { smsSent, providerName, gatewayResponse, adminPhone: rawAdminPhone };
 }
 
-// Order Notification Route
+// Global shared order storage in memory if DB connection is offline
+let inMemoryOrders = [];
+
+// 1. Fetch All Orders (for Admin Panel & Customer Order Tracking)
+router.get('/', async (req, res) => {
+  try {
+    let orders = [];
+    try {
+      orders = await Order.find({}).sort({ createdAt: -1 });
+    } catch (dbErr) {
+      console.warn('MongoDB fetch orders note:', dbErr.message);
+    }
+    
+    // Merge DB orders and in-memory orders without duplicates
+    const allOrdersMap = new Map();
+    inMemoryOrders.forEach(o => allOrdersMap.set(o.id || o.orderNumber, o));
+    orders.forEach(o => {
+      const obj = o.toObject ? o.toObject() : o;
+      const key = obj.id || obj._id?.toString() || obj.orderNumber;
+      allOrdersMap.set(key, { ...obj, id: obj.id || key });
+    });
+
+    const combined = Array.from(allOrdersMap.values());
+    res.json({ success: true, count: combined.length, orders: combined });
+  } catch (error) {
+    console.error('Fetch Orders Error:', error);
+    res.status(500).json({ success: false, message: 'Error fetching orders.' });
+  }
+});
+
+// 2. Create Order Route
+router.post('/', async (req, res) => {
+  try {
+    const { order } = req.body;
+    if (!order) {
+      return res.status(400).json({ success: false, message: 'Order object is required.' });
+    }
+
+    // Save in memory array first
+    const existingIndex = inMemoryOrders.findIndex(o => (o.id && o.id === order.id) || o.orderNumber === order.orderNumber);
+    if (existingIndex > -1) {
+      inMemoryOrders[existingIndex] = order;
+    } else {
+      inMemoryOrders.unshift(order);
+    }
+
+    // Save in MongoDB if connected
+    try {
+      await Order.create({
+        orderNumber: order.orderNumber,
+        customer: order.customer,
+        items: order.items,
+        status: order.status || 'Pending',
+        orderTime: order.orderTime,
+        paymentMethod: order.paymentMethod,
+        subtotal: order.subtotal || order.grandTotal,
+        grandTotal: order.grandTotal,
+        paid: Boolean(order.paid),
+      });
+    } catch (dbErr) {
+      console.warn('MongoDB Order Create Note:', dbErr.message);
+    }
+
+    res.json({ success: true, message: 'Order created successfully', order });
+  } catch (error) {
+    console.error('Create Order Error:', error);
+    res.status(500).json({ success: false, message: 'Error creating order.' });
+  }
+});
+
+// 3. Update Order Status Route
+router.put('/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ success: false, message: 'Status is required.' });
+    }
+
+    // Update in-memory array
+    inMemoryOrders = inMemoryOrders.map(o => (o.id === id || o.orderNumber === id) ? { ...o, status } : o);
+
+    // Update MongoDB
+    try {
+      await Order.findOneAndUpdate(
+        { $or: [{ id: id }, { orderNumber: id }] },
+        { status },
+        { new: true }
+      );
+    } catch (dbErr) {
+      console.warn('MongoDB status update note:', dbErr.message);
+    }
+
+    res.json({ success: true, message: 'Order status updated successfully' });
+  } catch (error) {
+    console.error('Update Status Error:', error);
+    res.status(500).json({ success: false, message: 'Error updating order status.' });
+  }
+});
+
+// 4. Clear All Orders Route
+router.delete('/clear-all', async (req, res) => {
+  try {
+    inMemoryOrders = [];
+    try {
+      await Order.deleteMany({});
+    } catch (dbErr) {
+      console.warn('MongoDB clear orders note:', dbErr.message);
+    }
+    res.json({ success: true, message: 'All orders cleared successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error clearing orders.' });
+  }
+});
+
+// 5. Order Notification Route
 router.post('/notify-admin', async (req, res) => {
   try {
     const { order } = req.body;
     if (!order) {
       return res.status(400).json({ success: false, message: 'Order data required.' });
+    }
+
+    // Save in memory array first
+    const existingIndex = inMemoryOrders.findIndex(o => (o.id && o.id === order.id) || o.orderNumber === order.orderNumber);
+    if (existingIndex > -1) {
+      inMemoryOrders[existingIndex] = order;
+    } else {
+      inMemoryOrders.unshift(order);
     }
 
     // Save order in MongoDB if connected
