@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
   const activeOrdersCount = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
   return (
-    <header className="sticky top-0 z-40 bg-darkbg/95 backdrop-blur-md border-b border-white/10 transition-all overflow-x-hidden">
+    <header className="sticky top-0 z-50 bg-darkbg/95 backdrop-blur-md border-b border-white/10 transition-all">
       {/* Top Notification Announcement Bar */}
       <div className="bg-gradient-to-r from-primary/20 via-secondary to-primary/20 border-b border-primary/30 text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 text-center flex items-center justify-between text-gray-300 font-medium">
         <div className="hidden md:flex items-center gap-2">
@@ -202,7 +202,7 @@ export const Navbar: React.FC = () => {
 
                 {/* Profile Popup Menu */}
                 {showProfileMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-secondary border border-white/10 rounded-2xl shadow-2xl p-2 z-50 space-y-1">
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-secondary/95 backdrop-blur-2xl border border-primary/40 rounded-2xl shadow-2xl p-2.5 z-[100] space-y-1">
                     <div className="px-3 py-2 border-b border-white/10">
                       <p className="text-xs font-bold text-white truncate">{userName}</p>
                       <span className="text-[10px] text-primary font-bold uppercase">{userRole || 'Customer'}</span>
@@ -214,9 +214,9 @@ export const Navbar: React.FC = () => {
                         setCustomerTab('orders');
                         setShowProfileMenu(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition flex items-center gap-2"
+                      className="w-full text-left px-3 py-2 text-xs text-gray-200 hover:text-white hover:bg-white/10 rounded-xl transition flex items-center gap-2 font-semibold"
                     >
-                      <ShoppingBag className="w-3.5 h-3.5 text-primary" /> My Account & Log Out
+                      <ShoppingBag className="w-3.5 h-3.5 text-primary" /> My Account & Orders
                     </button>
 
                     <button
@@ -224,7 +224,7 @@ export const Navbar: React.FC = () => {
                         logoutUser();
                         setShowProfileMenu(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs text-danger hover:bg-danger/10 rounded-xl transition flex items-center gap-2 font-bold"
+                      className="w-full text-left px-3 py-2 text-xs text-danger hover:bg-danger/20 rounded-xl transition flex items-center gap-2 font-bold"
                     >
                       <LogOut className="w-3.5 h-3.5" /> Log Out
                     </button>
