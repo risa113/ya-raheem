@@ -56,9 +56,7 @@ const MainAppContent: React.FC = () => {
         {customerTab === 'offers' && <OffersPage />}
         {customerTab === 'about' && <AboutPage />}
         {customerTab === 'contact' && <ContactPage />}
-        {customerTab === 'orders' && (
-          activeOrder ? <LiveOrderTracker /> : <CustomerOrdersPage />
-        )}
+        {customerTab === 'orders' && <CustomerOrdersPage />}
         {customerTab === 'wishlist' && <WishlistPage />}
       </main>
 

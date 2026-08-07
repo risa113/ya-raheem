@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { MapPicker } from './MapPicker';
+import { LiveOrderTracker } from './LiveOrderTracker';
 import { apiLogin, apiRegister, apiResetPassword } from '../services/api';
 import { 
   PhoneCall, MessageCircle, MapPin, Clock, 
@@ -319,7 +320,7 @@ export const AuthModal: React.FC = () => {
 // Customer Orders & Profile Page with Logout Option
 export const CustomerOrdersPage: React.FC = () => {
   const { 
-    orders, setActiveOrder, setCustomerTab, addToCart, 
+    orders, activeOrder, setActiveOrder, setCustomerTab, addToCart, 
     isLoggedIn, userName, userPhone, userEmail, userRole, logoutUser, setIsAuthModalOpen 
   } = useStore();
 
@@ -342,7 +343,7 @@ export const CustomerOrdersPage: React.FC = () => {
               <p className="text-xs text-gray-300 mt-0.5">
                 📞 {userPhone || '+91 90801 39363'} {userEmail ? `• ✉️ ${userEmail}` : ''}
               </p>
-              <p className="text-[11px] text-gray-400 mt-0.5">📍 Default Location: Melapalayam, Tirunelveli</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">📍 Location: Melapalayam, Tirunelveli</p>
             </div>
           </div>
 
@@ -356,14 +357,12 @@ export const CustomerOrdersPage: React.FC = () => {
                 <LogOut className="w-4 h-4" /> Log Out Account
               </button>
             ) : (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-glow-sm"
-                >
-                  <Key className="w-4 h-4" /> Sign In / Login
-                </button>
-              </div>
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-glow-sm"
+              >
+                <Key className="w-4 h-4" /> Sign In / Login
+              </button>
             )}
           </div>
         </div>
@@ -377,15 +376,33 @@ export const CustomerOrdersPage: React.FC = () => {
           <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
             <span className="text-gray-400 block text-[10px] uppercase font-bold">Account Status</span>
             <span className={`text-xs sm:text-sm font-extrabold ${isLoggedIn ? 'text-emerald-400' : 'text-amber-400'}`}>
-              {isLoggedIn ? '🟢 Verified' : '🟡 Guest'}
+              {isLoggedIn ? '🟢 Logged In' : '🟡 Guest Customer'}
             </span>
           </div>
           <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
-            <span className="text-gray-400 block text-[10px] uppercase font-bold">Zone</span>
+            <span className="text-gray-400 block text-[10px] uppercase font-bold">City</span>
             <span className="text-xs sm:text-sm font-extrabold text-primary">Melapalayam</span>
           </div>
         </div>
       </div>
+
+      {/* Embedded Live Order Tracker View if an active order is selected */}
+      {activeOrder && (
+        <div className="glass-panel p-4 sm:p-6 rounded-3xl space-y-4 border border-emerald-500/40">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h3 className="text-base font-extrabold text-emerald-400 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 animate-pulse" /> Live Active Order (#{activeOrder.orderNumber})
+            </h3>
+            <button
+              onClick={() => setActiveOrder(null)}
+              className="text-xs text-gray-400 hover:text-white font-bold"
+            >
+              Hide Live Map ✕
+            </button>
+          </div>
+          <LiveOrderTracker />
+        </div>
+      )}
 
       <div className="space-y-4">
         <h3 className="text-lg font-bold text-white flex items-center gap-2">
