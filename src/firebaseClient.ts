@@ -72,3 +72,16 @@ export const clearAllOrdersFromFirebase = async () => {
     console.warn('Firebase clear orders note:', err);
   }
 };
+
+// Seed historical orders to Firebase Cloud Firestore so history is recovered
+export const seedInitialOrdersToFirebase = async (initialOrders: any[]) => {
+  try {
+    for (const ord of initialOrders) {
+      const orderId = ord.id || ord.orderNumber;
+      await setDoc(doc(db, 'orders', orderId), ord, { merge: true });
+    }
+    console.log('🔥 Historical orders successfully recovered in Firebase Cloud Firestore');
+  } catch (err) {
+    console.warn('Firebase order seeding note:', err);
+  }
+};

@@ -13,7 +13,7 @@ import {
 } from '../services/api';
 import { 
   saveOrderToFirebase, updateOrderStatusInFirebase, 
-  subscribeOrdersFromFirebase, clearAllOrdersFromFirebase 
+  subscribeOrdersFromFirebase, clearAllOrdersFromFirebase, seedInitialOrdersToFirebase 
 } from '../firebaseClient';
 import confetti from 'canvas-confetti';
 
@@ -321,6 +321,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('mf_orders', JSON.stringify(orders));
   }, [orders]);
 
+  // Seed historical order data into Firebase Cloud Firestore on mount so past history is recovered
+  useEffect(() => {
+    seedInitialOrdersToFirebase(orders);
+  }, []);
+
   // Sync orders in real-time from Firebase Cloud Firestore (works on GitHub Pages & live sites)
   useEffect(() => {
     const unsubscribe = subscribeOrdersFromFirebase((firebaseOrders) => {
@@ -358,6 +363,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
           return Array.from(combinedMap.values());
         });
+      } else {
+        // If Firebase is empty, upload initial sample order history
+        seedInitialOrdersToFirebase(orders);
       }
     });
 
