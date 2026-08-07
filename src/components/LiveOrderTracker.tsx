@@ -54,10 +54,13 @@ export const LiveOrderTracker: React.FC = () => {
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <button
-          onClick={() => setCustomerTab('orders')}
+          onClick={() => {
+            setActiveOrder(null);
+            setCustomerTab('orders');
+          }}
           className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition"
         >
-          <ArrowLeft className="w-4 h-4" /> Back to My Orders
+          <ArrowLeft className="w-4 h-4" /> Back to Account & Orders
         </button>
 
         <span className="text-xs bg-primary/20 text-primary border border-primary/40 px-3 py-1 rounded-full font-bold">

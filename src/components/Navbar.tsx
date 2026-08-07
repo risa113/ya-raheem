@@ -210,12 +210,13 @@ export const Navbar: React.FC = () => {
 
                     <button
                       onClick={() => {
+                        setActiveOrder(null);
                         setCustomerTab('orders');
                         setShowProfileMenu(false);
                       }}
                       className="w-full text-left px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition flex items-center gap-2"
                     >
-                      <ShoppingBag className="w-3.5 h-3.5 text-primary" /> My Orders & Profile
+                      <ShoppingBag className="w-3.5 h-3.5 text-primary" /> My Account & Log Out
                     </button>
 
                     <button
@@ -364,11 +365,12 @@ export const MobileBottomNav: React.FC = () => {
           if (!isLoggedIn) {
             setIsAuthModalOpen(true);
           } else {
+            setActiveOrder(null);
             setCustomerTab('orders');
           }
         }}
         className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'wishlist' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+          customerTab === 'orders' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
         }`}
       >
         <User className="w-5 h-5" />
