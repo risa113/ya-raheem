@@ -324,38 +324,67 @@ export const CustomerOrdersPage: React.FC = () => {
   } = useStore();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-      <div className="glass-panel p-6 rounded-3xl flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-orange-600 text-white flex items-center justify-center font-extrabold text-2xl shadow-glow-sm">
-            {userName ? userName.charAt(0).toUpperCase() : 'U'}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl font-extrabold text-white">{userName || 'Midnight Foodie'}</h2>
-              <span className="text-[10px] bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded font-bold uppercase">
-                {userRole || 'Customer'}
-              </span>
+    <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6">
+      {/* Account Details & User Info Profile Card */}
+      <div className="glass-panel p-5 sm:p-6 rounded-3xl space-y-4 shadow-2xl border border-primary/30">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary to-orange-600 text-white flex items-center justify-center font-extrabold text-xl sm:text-3xl shadow-glow-sm">
+              {userName ? userName.charAt(0).toUpperCase() : '👤'}
             </div>
-            <p className="text-xs text-gray-400">{userPhone || '+91 90801 39363'} {userEmail ? `• ${userEmail}` : ''}</p>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg sm:text-2xl font-extrabold text-white">{userName || 'Guest Customer'}</h2>
+                <span className="text-[10px] bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded font-bold uppercase">
+                  {userRole || 'Customer'}
+                </span>
+              </div>
+              <p className="text-xs text-gray-300 mt-0.5">
+                📞 {userPhone || '+91 90801 39363'} {userEmail ? `• ✉️ ${userEmail}` : ''}
+              </p>
+              <p className="text-[11px] text-gray-400 mt-0.5">📍 Default Location: Melapalayam, Tirunelveli</p>
+            </div>
+          </div>
+
+          {/* Account Login / Logout Action Buttons */}
+          <div className="flex items-center gap-2">
+            {isLoggedIn ? (
+              <button
+                onClick={logoutUser}
+                className="flex items-center gap-1.5 bg-danger/20 hover:bg-danger text-danger hover:text-white border border-danger/40 px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-sm"
+              >
+                <LogOut className="w-4 h-4" /> Log Out Account
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-glow-sm"
+                >
+                  <Key className="w-4 h-4" /> Sign In / Login
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {isLoggedIn ? (
-          <button
-            onClick={logoutUser}
-            className="flex items-center gap-1.5 bg-danger/20 hover:bg-danger text-danger hover:text-white border border-danger/40 px-4 py-2 rounded-xl text-xs font-bold transition"
-          >
-            <LogOut className="w-4 h-4" /> Log Out
-          </button>
-        ) : (
-          <button
-            onClick={() => setIsAuthModalOpen(true)}
-            className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-glow-sm"
-          >
-            <User className="w-4 h-4" /> Log In / Register
-          </button>
-        )}
+        {/* User Account Quick Stats */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-1 text-center text-xs">
+          <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
+            <span className="text-gray-400 block text-[10px] uppercase font-bold">Total Orders</span>
+            <span className="text-sm sm:text-base font-extrabold text-white">{orders.length}</span>
+          </div>
+          <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
+            <span className="text-gray-400 block text-[10px] uppercase font-bold">Account Status</span>
+            <span className={`text-xs sm:text-sm font-extrabold ${isLoggedIn ? 'text-emerald-400' : 'text-amber-400'}`}>
+              {isLoggedIn ? '🟢 Verified' : '🟡 Guest'}
+            </span>
+          </div>
+          <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
+            <span className="text-gray-400 block text-[10px] uppercase font-bold">Zone</span>
+            <span className="text-xs sm:text-sm font-extrabold text-primary">Melapalayam</span>
+          </div>
+        </div>
       </div>
 
       <div className="space-y-4">
