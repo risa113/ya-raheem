@@ -17,8 +17,7 @@ import {
 } from './components/AdminComponents';
 
 const MainAppContent: React.FC = () => {
-  const { viewMode, customerTab, adminTab } = useStore();
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
+  const { viewMode, customerTab, adminTab, activeOrder, isCheckoutOpen, setIsCheckoutOpen } = useStore();
 
   if (viewMode === 'admin') {
     return (

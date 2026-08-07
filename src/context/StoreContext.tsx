@@ -61,6 +61,9 @@ interface StoreContextType {
   clearCart: () => void;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
+  isCheckoutOpen: boolean;
+  setIsCheckoutOpen: (open: boolean) => void;
+  buyNow: (product: Product, quantity?: number, notes?: string) => void;
 
   // Coupon
   appliedCoupon: Coupon | null;
@@ -228,6 +231,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return saved ? JSON.parse(saved) : [];
   });
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
+
+  const buyNow = (product: Product, quantity: number = 1, notes?: string) => {
+    addToCart(product, quantity, notes);
+    setIsCheckoutOpen(true);
+  };
 
   // Coupon state
   const [coupons, setCoupons] = useState<Coupon[]>(INITIAL_COUPONS);
@@ -701,6 +710,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       cart, addToCart, removeFromCart, updateQuantity, clearCart,
       isCartOpen, setIsCartOpen,
+      isCheckoutOpen, setIsCheckoutOpen, buyNow,
 
       appliedCoupon, applyCoupon, removeCoupon,
 

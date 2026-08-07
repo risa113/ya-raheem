@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
-import { Flame, Clock, Heart, Plus, Minus, X, Check, Star } from 'lucide-react';
+import { Flame, Clock, Heart, Plus, Minus, X, Check, Star, Zap } from 'lucide-react';
 
 export const ProductDetailModal: React.FC = () => {
   const { 
     activeProductDetail, setActiveProductDetail, 
-    addToCart, wishlist, toggleWishlist, reviews 
+    addToCart, buyNow, wishlist, toggleWishlist, reviews 
   } = useStore();
 
   const [quantity, setQuantity] = useState<number>(1);
@@ -157,8 +157,8 @@ export const ProductDetailModal: React.FC = () => {
               </div>
             </div>
 
-            {/* Quantity Selector + Add Button */}
-            <div className="flex items-center gap-3">
+            {/* Quantity Selector + Action Buttons */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <div className="flex items-center bg-secondary border border-white/10 rounded-full px-2 py-1">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -177,9 +177,19 @@ export const ProductDetailModal: React.FC = () => {
 
               <button
                 onClick={handleAdd}
-                className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-bold px-6 py-2.5 rounded-full text-sm flex items-center gap-2 shadow-glow-sm transition"
+                className="bg-secondary hover:bg-secondary-light text-gray-200 hover:text-white border border-white/20 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition"
               >
-                <Plus className="w-4 h-4" /> Add to Order
+                <Plus className="w-4 h-4 text-primary" /> Add to Cart
+              </button>
+
+              <button
+                onClick={() => {
+                  buyNow(product, quantity, specialNotes);
+                  setActiveProductDetail(null);
+                }}
+                className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-extrabold px-5 py-2.5 rounded-full text-xs sm:text-sm flex items-center gap-1.5 shadow-glow-sm transition"
+              >
+                <Zap className="w-4 h-4 text-amber-300 fill-amber-300" /> Buy Now
               </button>
             </div>
 

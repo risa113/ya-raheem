@@ -3,7 +3,7 @@ import { useStore } from '../context/StoreContext';
 import { Product } from '../types';
 import { 
   Flame, Clock, Heart, Plus, Minus, Search, 
-  Sparkles, CheckCircle2, AlertCircle, Eye 
+  Sparkles, CheckCircle2, AlertCircle, Eye, Zap 
 } from 'lucide-react';
 
 export const MenuSection: React.FC = () => {
@@ -16,7 +16,7 @@ export const MenuSection: React.FC = () => {
     priceRange, setPriceRange,
     cart, addToCart, updateQuantity,
     wishlist, toggleWishlist,
-    setActiveProductDetail
+    setActiveProductDetail, buyNow
   } = useStore();
 
   // Filter logic
@@ -269,49 +269,61 @@ export const MenuSection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Footer Price & Add To Cart Button */}
-                    <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
-                      
-                      {/* Price */}
-                      <div>
-                        {hasOffer ? (
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-lg font-extrabold text-primary">₹{product.offerPrice}</span>
-                            <span className="text-xs line-through text-gray-500">₹{product.price}</span>
-                          </div>
+                    {/* Footer Price & Add To Cart / Buy Now Action Buttons */}
+                    <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
+                      <div className="flex items-center justify-between gap-2">
+                        {/* Price */}
+                        <div>
+                          {hasOffer ? (
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-lg font-extrabold text-primary">₹{product.offerPrice}</span>
+                              <span className="text-xs line-through text-gray-500">₹{product.price}</span>
+                            </div>
+                          ) : (
+                            <span className="text-lg font-extrabold text-white">₹{product.price}</span>
+                          )}
+                        </div>
+
+                        {/* Add To Cart Button / Counter */}
+                        {!product.availability ? (
+                          <span className="text-[11px] text-danger font-bold bg-danger/10 px-2 py-1 rounded">
+                            Sold Out
+                          </span>
+                        ) : qty === 0 ? (
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="bg-secondary hover:bg-secondary-light text-gray-200 hover:text-white border border-white/20 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition"
+                          >
+                            <Plus className="w-3.5 h-3.5 text-primary" /> Add to Cart
+                          </button>
                         ) : (
-                          <span className="text-lg font-extrabold text-white">₹{product.price}</span>
+                          <div className="flex items-center bg-secondary border border-primary/50 rounded-xl px-1 py-0.5">
+                            <button
+                              onClick={() => updateQuantity(product.id, qty - 1)}
+                              className="w-6 h-6 rounded-lg bg-white/10 hover:bg-primary text-white flex items-center justify-center transition"
+                            >
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <span className="px-2 text-xs font-extrabold text-primary">{qty}</span>
+                            <button
+                              onClick={() => updateQuantity(product.id, qty + 1)}
+                              className="w-6 h-6 rounded-lg bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition"
+                            >
+                              <Plus className="w-3 h-3" />
+                            </button>
+                          </div>
                         )}
                       </div>
 
-                      {/* Add Button / Counter */}
-                      {!product.availability ? (
-                        <span className="text-[11px] text-danger font-bold bg-danger/10 px-2 py-1 rounded">
-                          Sold Out
-                        </span>
-                      ) : qty === 0 ? (
+                      {/* Buy Now Button (Instant Order Checkout) */}
+                      {product.availability && (
                         <button
-                          onClick={() => addToCart(product)}
-                          className="bg-secondary hover:bg-primary text-white hover:text-white border border-primary/40 px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 transition transform hover:scale-105"
+                          onClick={() => buyNow(product)}
+                          className="w-full bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-glow-sm hover:scale-[1.02] transition"
                         >
-                          <Plus className="w-3.5 h-3.5 text-primary group-hover:text-white" /> Add
+                          <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                          <span>Buy Now (Instant Order)</span>
                         </button>
-                      ) : (
-                        <div className="flex items-center bg-secondary border border-primary/50 rounded-full px-1 py-0.5">
-                          <button
-                            onClick={() => updateQuantity(product.id, qty - 1)}
-                            className="w-6 h-6 rounded-full bg-white/10 hover:bg-primary text-white flex items-center justify-center transition"
-                          >
-                            <Minus className="w-3 h-3" />
-                          </button>
-                          <span className="px-2.5 text-xs font-extrabold text-primary">{qty}</span>
-                          <button
-                            onClick={() => updateQuantity(product.id, qty + 1)}
-                            className="w-6 h-6 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition"
-                          >
-                            <Plus className="w-3 h-3" />
-                          </button>
-                        </div>
                       )}
 
                     </div>
