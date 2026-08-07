@@ -233,7 +233,11 @@ export const Navbar: React.FC = () => {
               </div>
             ) : (
               <button
-                onClick={() => setIsAuthModalOpen(true)}
+                onClick={() => {
+                  setActiveOrder(null);
+                  setCustomerTab('orders');
+                  if (!isLoggedIn) setIsAuthModalOpen(true);
+                }}
                 className="flex items-center gap-1 bg-secondary hover:bg-secondary-light text-gray-200 border border-white/10 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition"
               >
                 <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
@@ -362,11 +366,10 @@ export const MobileBottomNav: React.FC = () => {
 
       <button
         onClick={() => {
+          setActiveOrder(null);
+          setCustomerTab('orders');
           if (!isLoggedIn) {
             setIsAuthModalOpen(true);
-          } else {
-            setActiveOrder(null);
-            setCustomerTab('orders');
           }
         }}
         className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
