@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root, [data-theme="light"] {
-  --color-primary: #D97706;
-  --color-primary-hover: #B45309;
-  --color-primary-light: #FBBF24;
-  --color-primary-glow: rgba(217, 119, 6, 0.35);
-  --color-gold: #D97706;
+  --color-primary: #FFD700;
+  --color-primary-hover: #E6B800;
+  --color-primary-light: #FFE44D;
+  --color-primary-glow: rgba(255, 215, 0, 0.45);
+  --color-gold: #FFD700;
   --color-ruby: #E11D48;
-  --color-secondary: #FFFFFF;
-  --color-secondary-light: #F1F5F9;
-  --color-secondary-lighter: #E2E8F0;
-  --color-darkbg: #F8FAFC;
-  --color-card: #FFFFFF;
-  --color-text: #0F172A;
-  --color-text-muted: #475569;
-  --color-border: rgba(0, 0, 0, 0.1);
+  --color-secondary: #0F172A;
+  --color-secondary-light: #1E293B;
+  --color-secondary-lighter: #334155;
+  --color-darkbg: #090D16;
+  --color-card: #0F172A;
+  --color-text: #FFFFFF;
+  --color-text-muted: #CBD5E1;
+  --color-border: rgba(255, 215, 0, 0.25);
 }
 
 .dark, [data-theme="dark"] {
@@ -38,8 +38,8 @@
 
 @layer base {
   body {
-    background-color: var(--color-darkbg, #F8FAFC);
-    color: var(--color-text, #0F172A);
+    background-color: var(--color-darkbg, #000000);
+    color: var(--color-text, #FFFFFF);
     overflow-x: hidden;
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
   }
