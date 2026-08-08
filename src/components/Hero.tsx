@@ -67,6 +67,8 @@ export const Hero: React.FC = () => {
             <span className="text-[11px] text-primary font-bold hover:underline cursor-pointer" onClick={() => setCustomerTab('menu')}>
               View All Cuisines →
             </span>
+          </div>
+
           <div className="flex items-center gap-3.5 sm:gap-6 overflow-x-auto pb-2 no-scrollbar touch-pan-x snap-x pt-1">
             {categories.map((cat) => (
               <button
