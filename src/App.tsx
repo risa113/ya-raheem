@@ -18,8 +18,6 @@ import {
 import { 
   AdminLayout, AdminDashboardView, AdminOrdersView, 
   AdminKitchenView, AdminProductsView, AdminCategoriesView, AdminSettingsView, AdminCustomersView 
-} from './components/AdminComponents';
-import { CustomCursor } from './components/CustomCursor';
 import { SEOHead } from './components/SEOHead';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import { HtmlSitemap } from './components/HtmlSitemap';
@@ -126,11 +124,8 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-darkbg text-white font-sans selection:bg-primary selection:text-white">
-      {/* Dynamic Production-Grade SEO & JSON-LD Schema Engine */}
+      {/* Dynamic Production-Grade SEO Title Engine */}
       <SEOHead customerTab={customerTab} activeProductDetail={activeProductDetail} />
-
-      {/* 24K Gold Ultra-Responsive Interactive Custom Cursor */}
-      <CustomCursor />
 
       {/* Sticky Header */}
       <Navbar />
