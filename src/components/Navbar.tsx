@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useStore, ThemePalette } from '../context/StoreContext';
+import { useStore } from '../context/StoreContext';
 import { 
   Flame, ShoppingBag, User, Search, Clock, 
-  MapPin, Heart, Shield, PhoneCall, Sparkles, LogOut, X, ChevronDown, Check, ArrowRight, Palette
+  MapPin, Heart, Shield, PhoneCall, Sparkles, LogOut, X, ChevronDown, Check, ArrowRight, Sun, Moon
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { 
-    activeTheme, setActiveTheme,
+    themeMode, toggleThemeMode,
     viewMode, setViewMode, 
     customerTab, setCustomerTab, 
     cart, setIsCartOpen, 
@@ -84,50 +84,24 @@ export const Navbar: React.FC = () => {
         {/* Location & Theme Picker Header Trigger */}
         <div className="flex items-center gap-2.5 sm:gap-3">
           
-          {/* Theme Palette Switcher Dropdown */}
-          <div className="relative" ref={themeMenuRef}>
-            <button
-              onClick={() => setShowThemeModal(!showThemeModal)}
-              className="flex items-center gap-1.5 text-amber-300 hover:text-white transition text-[11px] sm:text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-500/30"
-              title="Change Color Theme Palette"
-            >
-              <Palette className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span className="hidden sm:inline">Theme:</span>
-              <span className="capitalize font-black text-amber-300">
-                {themeOptions.find(t => t.id === activeTheme)?.name.split(' ')[0] || 'Royal'}
-              </span>
-              <ChevronDown className="w-3 h-3 text-amber-400" />
-            </button>
-
-            {showThemeModal && (
-              <div className="absolute right-0 top-full mt-2 w-64 bg-secondary/95 backdrop-blur-2xl border border-primary/40 rounded-2xl shadow-2xl p-2 z-[100] space-y-1.5">
-                <div className="px-3 py-1.5 border-b border-white/10 flex items-center justify-between">
-                  <span className="text-[10px] font-extrabold uppercase text-gray-400 tracking-wider">Select Elegant Theme</span>
-                  <span className="text-xs">🎨</span>
-                </div>
-                {themeOptions.map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => {
-                      setActiveTheme(t.id);
-                      setShowThemeModal(false);
-                    }}
-                    className={`w-full text-left p-2 rounded-xl text-xs font-bold flex items-center justify-between transition border ${
-                      activeTheme === t.id
-                        ? 'bg-primary/20 border-primary text-white'
-                        : 'bg-darkbg/60 border-white/5 text-gray-300 hover:border-white/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-base">{t.icon}</span>
-                      <span>{t.name}</span>
-                    </div>
-                    <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${t.bg} border ${t.border} shrink-0`} />
-                  </button>
-                ))}
-              </div>
+          {/* Light Mode / Dark Mode Toggle Button */}
+          <button
+            onClick={toggleThemeMode}
+            className="flex items-center gap-1.5 transition text-[11px] sm:text-xs font-black bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-500/40"
+            title="Toggle Light or Dark Mode"
+          >
+            {themeMode === 'light' ? (
+              <>
+                <Sun className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span className="font-black text-amber-700">Light Mode ☀️</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                <span className="font-black text-amber-300">Dark Mode 🌙</span>
+              </>
             )}
-          </div>
+          </button>
 
           <button
             onClick={() => setShowLocationModal(true)}

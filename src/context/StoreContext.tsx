@@ -17,12 +17,13 @@ import {
 } from '../firebaseClient';
 import confetti from 'canvas-confetti';
 
-export type ThemePalette = 'emerald' | 'saffron' | 'crimson' | 'amethyst';
+export type ThemeMode = 'light' | 'dark';
 
 interface StoreContextType {
-  // Theme State
-  activeTheme: ThemePalette;
-  setActiveTheme: (theme: ThemePalette) => void;
+  // Theme Mode (Light / Dark)
+  themeMode: ThemeMode;
+  setThemeMode: (mode: ThemeMode) => void;
+  toggleThemeMode: () => void;
 
   // Navigation & View Mode
   viewMode: ViewMode;
@@ -193,19 +194,33 @@ const triggerBrowserPushNotification = (order: Order) => {
 };
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [activeTheme, setActiveThemeState] = useState<ThemePalette>(() => {
-    return (localStorage.getItem('mf_theme_palette') as ThemePalette) || 'saffron';
+  const [themeMode, setThemeModeState] = useState<ThemeMode>(() => {
+    return (localStorage.getItem('mf_theme_mode') as ThemeMode) || 'light';
   });
 
-  const setActiveTheme = (theme: ThemePalette) => {
-    setActiveThemeState(theme);
-    localStorage.setItem('mf_theme_palette', theme);
-    document.documentElement.setAttribute('data-theme', theme);
+  const setThemeMode = (mode: ThemeMode) => {
+    setThemeModeState(mode);
+    localStorage.setItem('mf_theme_mode', mode);
+    document.documentElement.setAttribute('data-theme', mode);
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  const toggleThemeMode = () => {
+    setThemeMode(themeMode === 'light' ? 'dark' : 'light');
   };
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', activeTheme);
-  }, [activeTheme]);
+    document.documentElement.setAttribute('data-theme', themeMode);
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [themeMode]);
 
   const [viewModeState, setViewModeState] = useState<ViewMode>(() => {
     return (localStorage.getItem('mf_view_mode') as ViewMode) || 'customer';
@@ -726,7 +741,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <StoreContext.Provider value={{
-      activeTheme, setActiveTheme,
+      themeMode, setThemeMode, toggleThemeMode,
       viewMode, setViewMode,
       customerTab, setCustomerTab,
       adminTab, setAdminTab,
