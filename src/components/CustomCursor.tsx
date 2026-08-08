@@ -26,25 +26,30 @@ export const CustomCursor: React.FC = () => {
       // Check if mouse is hovering over an interactive element or food category
       const target = e.target as HTMLElement | null;
       if (target) {
-        const isInteractive = Boolean(
-          target.closest('button, a, input, select, textarea, [role="button"], .glass-card, .cursor-pointer, [onClick]')
-        );
-        setIsHovered(isInteractive);
+        try {
+          const isInteractive = Boolean(
+            target.closest('button, a, input, select, textarea, [role="button"], .glass-card, .cursor-pointer')
+          );
+          setIsHovered(isInteractive);
 
-        // Detect food category context from inner text or title
-        const textContent = target.innerText?.toLowerCase() || '';
-        if (textContent.includes('biryani')) setFoodIcon('🍲');
-        else if (textContent.includes('mandi')) setFoodIcon('🍗');
-        else if (textContent.includes('shawarma') || textContent.includes('roll')) setFoodIcon('🌯');
-        else if (textContent.includes('burger')) setFoodIcon('🍔');
-        else if (textContent.includes('pizza')) setFoodIcon('🍕');
-        else if (textContent.includes('parotta') || textContent.includes('gravy')) setFoodIcon('🥞');
-        else if (textContent.includes('noodle') || textContent.includes('rice')) setFoodIcon('🍜');
-        else if (textContent.includes('sandwich')) setFoodIcon('🥪');
-        else if (textContent.includes('combo') || textContent.includes('bucket')) setFoodIcon('🍱');
-        else if (textContent.includes('drink') || textContent.includes('mojito') || textContent.includes('dessert')) setFoodIcon('🥤');
-        else if (isInteractive) setFoodIcon('🔥');
-        else setFoodIcon('🍗');
+          // Detect food category context from inner text or title
+          const textContent = target.innerText?.toLowerCase() || '';
+          if (textContent.includes('biryani')) setFoodIcon('🍲');
+          else if (textContent.includes('mandi')) setFoodIcon('🍗');
+          else if (textContent.includes('shawarma') || textContent.includes('roll')) setFoodIcon('🌯');
+          else if (textContent.includes('burger')) setFoodIcon('🍔');
+          else if (textContent.includes('pizza')) setFoodIcon('🍕');
+          else if (textContent.includes('parotta') || textContent.includes('gravy')) setFoodIcon('🥞');
+          else if (textContent.includes('noodle') || textContent.includes('rice')) setFoodIcon('🍜');
+          else if (textContent.includes('sandwich')) setFoodIcon('🥪');
+          else if (textContent.includes('combo') || textContent.includes('bucket')) setFoodIcon('🍱');
+          else if (textContent.includes('drink') || textContent.includes('mojito') || textContent.includes('dessert')) setFoodIcon('🥤');
+          else if (isInteractive) setFoodIcon('🔥');
+          else setFoodIcon('🍗');
+        } catch (err) {
+          // Fallback if target element check fails
+          setIsHovered(false);
+        }
       }
     };
 

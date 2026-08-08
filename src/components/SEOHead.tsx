@@ -222,16 +222,18 @@ export const getSeoConfigForTab = (tab: CustomerTab, activeProduct?: Product | n
     case 'privacy-policy':
     case 'terms':
     default:
+      const safeTabStr = tab ? String(tab) : 'home';
+      const formattedTitle = safeTabStr.charAt(0).toUpperCase() + safeTabStr.slice(1).replace(/-/g, ' ');
       return {
-        title: `${tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')} | MidnightFuelss Tirunelveli`,
+        title: `${formattedTitle} | MidnightFuelss Tirunelveli`,
         description: 'MidnightFuelss - Premier late night food delivery destination in Melapalayam & Tirunelveli.',
         keywords: 'MidnightFuelss Tirunelveli',
-        canonicalPath: `/#${tab}`,
-        robots: tab === 'orders' || tab === 'wishlist' ? 'noindex, follow' : 'index, follow',
+        canonicalPath: `/#${safeTabStr}`,
+        robots: safeTabStr === 'orders' || safeTabStr === 'wishlist' ? 'noindex, follow' : 'index, follow',
         ogImage: 'https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=80',
         breadcrumbs: [
           { name: 'Home', item: `${baseUrl}/` },
-          { name: tab, item: `${baseUrl}/#${tab}` },
+          { name: formattedTitle, item: `${baseUrl}/#${safeTabStr}` },
         ],
       };
   }
