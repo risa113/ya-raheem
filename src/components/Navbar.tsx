@@ -299,13 +299,12 @@ export const Navbar: React.FC = () => {
 
                     <button
                       onClick={() => {
-                        setActiveOrder(null);
-                        setCustomerTab('orders');
+                        setCustomerTab('account');
                         setShowProfileMenu(false);
                       }}
                       className="w-full text-left px-3 py-2 text-xs text-gray-200 hover:text-white hover:bg-white/10 rounded-xl transition flex items-center gap-2 font-semibold"
                     >
-                      <ShoppingBag className="w-4 h-4 text-primary" /> My Account & Orders
+                      <User className="w-4 h-4 text-primary" /> My Account & Profile
                     </button>
 
                     <button
