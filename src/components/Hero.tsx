@@ -132,7 +132,7 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2 w-full">
               <button
                 onClick={() => setCustomerTab('menu')}
-                className="w-full sm:w-auto bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-black px-8 py-3.5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-gold hover:scale-105 transition transform"
+                className="w-full sm:w-auto bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 hover:from-yellow-400 hover:to-amber-500 text-black font-black px-8 py-3.5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-gold hover:scale-105 transition transform"
               >
                 <Zap className="w-5 h-5 fill-black text-black" />
                 <span>Order Gourmet Food Now</span>

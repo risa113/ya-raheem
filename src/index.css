@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root, [data-theme="saffron"], [data-theme="emerald"] {
-  --color-primary: #F59E0B;
-  --color-primary-hover: #D97706;
-  --color-primary-light: #FDE68A;
-  --color-primary-glow: rgba(245, 158, 11, 0.45);
-  --color-gold: #F59E0B;
+  --color-primary: #FFD700;
+  --color-primary-hover: #E6B800;
+  --color-primary-light: #FFE44D;
+  --color-primary-glow: rgba(255, 215, 0, 0.45);
+  --color-gold: #FFD700;
   --color-ruby: #E11D48;
-  --color-secondary: #0D111A;
-  --color-secondary-light: #141A26;
-  --color-secondary-lighter: #1F2738;
-  --color-darkbg: #07090E;
-  --color-card: #0B0F17;
+  --color-secondary: #0A0A0A;
+  --color-secondary-light: #121212;
+  --color-secondary-lighter: #1A1A1A;
+  --color-darkbg: #000000;
+  --color-card: #080808;
 }
 
 [data-theme="crimson"] {
@@ -21,13 +21,13 @@
   --color-primary-hover: #BE123C;
   --color-primary-light: #FB7185;
   --color-primary-glow: rgba(225, 29, 72, 0.45);
-  --color-gold: #FBBF24;
+  --color-gold: #FFD700;
   --color-ruby: #E11D48;
-  --color-secondary: #160B0E;
-  --color-secondary-light: #241217;
-  --color-secondary-lighter: #381C24;
-  --color-darkbg: #0E0709;
-  --color-card: #180D11;
+  --color-secondary: #0A0A0A;
+  --color-secondary-light: #121212;
+  --color-secondary-lighter: #1A1A1A;
+  --color-darkbg: #000000;
+  --color-card: #080808;
 }
 
 [data-theme="amethyst"] {
@@ -35,18 +35,18 @@
   --color-primary-hover: #7C3AED;
   --color-primary-light: #A78BFA;
   --color-primary-glow: rgba(139, 92, 246, 0.45);
-  --color-gold: #FBBF24;
+  --color-gold: #FFD700;
   --color-ruby: #E11D48;
-  --color-secondary: #120E24;
-  --color-secondary-light: #1C1738;
-  --color-secondary-lighter: #2A2252;
-  --color-darkbg: #0D0B18;
-  --color-card: #15112B;
+  --color-secondary: #0A0A0A;
+  --color-secondary-light: #121212;
+  --color-secondary-lighter: #1A1A1A;
+  --color-darkbg: #000000;
+  --color-card: #080808;
 }
 
 @layer base {
   body {
-    background-color: var(--color-darkbg, #07090E);
+    background-color: var(--color-darkbg, #000000);
     color: #FFFFFF;
     overflow-x: hidden;
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
@@ -60,88 +60,89 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-darkbg, #07090E);
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-secondary-lighter, #1F2738);
+  background: #1A1A1A;
   border-radius: 9999px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary, #F59E0B);
+  background: #FFD700;
 }
 
 /* Glassmorphism utility classes */
 .glass-panel {
-  background: rgba(13, 17, 26, 0.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(245, 158, 11, 0.22);
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 0, 0.25);
 }
 
 .glass-card {
-  background: rgba(11, 15, 23, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 12, 12, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 215, 0, 0.15);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(245, 158, 11, 0.55);
+  border-color: rgba(255, 215, 0, 0.65);
   transform: translateY(-5px);
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.85), 0 0 25px var(--color-primary-glow, rgba(245, 158, 11, 0.35));
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 215, 0, 0.35);
 }
 
 .neon-border {
-  border: 1px solid var(--color-primary, #F59E0B);
-  box-shadow: 0 0 25px var(--color-primary-glow, rgba(245, 158, 11, 0.55));
+  border: 1px solid #FFD700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FDE68A 50%, var(--color-primary, #F59E0B) 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF099 50%, #FFD700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, #FFF7ED 0%, #FDE047 30%, #F59E0B 70%, #D97706 100%);
+  background: linear-gradient(135deg, #FFFDF0 0%, #FFE44D 25%, #FFD700 60%, #D4AF37 85%, #AA7C11 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-platinum {
-  background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 50%, #94A3B8 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 50%, #D1D5DB 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-orange {
-  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 45%, #E11D48 100%);
+  background: linear-gradient(135deg, #FFF099 0%, #FFD700 50%, #D4AF37 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Shimmer Loading Background */
 .shimmer-bg {
-  background: linear-gradient(90deg, #0B0F17 0%, #1B2333 50%, #0B0F17 100%);
+  background: linear-gradient(90deg, #080808 0%, #1A1A1A 50%, #080808 100%);
   background-size: 200% 100%;
   animation: shimmer 1.8s infinite;
 }
 
 /* Swiggy/Zomato Rating Pill */
 .rating-badge {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  color: white;
-  font-weight: 800;
+  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+  color: #000000;
+  font-weight: 900;
   font-size: 11px;
   padding: 2px 7px;
   border-radius: 6px;
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.45);
 }
 
 /* Thermal receipt print styles */

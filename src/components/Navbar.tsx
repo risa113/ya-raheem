@@ -374,12 +374,12 @@ export const Navbar: React.FC = () => {
             {/* Cart Button with Total Price */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-extrabold flex items-center gap-2 shadow-glow-sm hover:shadow-glow-primary transition transform hover:scale-105"
+              className="relative bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-500 hover:to-amber-500 text-black px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-black flex items-center gap-2 shadow-glow-gold hover:scale-105 transition transform"
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-4 h-4 text-black" />
               <span>Cart</span>
               {totalCartCount > 0 && (
-                <div className="flex items-center gap-1 bg-white/20 px-2 py-0.5 rounded-full text-[10px] font-black">
+                <div className="flex items-center gap-1 bg-black/20 text-black px-2 py-0.5 rounded-full text-[10px] font-black border border-black/10">
                   <span>{totalCartCount}</span>
                   <span>•</span>
                   <span>₹{cartSubtotal}</span>
