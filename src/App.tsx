@@ -18,6 +18,7 @@ import {
 import { 
   AdminLayout, AdminDashboardView, AdminOrdersView, 
   AdminKitchenView, AdminProductsView, AdminCategoriesView, AdminSettingsView, AdminCustomersView 
+} from './components/AdminComponents';
 import { SEOHead } from './components/SEOHead';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import { HtmlSitemap } from './components/HtmlSitemap';
