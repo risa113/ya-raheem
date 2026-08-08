@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { MapPicker } from './MapPicker';
+import { ThermalReceiptModal } from './ThermalReceiptModal';
 import { OrderStatus } from '../types';
 import { 
   Clock, MapPin, PhoneCall, CheckCircle2, 
-  ChefHat, Bike, PackageCheck, AlertCircle, MessageCircle, ArrowLeft 
+  ChefHat, Bike, PackageCheck, AlertCircle, MessageCircle, ArrowLeft, Printer, Star, User
 } from 'lucide-react';
 
 export const LiveOrderTracker: React.FC = () => {
   const { activeOrder, setActiveOrder, setCustomerTab, settings } = useStore();
+  const [showReceiptModal, setShowReceiptModal] = useState<boolean>(false);
 
   if (!activeOrder) {
     return (
@@ -20,7 +22,7 @@ export const LiveOrderTracker: React.FC = () => {
         </p>
         <button
           onClick={() => setCustomerTab('menu')}
-          className="bg-primary hover:bg-primary-hover text-white font-bold px-6 py-2.5 rounded-full text-xs transition"
+          className="bg-primary hover:bg-primary-hover text-white font-bold px-6 py-2.5 rounded-full text-xs transition shadow-glow-sm"
         >
           Explore Menu
         </button>
@@ -38,8 +40,8 @@ export const LiveOrderTracker: React.FC = () => {
       case 'Accepted': return <CheckCircle2 className="w-5 h-5 text-blue-400" />;
       case 'Preparing': return <ChefHat className="w-5 h-5 text-primary" />;
       case 'Ready': return <PackageCheck className="w-5 h-5 text-emerald-400" />;
-      case 'Out for Delivery': return <Bike className="w-5 h-5 text-emerald-500 animate-bounce" />;
-      case 'Delivered': return <CheckCircle2 className="w-5 h-5 text-success" />;
+      case 'Out for Delivery': return <Bike className="w-5 h-5 text-emerald-400 animate-bounce" />;
+      case 'Delivered': return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
       case 'Cancelled': return <AlertCircle className="w-5 h-5 text-danger" />;
     }
   };
@@ -58,14 +60,23 @@ export const LiveOrderTracker: React.FC = () => {
             setActiveOrder(null);
             setCustomerTab('orders');
           }}
-          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition"
+          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition font-bold"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Account & Orders
         </button>
 
-        <span className="text-xs bg-primary/20 text-primary border border-primary/40 px-3 py-1 rounded-full font-bold">
-          Order #{order.orderNumber}
-        </span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowReceiptModal(true)}
+            className="flex items-center gap-1.5 bg-secondary hover:bg-secondary-light text-gray-200 border border-white/10 px-3 py-1 rounded-full text-xs font-extrabold transition"
+          >
+            <Printer className="w-3.5 h-3.5 text-primary" /> Print Bill
+          </button>
+
+          <span className="text-xs bg-primary/20 text-primary border border-primary/40 px-3 py-1 rounded-full font-black">
+            Order #{order.orderNumber}
+          </span>
+        </div>
       </div>
 
       {/* Main Glass Status Hero Card */}
@@ -73,10 +84,10 @@ export const LiveOrderTracker: React.FC = () => {
         
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-white/10 pb-4">
           <div>
-            <span className="text-xs text-gray-400 block">ESTIMATED DELIVERY TIME</span>
+            <span className="text-xs text-gray-400 font-bold block uppercase tracking-wider">ESTIMATED DELIVERY TIME</span>
             <div className="flex items-center gap-2 mt-1">
-              <Clock className="w-6 h-6 text-primary animate-pulse" />
-              <span className="text-2xl font-extrabold text-white">{order.estimatedTime}</span>
+              <Clock className="w-7 h-7 text-primary animate-pulse" />
+              <span className="text-3xl font-black text-white">{order.estimatedTime}</span>
             </div>
           </div>
 
@@ -85,28 +96,53 @@ export const LiveOrderTracker: React.FC = () => {
               href={whatsappConfirmUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-initial bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center justify-center gap-1.5 transition"
+              className="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold px-3.5 py-2.5 rounded-2xl flex items-center justify-center gap-1.5 transition shadow-lg"
             >
-              <MessageCircle className="w-4 h-4" /> <span>WhatsApp Us</span>
+              <MessageCircle className="w-4 h-4" /> <span>WhatsApp Kitchen</span>
             </a>
 
             <a
               href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-              className="flex-1 sm:flex-initial bg-secondary hover:bg-secondary-light text-white text-xs font-bold px-3 py-2 rounded-xl border border-white/10 flex items-center justify-center gap-1.5 transition"
+              className="flex-1 sm:flex-initial bg-secondary hover:bg-secondary-light text-white text-xs font-extrabold px-3.5 py-2.5 rounded-2xl border border-white/10 flex items-center justify-center gap-1.5 transition"
             >
               <PhoneCall className="w-4 h-4 text-primary" /> <span>Call Kitchen</span>
             </a>
           </div>
         </div>
 
-        {/* Status Stage Stepper Timeline */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between text-xs font-bold text-gray-300 flex-wrap gap-1">
-            <span>Status: <strong className="text-primary uppercase">{order.status}</strong></span>
-            <span className="text-gray-500">Placed at {order.orderTime}</span>
+        {/* Delivery Driver Info Box - Swiggy Style */}
+        <div className="bg-secondary/90 border border-primary/30 p-3.5 rounded-2xl flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/40 flex items-center justify-center text-primary font-black text-lg">
+              <User className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-sm font-black text-white">Rajah M.</h4>
+                <span className="bg-emerald-600/20 text-emerald-400 text-[10px] font-black px-2 py-0.5 rounded-md flex items-center gap-0.5">
+                  <Star className="w-3 h-3 fill-current" /> 4.9
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-400 font-semibold">Delivery Hero • Midnight Express</p>
+            </div>
           </div>
 
-          {/* Stepper Bar — horizontally scrollable on mobile, always shows labels */}
+          <a
+            href={`tel:${settings.phone.replace(/\s+/g, '')}`}
+            className="bg-primary hover:bg-primary-hover text-white p-2.5 rounded-xl font-bold text-xs flex items-center gap-1 shadow-glow-sm transition"
+          >
+            <PhoneCall className="w-4 h-4" /> Call Driver
+          </a>
+        </div>
+
+        {/* Status Stage Stepper Timeline */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between text-xs font-extrabold text-gray-300">
+            <span>Status: <strong className="text-primary uppercase">{order.status}</strong></span>
+            <span className="text-gray-400">Placed at {order.orderTime}</span>
+          </div>
+
+          {/* Stepper Bar */}
           <div className="overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
             <div className="flex items-start gap-2 min-w-max sm:min-w-0 sm:grid sm:grid-cols-6">
               {statuses.map((st, idx) => {
@@ -114,8 +150,8 @@ export const LiveOrderTracker: React.FC = () => {
                 const isCurrent = idx === currentIndex;
 
                 return (
-                  <div key={st} className="flex flex-col items-center text-center space-y-1.5 w-14 sm:w-auto flex-shrink-0">
-                    <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border transition ${
+                  <div key={st} className="flex flex-col items-center text-center space-y-1.5 w-16 sm:w-auto flex-shrink-0">
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center border transition ${
                       isCurrent
                         ? 'bg-primary border-white text-white shadow-glow-sm animate-pulse'
                         : isPassed
@@ -124,7 +160,7 @@ export const LiveOrderTracker: React.FC = () => {
                     }`}>
                       {getStatusIcon(st)}
                     </div>
-                    <span className={`text-[9px] sm:text-[10px] font-semibold leading-tight ${
+                    <span className={`text-[10px] font-extrabold leading-tight ${
                       isPassed ? 'text-white' : 'text-gray-600'
                     }`}>
                       {st}
@@ -142,9 +178,9 @@ export const LiveOrderTracker: React.FC = () => {
             <span className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-primary shrink-0" /> Live GPS Delivery Tracking
             </span>
-            <span className="text-[11px] text-emerald-400 font-semibold animate-pulse flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
-              Driver En Route
+            <span className="text-[11px] text-emerald-400 font-extrabold animate-pulse flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
+              Driver Moving Live
             </span>
           </div>
 
@@ -154,68 +190,77 @@ export const LiveOrderTracker: React.FC = () => {
             initialLng={order.customer.location?.lng || 77.7280}
             driverLat={order.driverLocation?.lat || 8.7120}
             driverLng={order.driverLocation?.lng || 77.7310}
-            height="200px"
+            height="220px"
           />
         </div>
 
       </div>
 
       {/* Order Itemized Summary Card */}
-      <div className="glass-card p-6 rounded-3xl space-y-4">
-        <h3 className="text-sm font-bold text-white border-b border-white/10 pb-3">
-          Order Summary & Invoice
+      <div className="glass-card p-6 rounded-3xl space-y-4 border border-white/10">
+        <h3 className="text-sm font-extrabold text-white border-b border-white/10 pb-3">
+          Order Summary & Bill Details
         </h3>
 
         <div className="space-y-3">
           {order.items.map((item, i) => (
             <div key={i} className="flex items-center justify-between text-xs text-gray-300">
               <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center text-[10px]">
+                <span className="w-5 h-5 rounded-lg bg-primary/20 text-primary font-black flex items-center justify-center text-[10px]">
                   {item.quantity}x
                 </span>
-                <span className="font-semibold text-white">{item.product.name}</span>
+                <span className="font-extrabold text-white">{item.product.name}</span>
               </div>
-              <span className="font-bold text-white">
+              <span className="font-black text-white">
                 ₹{(item.product.offerPrice || item.product.price) * item.quantity}
               </span>
             </div>
           ))}
         </div>
 
-        <div className="pt-3 border-t border-white/10 space-y-1.5 text-xs text-gray-400">
+        <div className="pt-3 border-t border-white/10 space-y-1.5 text-xs text-gray-400 font-semibold">
           <div className="flex justify-between">
             <span>Subtotal</span>
             <span>₹{order.subtotal}</span>
           </div>
           {order.discount > 0 && (
-            <div className="flex justify-between text-success">
+            <div className="flex justify-between text-emerald-400 font-bold">
               <span>Discount</span>
               <span>-₹{order.discount}</span>
             </div>
           )}
           <div className="flex justify-between">
-            <span>Delivery Fee</span>
+            <span>Delivery Charge</span>
             <span>₹{order.deliveryCharge}</span>
           </div>
           <div className="flex justify-between">
             <span>GST Tax</span>
             <span>₹{order.tax}</span>
           </div>
-          <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-white/10">
+          <div className="flex justify-between text-base font-black text-white pt-2 border-t border-white/10">
             <span>Paid via {order.paymentMethod}</span>
-            <span className="text-primary text-base">₹{order.grandTotal}</span>
+            <span className="text-primary text-xl font-black">₹{order.grandTotal}</span>
           </div>
         </div>
 
         {/* Address Footer */}
-        <div className="bg-secondary/60 p-3 rounded-xl text-xs text-gray-300 space-y-1 border border-white/5">
-          <span className="font-bold text-white block">Deliver To:</span>
-          <p>{order.customer.fullName} ({order.customer.phone})</p>
+        <div className="bg-secondary/80 p-3.5 rounded-2xl text-xs text-gray-300 space-y-1 border border-white/10">
+          <span className="font-black text-white block">Deliver To:</span>
+          <p className="font-bold">{order.customer.fullName} ({order.customer.phone})</p>
           <p className="text-gray-400">{order.customer.address}, {order.customer.area} - {order.customer.pincode}</p>
         </div>
 
       </div>
 
+      {/* Thermal Receipt Modal */}
+      {showReceiptModal && (
+        <ThermalReceiptModal
+          order={order}
+          onClose={() => setShowReceiptModal(false)}
+        />
+      )}
+
     </div>
   );
 };
+

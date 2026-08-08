@@ -134,4 +134,22 @@ export interface RestaurantSettings {
 
 export type ViewMode = 'customer' | 'admin';
 export type AdminTab = 'dashboard' | 'orders' | 'kitchen' | 'products' | 'categories' | 'coupons' | 'banners' | 'customers' | 'analytics' | 'reviews' | 'settings';
-export type CustomerTab = 'home' | 'menu' | 'offers' | 'about' | 'contact' | 'orders' | 'wishlist';
+export type CustomerTab = 
+  | 'home' 
+  | 'menu' 
+  | 'offers' 
+  | 'about' 
+  | 'contact' 
+  | 'orders' 
+  | 'wishlist'
+  | 'mandi-tirunelveli'
+  | 'biryani-tirunelveli'
+  | 'midnight-food-tirunelveli'
+  | 'food-delivery-melapalayam'
+  | 'shawarma-tirunelveli'
+  | 'pizza-tirunelveli'
+  | 'fried-chicken-tirunelveli'
+  | 'faq'
+  | 'privacy-policy'
+  | 'terms';
+

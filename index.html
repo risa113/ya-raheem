@@ -4,23 +4,93 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍗</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#FF6B00" />
-    <meta name="description" content="Midnight Fuel - Tirunelveli's Premium Night Food Ordering & Catering Management Platform. Open Every Night 7:00 PM - 2:00 AM. Fresh, Hot, Fast Mandi, Biryani, Shawarma & More!" />
-    <title>Midnight Fuel 🍗 | Premium Food Ordering & Catering Management</title>
+    <meta name="theme-color" content="#FF5200" />
     
+    <!-- Primary Commercial SEO Tags -->
+    <title>Midnight Fuel | Late Night Food Delivery in Tirunelveli | Mandi & Biryani</title>
+    <meta name="description" content="Order Mandi, Biryani, Shawarma, Pizza, Fried Chicken, Burgers and more from Midnight Fuel in Melapalayam, Tirunelveli. Late-night food delivery available until 2 AM." />
+    <meta name="keywords" content="food delivery in Tirunelveli, late night food delivery Tirunelveli, midnight food delivery Tirunelveli, food delivery in Melapalayam, late night food Melapalayam, Mandi in Tirunelveli, Mandi biryani Tirunelveli, chicken Mandi Tirunelveli, beef Mandi Tirunelveli, mutton Mandi Tirunelveli, biryani delivery Tirunelveli, midnight food Tirunelveli, restaurant in Melapalayam Tirunelveli, non veg food delivery Tirunelveli" />
+    <meta name="author" content="Midnight Fuel Tirunelveli" />
+    <link rel="canonical" href="https://midnightfuel.in/" />
+
+    <!-- Open Graph / Facebook / WhatsApp SEO Tags -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:url" content="https://midnightfuel.in/" />
+    <meta property="og:title" content="Midnight Fuel | Late Night Food Delivery in Tirunelveli | Mandi & Biryani" />
+    <meta property="og:description" content="Tirunelveli's #1 Late Night Food App. Slow-cooked Arabian Mandi, spicy dum biryani, jumbo shawarmas & burgers delivered hot until 2 AM in Melapalayam." />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=80" />
+
+    <!-- Twitter Card SEO Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Midnight Fuel | Late Night Food Delivery in Tirunelveli" />
+    <meta name="twitter:description" content="Fresh Arabian Mandi & Dum Biryani delivered piping hot until 2:00 AM. 100% Halal certified in Melapalayam, Tirunelveli." />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=80" />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS for Maps -->
+    <!-- Leaflet CSS for Interactive Maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
     <!-- Official Razorpay Checkout SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Structured Data JSON-LD Schema (Google Rich Snippets) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Midnight Fuel",
+      "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=80",
+      "url": "https://midnightfuel.in",
+      "telephone": "+919080139363",
+      "priceRange": "₹₹",
+      "servesCuisine": [
+        "Arabian Mandi",
+        "Hyderabadi Dum Biryani",
+        "Shawarma",
+        "Fast Food",
+        "Late Night Food"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Bazar, Near Meera Broilers",
+        "addressLocality": "Melapalayam",
+        "addressRegion": "Tirunelveli",
+        "postalCode": "627005",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 8.7075,
+        "longitude": 77.7280
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "19:00",
+          "closes": "02:00"
+        }
+      ],
+      "hasMenu": "https://midnightfuel.in/#menu",
+      "acceptsReservations": "True"
+    }
+    </script>
   </head>
   <body class="bg-darkbg text-white font-sans antialiased selection:bg-primary selection:text-white min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+

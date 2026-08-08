@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStore } from '../context/StoreContext';
 import { Product } from '../types';
 import { 
   Flame, Clock, Heart, Plus, Minus, Search, 
-  Sparkles, CheckCircle2, AlertCircle, Eye, Zap 
+  Sparkles, CheckCircle2, AlertCircle, Eye, Zap, Star, ArrowUpDown, Tag
 } from 'lucide-react';
 
 export const MenuSection: React.FC = () => {
@@ -19,13 +19,18 @@ export const MenuSection: React.FC = () => {
     setActiveProductDetail, buyNow
   } = useStore();
 
-  // Filter logic
+  const [sortBy, setSortBy] = useState<'default' | 'rating' | 'priceLow' | 'priceHigh'>('default');
+  const [minRating, setMinRating] = useState<number>(0);
+  const [addedToast, setAddedToast] = useState<string | null>(null);
+
+  // Filter & Sort logic
   const filteredProducts = products.filter(product => {
     if (selectedCategory !== 'all' && product.category !== selectedCategory) return false;
     if (isVegOnly && !product.isVeg) return false;
     if (popularOnly && !product.popularBadge) return false;
     const finalPrice = product.offerPrice || product.price;
     if (finalPrice > priceRange) return false;
+    if (minRating > 0 && (product.rating || 4.5) < minRating) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       return product.name.toLowerCase().includes(q) || 
@@ -33,6 +38,13 @@ export const MenuSection: React.FC = () => {
              product.category.toLowerCase().includes(q);
     }
     return true;
+  }).sort((a, b) => {
+    const priceA = a.offerPrice || a.price;
+    const priceB = b.offerPrice || b.price;
+    if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
+    if (sortBy === 'priceLow') return priceA - priceB;
+    if (sortBy === 'priceHigh') return priceB - priceA;
+    return 0;
   });
 
   const getItemQuantityInCart = (productId: string) => {
@@ -40,20 +52,35 @@ export const MenuSection: React.FC = () => {
     return found ? found.quantity : 0;
   };
 
+  const handleAddToCartWithToast = (product: Product) => {
+    addToCart(product);
+    setAddedToast(product.name);
+    setTimeout(() => setAddedToast(null), 2500);
+  };
+
   return (
-    <section id="menu-section" className="py-8 sm:py-12 bg-darkbg overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+    <section id="menu-section" className="py-8 sm:py-14 bg-darkbg overflow-x-hidden relative">
+      
+      {/* Toast Notification */}
+      {addedToast && (
+        <div className="fixed bottom-20 right-6 z-50 bg-emerald-600 text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 text-xs font-extrabold animate-bounce">
+          <CheckCircle2 className="w-4 h-4 text-white" />
+          <span>Added "{addedToast}" to cart!</span>
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/30 uppercase tracking-widest">
-            <Flame className="w-3.5 h-3.5" /> Midnight Menu
+          <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-black px-3.5 py-1 rounded-full border border-primary/30 uppercase tracking-widest">
+            <Flame className="w-3.5 h-3.5" /> Midnight Food Explorer
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Explore Our <span className="text-gradient-orange">Night Feasts</span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
+            Explore <span className="text-gradient-orange">Night Feasts</span>
           </h2>
-          <p className="text-gray-400 text-sm">
-            Cooked fresh to order. Filter by category, spice level, or veg preference.
+          <p className="text-gray-400 text-xs sm:text-sm">
+            Cooked fresh to order in Melapalayam. Filter by category, spice level, or customer rating.
           </p>
         </div>
 
@@ -61,13 +88,13 @@ export const MenuSection: React.FC = () => {
         <div className="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 scrollbar-none">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition border ${
+            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold whitespace-nowrap transition border ${
               selectedCategory === 'all'
                 ? 'bg-primary text-white border-primary shadow-glow-sm'
                 : 'bg-secondary text-gray-300 border-white/10 hover:border-primary/50'
             }`}
           >
-            🍽️ All Items ({products.length})
+            🍽️ All Dishes ({products.length})
           </button>
 
           {categories.map(cat => {
@@ -77,15 +104,15 @@ export const MenuSection: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition flex items-center gap-2 border ${
+                className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold whitespace-nowrap transition flex items-center gap-2 border ${
                   isSelected
                     ? 'bg-primary text-white border-primary shadow-glow-sm'
                     : 'bg-secondary text-gray-300 border-white/10 hover:border-primary/50'
                 }`}
               >
-                <span>{cat.icon}</span>
+                <span className="text-sm">{cat.icon}</span>
                 <span>{cat.name}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'}`}>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'}`}>
                   {count}
                 </span>
               </button>
@@ -93,81 +120,101 @@ export const MenuSection: React.FC = () => {
           })}
         </div>
 
-        {/* Filter Controls Row */}
-        <div className="glass-panel p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 text-xs font-medium text-gray-300">
+        {/* Swiggy / Zomato Filter Chips & Sorting Row */}
+        <div className="glass-panel p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-gray-300">
           
-          {/* Toggles */}
-          <div className="flex flex-wrap items-center gap-4">
+          {/* Swiggy Toggles Chips */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             
-            {/* Veg Only */}
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={isVegOnly}
-                onChange={(e) => setIsVegOnly(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-700 bg-secondary text-emerald-500 focus:ring-emerald-500"
-              />
-              <span className="flex items-center gap-1">
-                <span className="w-3 h-3 rounded-sm border border-emerald-500 flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                </span>
-                Veg Only
-              </span>
-            </label>
-
-            {/* Popular Only */}
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={popularOnly}
-                onChange={(e) => setPopularOnly(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-700 bg-secondary text-primary focus:ring-primary"
-              />
-              <span className="flex items-center gap-1 text-amber-400">
-                <Sparkles className="w-3.5 h-3.5" /> Popular Specials
-              </span>
-            </label>
-
-          </div>
-
-          {/* Price Filter Slider */}
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span>Max Price: <strong className="text-primary font-bold">₹{priceRange}</strong></span>
-            <input
-              type="range"
-              min="50"
-              max="1500"
-              step="50"
-              value={priceRange}
-              onChange={(e) => setPriceRange(Number(e.target.value))}
-              className="accent-primary w-32 cursor-pointer"
-            />
-          </div>
-
-          {/* Reset Filters */}
-          {(selectedCategory !== 'all' || isVegOnly || popularOnly || priceRange < 1500 || searchQuery) && (
+            {/* Pure Veg */}
             <button
-              onClick={() => {
-                setSelectedCategory('all');
-                setIsVegOnly(false);
-                setPopularOnly(false);
-                setPriceRange(1500);
-                setSearchQuery('');
-              }}
-              className="text-primary hover:underline font-bold text-xs"
+              onClick={() => setIsVegOnly(!isVegOnly)}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
+                isVegOnly 
+                  ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400 font-extrabold'
+                  : 'bg-secondary border-white/10 text-gray-400 hover:border-white/20'
+              }`}
             >
-              Reset Filters
+              <span className="w-2.5 h-2.5 rounded-sm border border-emerald-500 flex items-center justify-center">
+                <span className="w-1 h-1 bg-emerald-500 rounded-full"></span>
+              </span>
+              <span>Pure Veg 🟢</span>
             </button>
-          )}
+
+            {/* Bestseller */}
+            <button
+              onClick={() => setPopularOnly(!popularOnly)}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
+                popularOnly 
+                  ? 'bg-amber-500/20 border-amber-500 text-amber-300 font-extrabold'
+                  : 'bg-secondary border-white/10 text-gray-400 hover:border-white/20'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Bestsellers 🔥</span>
+            </button>
+
+            {/* Rating 4.5+ */}
+            <button
+              onClick={() => setMinRating(minRating === 4.5 ? 0 : 4.5)}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition ${
+                minRating === 4.5 
+                  ? 'bg-primary/20 border-primary text-primary font-extrabold'
+                  : 'bg-secondary border-white/10 text-gray-400 hover:border-white/20'
+              }`}
+            >
+              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+              <span>Ratings 4.5+ ⭐</span>
+            </button>
+
+          </div>
+
+          {/* Sort Dropdown & Max Price */}
+          <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+            
+            {/* Sort Select */}
+            <div className="flex items-center gap-1.5">
+              <ArrowUpDown className="w-3.5 h-3.5 text-primary" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="bg-secondary text-xs text-white border border-white/10 rounded-xl px-2.5 py-1.5 focus:border-primary focus:outline-none font-semibold cursor-pointer"
+              >
+                <option value="default">Sort by: Relevance</option>
+                <option value="rating">Rating: High to Low</option>
+                <option value="priceLow">Price: Low to High</option>
+                <option value="priceHigh">Price: High to Low</option>
+              </select>
+            </div>
+
+            {/* Reset Filters */}
+            {(selectedCategory !== 'all' || isVegOnly || popularOnly || priceRange < 1500 || searchQuery || minRating > 0 || sortBy !== 'default') && (
+              <button
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setIsVegOnly(false);
+                  setPopularOnly(false);
+                  setPriceRange(1500);
+                  setSearchQuery('');
+                  setMinRating(0);
+                  setSortBy('default');
+                }}
+                className="text-primary hover:underline font-extrabold text-xs"
+              >
+                Reset All
+              </button>
+            )}
+
+          </div>
 
         </div>
 
         {/* Product Grid */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 glass-card rounded-2xl space-y-3">
-            <div className="text-4xl">🍗</div>
+          <div className="text-center py-16 glass-card rounded-3xl space-y-3">
+            <div className="text-5xl">🍗</div>
             <h3 className="text-lg font-bold text-white">No Dishes Found</h3>
-            <p className="text-gray-400 text-sm max-w-sm mx-auto">
+            <p className="text-gray-400 text-xs sm:text-sm max-w-sm mx-auto">
               Try resetting your filters or search for something else like Mandi or Biryani!
             </p>
           </div>
@@ -177,22 +224,23 @@ export const MenuSection: React.FC = () => {
               const qty = getItemQuantityInCart(product.id);
               const isWishlisted = wishlist.includes(product.id);
               const hasOffer = Boolean(product.offerPrice && product.offerPrice < product.price);
+              const discountPercent = hasOffer ? Math.round(((product.price - (product.offerPrice || product.price)) / product.price) * 100) : 0;
 
               return (
                 <div 
                   key={product.id}
-                  className="glass-card rounded-2xl overflow-hidden flex flex-col group relative"
+                  className="glass-card rounded-3xl overflow-hidden flex flex-col group relative border border-white/10 hover:border-primary/50 transition-all duration-300"
                 >
                   {/* Top Image Box */}
-                  <div className="relative h-48 sm:h-52 overflow-hidden bg-secondary">
+                  <div className="relative h-52 sm:h-56 overflow-hidden bg-secondary">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
 
-                    {/* Veg / Non-Veg Badge */}
-                    <div className="absolute top-3 left-3 bg-darkbg/90 backdrop-blur-md px-2 py-1 rounded-md flex items-center gap-1 border border-white/10 text-[10px] font-bold">
+                    {/* Veg / Non-Veg Indicator */}
+                    <div className="absolute top-3 left-3 bg-darkbg/90 backdrop-blur-md px-2.5 py-1 rounded-lg flex items-center gap-1.5 border border-white/10 text-[10px] font-black">
                       <span className={`w-3 h-3 rounded-sm border ${product.isVeg ? 'border-emerald-500' : 'border-red-500'} flex items-center justify-center`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${product.isVeg ? 'bg-emerald-500' : 'bg-red-500'}`}></span>
                       </span>
@@ -201,12 +249,19 @@ export const MenuSection: React.FC = () => {
                       </span>
                     </div>
 
-                    {/* Popular Tag */}
-                    {product.popularBadge && (
-                      <div className="absolute top-3 right-12 bg-gradient-to-r from-amber-500 to-primary text-white text-[10px] font-extrabold px-2 py-1 rounded-md shadow-lg flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" /> POPULAR
+                    {/* Discount Badge */}
+                    {hasOffer && (
+                      <div className="absolute top-3 left-24 bg-primary text-white text-[10px] font-black px-2 py-1 rounded-lg shadow-lg flex items-center gap-0.5">
+                        <Tag className="w-3 h-3" /> {discountPercent}% OFF
                       </div>
                     )}
+
+                    {/* Rating Pill - Swiggy Style */}
+                    <div className="absolute bottom-3 left-3 bg-emerald-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-xl shadow-lg flex items-center gap-1">
+                      <Star className="w-3.5 h-3.5 fill-current" />
+                      <span>{product.rating || 4.9}</span>
+                      <span className="text-[9px] opacity-85">({product.reviewsCount || 120}+)</span>
+                    </div>
 
                     {/* Wishlist Heart Button */}
                     <button
@@ -219,7 +274,7 @@ export const MenuSection: React.FC = () => {
                       <Heart className="w-4 h-4 fill-current" />
                     </button>
 
-                    {/* Quick View Button */}
+                    {/* Quick View Details Button */}
                     <button
                       onClick={() => setActiveProductDetail(product)}
                       className="absolute bottom-3 right-3 bg-darkbg/80 hover:bg-primary text-white p-2 rounded-xl backdrop-blur-md text-xs font-medium flex items-center gap-1 transition"
@@ -233,23 +288,20 @@ export const MenuSection: React.FC = () => {
                   <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                     
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <h3 
-                          onClick={() => setActiveProductDetail(product)}
-                          className="font-bold text-white text-base hover:text-primary transition cursor-pointer line-clamp-1"
-                        >
-                          {product.name}
-                        </h3>
-                      </div>
+                      <h3 
+                        onClick={() => setActiveProductDetail(product)}
+                        className="font-extrabold text-white text-base hover:text-primary transition cursor-pointer line-clamp-1"
+                      >
+                        {product.name}
+                      </h3>
 
                       <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
                         {product.description}
                       </p>
 
                       {/* Spicy Meter & Prep Time */}
-                      <div className="flex items-center justify-between pt-1 text-[11px] text-gray-400">
-                        {/* Spicy Level */}
-                        <div className="flex items-center gap-1" title={`Spicy level: ${product.spicyLevel}/3`}>
+                      <div className="flex items-center justify-between pt-1 text-[11px] text-gray-400 font-semibold">
+                        <div className="flex items-center gap-1">
                           <span>Spice:</span>
                           <span className="flex">
                             {Array.from({ length: 3 }).map((_, i) => (
@@ -261,55 +313,54 @@ export const MenuSection: React.FC = () => {
                           </span>
                         </div>
 
-                        {/* Prep Time */}
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-primary" />
+                        <div className="flex items-center gap-1 text-gray-300">
+                          <Clock className="w-3.5 h-3.5 text-primary" />
                           <span>{product.prepTime}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Footer Price & Add To Cart / Buy Now Action Buttons */}
+                    {/* Footer Price & Swiggy Add/Buy Buttons */}
                     <div className="pt-3 border-t border-white/10 flex flex-col gap-2.5">
                       <div className="flex items-center justify-between gap-2">
                         {/* Price */}
                         <div>
                           {hasOffer ? (
                             <div className="flex items-baseline gap-1.5">
-                              <span className="text-lg font-extrabold text-primary">₹{product.offerPrice}</span>
+                              <span className="text-xl font-black text-primary">₹{product.offerPrice}</span>
                               <span className="text-xs line-through text-gray-500">₹{product.price}</span>
                             </div>
                           ) : (
-                            <span className="text-lg font-extrabold text-white">₹{product.price}</span>
+                            <span className="text-xl font-black text-white">₹{product.price}</span>
                           )}
                         </div>
 
-                        {/* Add To Cart Button / Counter */}
+                        {/* Add To Cart Counter / Button */}
                         {!product.availability ? (
-                          <span className="text-[11px] text-danger font-bold bg-danger/10 px-2 py-1 rounded">
+                          <span className="text-[11px] text-danger font-extrabold bg-danger/10 px-2.5 py-1 rounded-xl">
                             Sold Out
                           </span>
                         ) : qty === 0 ? (
                           <button
-                            onClick={() => addToCart(product)}
-                            className="bg-secondary hover:bg-secondary-light text-gray-200 hover:text-white border border-white/20 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition"
+                            onClick={() => handleAddToCartWithToast(product)}
+                            className="bg-primary/20 hover:bg-primary text-primary hover:text-white border border-primary/50 px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-glow-sm"
                           >
-                            <Plus className="w-3.5 h-3.5 text-primary" /> Add to Cart
+                            <Plus className="w-4 h-4" /> ADD
                           </button>
                         ) : (
-                          <div className="flex items-center bg-secondary border border-primary/50 rounded-xl px-1 py-0.5">
+                          <div className="flex items-center bg-secondary border border-primary/60 rounded-xl px-1.5 py-0.5 shadow-glow-sm">
                             <button
                               onClick={() => updateQuantity(product.id, qty - 1)}
-                              className="w-6 h-6 rounded-lg bg-white/10 hover:bg-primary text-white flex items-center justify-center transition"
+                              className="w-6 h-6 rounded-lg bg-white/10 hover:bg-primary text-white flex items-center justify-center transition text-xs"
                             >
-                              <Minus className="w-3 h-3" />
+                              <Minus className="w-3.5 h-3.5" />
                             </button>
-                            <span className="px-2 text-xs font-extrabold text-primary">{qty}</span>
+                            <span className="px-2 text-xs font-black text-primary">{qty}</span>
                             <button
                               onClick={() => updateQuantity(product.id, qty + 1)}
-                              className="w-6 h-6 rounded-lg bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition"
+                              className="w-6 h-6 rounded-lg bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition text-xs"
                             >
-                              <Plus className="w-3 h-3" />
+                              <Plus className="w-3.5 h-3.5" />
                             </button>
                           </div>
                         )}
@@ -339,3 +390,4 @@ export const MenuSection: React.FC = () => {
     </section>
   );
 };
+
