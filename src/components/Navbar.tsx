@@ -58,51 +58,51 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-darkbg/95 backdrop-blur-xl border-b border-white/10 transition-all shadow-xl">
       {/* Top Notification Announcement Bar */}
-      <div className="bg-gradient-to-r from-primary/20 via-secondary to-primary/20 border-b border-primary/20 text-[11px] sm:text-xs py-1.5 px-3 sm:px-6 flex items-center justify-between text-gray-300 font-medium">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 relative">
+      <div className="bg-gradient-to-r from-primary/20 via-secondary to-primary/20 border-b border-primary/20 text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-6 flex items-center justify-between text-gray-300 font-medium overflow-hidden gap-2">
+        <div className="flex items-center gap-1.5 shrink min-w-0">
+          <span className="flex h-2 w-2 relative shrink-0">
             <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isRestaurantOpen ? 'bg-success' : 'bg-danger'} opacity-75`}></span>
             <span className={`relative inline-flex rounded-full h-2 w-2 ${isRestaurantOpen ? 'bg-success' : 'bg-danger'}`}></span>
           </span>
-          <span className="text-white font-bold tracking-wide">
-            {isRestaurantOpen ? '🟢 Kitchen LIVE • Delivering Hot Midnight Feasts!' : '🌙 Opens Daily 7:00 PM – 2:00 AM (Booking Open)'}
+          <span className="text-white font-bold tracking-wide truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none">
+            {isRestaurantOpen ? '🟢 Kitchen LIVE • Delivering Hot Midnight Feasts!' : '🌙 Opens 7:00 PM – 2:00 AM'}
           </span>
         </div>
 
         {/* Location & Theme Picker Header Trigger */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           
           {/* Light Mode / Dark Mode Toggle Button */}
           <button
             onClick={toggleThemeMode}
-            className="flex items-center gap-1.5 transition text-[11px] sm:text-xs font-black bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-500/40"
+            className="flex items-center gap-1 transition text-[10px] sm:text-xs font-black bg-amber-500/10 hover:bg-amber-500/20 px-2 py-0.5 sm:px-2.5 rounded-full border border-amber-500/40 shrink-0"
             title="Toggle Light or Dark Mode"
           >
             {themeMode === 'light' ? (
               <>
                 <Sun className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                <span className="font-black text-amber-700">Light Mode ☀️</span>
+                <span className="font-black text-amber-700 hidden sm:inline">Light Mode ☀️</span>
               </>
             ) : (
               <>
                 <Moon className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                <span className="font-black text-amber-300">Dark Mode 🌙</span>
+                <span className="font-black text-amber-300 hidden sm:inline">Dark Mode 🌙</span>
               </>
             )}
           </button>
 
           <button
             onClick={() => setShowLocationModal(true)}
-            className="flex items-center gap-1.5 text-primary-light hover:text-white transition text-[11px] sm:text-xs font-semibold bg-white/5 hover:bg-white/10 px-2.5 py-0.5 rounded-full border border-white/10"
+            className="flex items-center gap-1 text-primary-light hover:text-white transition text-[10px] sm:text-xs font-semibold bg-white/5 hover:bg-white/10 px-2 py-0.5 sm:px-2.5 rounded-full border border-white/10 shrink-0"
           >
             <MapPin className="w-3 h-3 text-primary shrink-0" />
-            <span className="truncate max-w-[120px] sm:max-w-[200px]">{selectedAddress.split(',')[0]}</span>
-            <ChevronDown className="w-3 h-3 text-gray-400" />
+            <span className="truncate max-w-[70px] xs:max-w-[110px] sm:max-w-[200px]">{selectedAddress.split(',')[0]}</span>
+            <ChevronDown className="w-3 h-3 text-gray-400 shrink-0" />
           </button>
 
           <a 
             href={`tel:${settings.phone.replace(/\s+/g, '')}`} 
-            className="hidden lg:flex items-center gap-1 hover:text-white transition text-xs font-medium"
+            className="hidden lg:flex items-center gap-1 hover:text-white transition text-xs font-medium shrink-0"
           >
             <PhoneCall className="w-3.5 h-3.5 text-primary" /> {settings.phone}
           </a>
@@ -110,7 +110,7 @@ export const Navbar: React.FC = () => {
           {/* Admin Switch */}
           <button
             onClick={() => setViewMode(viewMode === 'customer' ? 'admin' : 'customer')}
-            className="flex items-center gap-1 bg-primary/20 hover:bg-primary text-primary hover:text-white px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold transition border border-primary/40 whitespace-nowrap"
+            className="hidden sm:flex items-center gap-1 bg-primary/20 hover:bg-primary text-primary hover:text-white px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold transition border border-primary/40 whitespace-nowrap shrink-0"
           >
             <Shield className="w-3 h-3" />
             <span>{viewMode === 'customer' ? 'Admin Portal' : 'Customer View'}</span>
