@@ -278,14 +278,29 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('mf_admin_tab', tab);
   };
 
+  // Safe localStorage helper to prevent syntax crashes from corrupted state
+  const safeParseJSON = <T,>(key: string, fallback: T): T => {
+    if (typeof window === 'undefined') return fallback;
+    try {
+      const saved = localStorage.getItem(key);
+      if (!saved) return fallback;
+      return JSON.parse(saved) as T;
+    } catch (err) {
+      console.warn(`Failed to parse localStorage key ${key}, resetting fallback:`, err);
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {}
+      return fallback;
+    }
+  };
+
   const viewMode = viewModeState;
   const customerTab = customerTabState;
   const adminTab = adminTabState;
 
   // Products & Categories state
   const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('mf_products');
-    return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+    return safeParseJSON('mf_products', INITIAL_PRODUCTS);
   });
   const [categories] = useState<Category[]>(INITIAL_CATEGORIES);
 
@@ -301,8 +316,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Cart state
   const [cart, setCart] = useState<CartItem[]>(() => {
-    const saved = localStorage.getItem('mf_cart');
-    return saved ? JSON.parse(saved) : [];
+    return safeParseJSON('mf_cart', []);
   });
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
@@ -318,8 +332,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Wishlist
   const [wishlist, setWishlist] = useState<string[]>(() => {
-    const saved = localStorage.getItem('mf_wishlist');
-    return saved ? JSON.parse(saved) : [];
+    return safeParseJSON('mf_wishlist', []);
   });
 
   // User auth state
@@ -334,8 +347,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Orders state
   const [orders, setOrders] = useState<Order[]>(() => {
-    const saved = localStorage.getItem('mf_orders');
-    if (saved) return JSON.parse(saved);
+    const parsed = safeParseJSON<Order[] | null>('mf_orders', null);
+    if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed;
     // Initial sample order
     return [
       {
