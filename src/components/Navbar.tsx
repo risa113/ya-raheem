@@ -246,7 +246,7 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* Header Action Buttons */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
             
             {/* Live Tracking Pill */}
             {activeOrdersCount > 0 && (
@@ -256,22 +256,22 @@ export const Navbar: React.FC = () => {
                   if (active) setActiveOrder(active);
                   setCustomerTab('orders');
                 }}
-                className="flex items-center gap-1.5 bg-primary/20 text-primary border border-primary/50 px-3 py-1.5 rounded-full text-xs font-extrabold animate-pulse"
+                className="flex items-center gap-1 bg-primary/20 text-primary border border-primary/50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-extrabold animate-pulse shrink-0"
               >
-                <Clock className="w-4 h-4 text-primary" />
-                <span className="hidden sm:inline">Track Order ({activeOrdersCount})</span>
+                <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                <span className="hidden sm:inline">Track ({activeOrdersCount})</span>
               </button>
             )}
 
             {/* Wishlist Button */}
             <button
               onClick={() => setCustomerTab('wishlist')}
-              className="relative p-2 text-gray-300 hover:text-primary transition rounded-full hover:bg-secondary/80"
+              className="relative p-1.5 sm:p-2 text-gray-300 hover:text-primary transition rounded-full hover:bg-secondary/80 shrink-0"
               title="Wishlist"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] font-black w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
@@ -279,10 +279,10 @@ export const Navbar: React.FC = () => {
 
             {/* User Account / Profile */}
             {isLoggedIn ? (
-              <div className="relative" ref={profileMenuRef}>
+              <div className="relative shrink-0" ref={profileMenuRef}>
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="flex items-center gap-1.5 bg-secondary hover:bg-secondary-light border border-white/10 px-3 py-1.5 rounded-2xl text-xs font-semibold text-white transition"
+                  className="flex items-center gap-1 bg-secondary hover:bg-secondary-light border border-white/10 p-1.5 sm:px-3 sm:py-1.5 rounded-2xl text-xs font-semibold text-white transition"
                 >
                   <div className="w-5 h-5 rounded-full bg-primary/30 text-primary flex items-center justify-center font-bold text-xs">
                     {userName.charAt(0).toUpperCase()}
@@ -322,28 +322,26 @@ export const Navbar: React.FC = () => {
             ) : (
               <button
                 onClick={() => {
-                  setActiveOrder(null);
-                  setCustomerTab('orders');
+                  setCustomerTab('account');
                 }}
-                className="flex items-center gap-1.5 bg-secondary hover:bg-secondary-light text-gray-200 border border-white/10 px-3 py-1.5 rounded-2xl text-xs font-semibold transition"
+                className="flex items-center gap-1 bg-secondary hover:bg-secondary-light text-gray-200 border border-white/10 p-1.5 sm:px-3 sm:py-1.5 rounded-2xl text-xs font-semibold transition shrink-0"
               >
                 <User className="w-4 h-4 text-primary" />
                 <span className="hidden sm:inline text-xs">Account</span>
               </button>
             )}
 
-            {/* Cart Button with Total Price */}
+            {/* Cart Button with Total Price - 100% Mobile Visible */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-500 hover:to-amber-500 text-black px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-black flex items-center gap-2 shadow-glow-gold hover:scale-105 transition transform"
+              className="relative bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:from-yellow-500 hover:to-amber-500 text-black px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-2xl text-xs font-black flex items-center gap-1.5 shadow-glow-gold hover:scale-105 transition transform shrink-0"
             >
               <ShoppingBag className="w-4 h-4 text-black" />
-              <span>Cart</span>
+              <span className="hidden xs:inline">Cart</span>
               {totalCartCount > 0 && (
-                <div className="flex items-center gap-1 bg-black/20 text-black px-2 py-0.5 rounded-full text-[10px] font-black border border-black/10">
+                <div className="flex items-center gap-1 bg-black text-amber-400 px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] font-black">
                   <span>{totalCartCount}</span>
-                  <span>•</span>
-                  <span>₹{cartSubtotal}</span>
+                  <span className="hidden sm:inline">• ₹{cartSubtotal}</span>
                 </div>
               )}
             </button>
