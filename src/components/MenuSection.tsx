@@ -110,7 +110,11 @@ export const MenuSection: React.FC = () => {
                     : 'bg-secondary text-gray-300 border-white/10 hover:border-amber-500/50'
                 }`}
               >
-                <span className="text-sm">{cat.icon}</span>
+                {cat.image ? (
+                  <img src={cat.image} alt={cat.name} className="w-5 h-5 rounded-full object-cover border border-amber-500/50 shrink-0" />
+                ) : (
+                  <span className="text-sm">{cat.icon}</span>
+                )}
                 <span>{cat.name}</span>
                 <span className={`text-[10px] px-2 py-0.5 rounded-full ${isSelected ? 'bg-black/20 text-black font-extrabold' : 'bg-white/10 text-gray-400'}`}>
                   {count}

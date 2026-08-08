@@ -79,13 +79,21 @@ export const Hero: React.FC = () => {
                 }}
                 className="flex flex-col items-center gap-2 group shrink-0"
               >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-secondary-light to-secondary p-1 border border-amber-500/30 group-hover:border-primary group-hover:shadow-glow-sm transition transform group-hover:scale-105 flex items-center justify-center relative">
-                  <span className="text-2xl sm:text-3xl">{cat.icon}</span>
-                  <span className="absolute -bottom-1 bg-primary text-white text-[9px] font-black px-1.5 py-0.2 rounded-full opacity-0 group-hover:opacity-100 transition">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-secondary overflow-hidden p-[2px] border-2 border-amber-500/40 group-hover:border-amber-400 group-hover:shadow-glow-gold transition-all duration-300 transform group-hover:scale-110 relative shrink-0 flex items-center justify-center">
+                  {cat.image ? (
+                    <img 
+                      src={cat.image} 
+                      alt={cat.name} 
+                      className="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-500" 
+                    />
+                  ) : (
+                    <span className="text-2xl sm:text-3xl">{cat.icon}</span>
+                  )}
+                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-300 to-amber-500 text-black text-[8px] font-black px-1.5 py-0.2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap z-10">
                     ORDER
                   </span>
                 </div>
-                <span className="text-xs font-bold text-gray-300 group-hover:text-white transition">
+                <span className="text-xs font-extrabold text-gray-300 group-hover:text-amber-400 transition">
                   {cat.name}
                 </span>
               </button>

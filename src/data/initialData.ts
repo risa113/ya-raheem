@@ -1,17 +1,17 @@
 import { Product, Category, Coupon, Banner, Review, RestaurantSettings } from '../types';
 
 export const INITIAL_CATEGORIES: Category[] = [
-  { id: 'mandi', name: 'Mandi', icon: '🍗', description: 'Traditional Arabian slow-cooked flavorful rice with succulent meat' },
-  { id: 'biryani', name: 'Biryani', icon: '🍲', description: 'Aromatic Dum Biryani cooked with secret Tirunelveli spices' },
-  { id: 'chicken', name: 'Chicken Dishes', icon: '🍖', description: 'Fried, roasted, and rich gravy chicken specials' },
-  { id: 'shawarma', name: 'Shawarma & Rolls', icon: '🌯', description: 'Juicy layered shawarma wrapped in hot rumali parotta' },
-  { id: 'burger', name: 'Burgers', icon: '🍔', description: 'Loaded night-owl burger towers with melted cheese' },
-  { id: 'pizza', name: 'Pizza', icon: '🍕', description: 'Fresh wood-fired sourdough pizzas loaded with toppings' },
-  { id: 'parotta', name: 'Parotta & Gravies', icon: '🥞', description: 'Flaky layered Kerala parotta served with spicy rich curry' },
-  { id: 'noodles', name: 'Noodles & Rice', icon: '🍜', description: 'Wok-tossed spicy Indo-Chinese noodles and fried rice' },
-  { id: 'sandwich', name: 'Sandwich', icon: '🥪', description: 'Toasted multi-layer midnight snack sandwiches' },
-  { id: 'combo', name: 'Combos & Buckets', icon: '🍱', description: 'Value feast boxes for your midnight gang' },
-  { id: 'drinks', name: 'Drinks & Desserts', icon: '🥤', description: 'Chilled sodas, shakes, and traditional sweet ends' },
+  { id: 'mandi', name: 'Mandi', icon: '🍗', image: 'https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=400&q=80', description: 'Traditional Arabian slow-cooked flavorful rice with succulent meat' },
+  { id: 'biryani', name: 'Biryani', icon: '🍲', image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80', description: 'Aromatic Dum Biryani cooked with secret Tirunelveli spices' },
+  { id: 'chicken', name: 'Chicken Dishes', icon: '🍖', image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80', description: 'Fried, roasted, and rich gravy chicken specials' },
+  { id: 'shawarma', name: 'Shawarma & Rolls', icon: '🌯', image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=400&q=80', description: 'Juicy layered shawarma wrapped in hot rumali parotta' },
+  { id: 'burger', name: 'Burgers', icon: '🍔', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80', description: 'Loaded night-owl burger towers with melted cheese' },
+  { id: 'pizza', name: 'Pizza', icon: '🍕', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', description: 'Fresh wood-fired sourdough pizzas loaded with toppings' },
+  { id: 'parotta', name: 'Parotta & Gravies', icon: '🥞', image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80', description: 'Flaky layered Kerala parotta served with spicy rich curry' },
+  { id: 'noodles', name: 'Noodles & Rice', icon: '🍜', image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&q=80', description: 'Wok-tossed spicy Indo-Chinese noodles and fried rice' },
+  { id: 'sandwich', name: 'Sandwich', icon: '🥪', image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80', description: 'Toasted multi-layer midnight snack sandwiches' },
+  { id: 'combo', name: 'Combos & Buckets', icon: '🍱', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80', description: 'Value feast boxes for your midnight gang' },
+  { id: 'drinks', name: 'Drinks & Desserts', icon: '🥤', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=400&q=80', description: 'Chilled sodas, shakes, and traditional sweet ends' },
 ];
 
 export const INITIAL_PRODUCTS: Product[] = [
