@@ -203,92 +203,99 @@ const MainAppContent: React.FC = () => {
       {/* Mobile Sticky Bottom Navigation */}
       <MobileBottomNav />
 
-      {/* Advanced SEO Footer with Internal Keyword Architecture */}
-      <footer className="bg-secondary/95 border-t border-white/10 py-12 px-4 text-xs text-gray-400 space-y-8 pb-28 md:pb-12">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 text-left">
+      {/* Premium Justified & Aligned Footer */}
+      <footer className="bg-secondary/95 border-t border-white/10 py-12 px-4 sm:px-8 text-xs text-gray-400 space-y-10 pb-28 md:pb-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 text-left items-start">
           
           {/* Col 1: Brand Info */}
-          <div className="space-y-3 lg:col-span-2">
+          <div className="space-y-4">
             <div 
               onClick={() => setCustomerTab('home')}
-              className="flex items-center gap-2 cursor-pointer group"
+              className="flex items-center gap-2.5 cursor-pointer group"
             >
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center text-white">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center text-white shadow-glow-sm">
                 <Flame className="w-5 h-5" />
               </div>
-              <span className="font-black text-lg text-white">MIDNIGHT<span className="text-primary">FUEL</span></span>
+              <span className="font-black text-xl text-white tracking-tight">MIDNIGHT<span className="text-primary">FUEL</span></span>
             </div>
-            <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
-              Tirunelveli's premier late night food delivery hub operating 7:00 PM – 2:00 AM. Serving authentic slow-cooked Arabian Mandi, Dum Biryani, Shawarma, and Fast Food in Melapalayam.
+            <p className="text-gray-400 text-xs leading-relaxed text-justify">
+              Tirunelveli's premier late night food delivery hub operating daily 7:00 PM – 2:00 AM. Serving slow-cooked Arabian Mandi, Hyderabadi Dum Biryani, Gourmet Shawarmas, and Crisp Fast Food across Melapalayam.
             </p>
-            <p className="text-[11px] text-gray-500">
-              📍 Bazar, Near Meera Broilers, Melapalayam, Tirunelveli – 627005 | 📞 +91 90801 39363
-            </p>
+            <div className="text-[11px] text-gray-400 space-y-1 pt-1 border-t border-white/5">
+              <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-primary shrink-0" /> Bazar, Melapalayam, Tirunelveli - 627005</p>
+              <p className="flex items-center gap-1.5"><PhoneCall className="w-3.5 h-3.5 text-primary shrink-0" /> +91 90801 39363</p>
+            </div>
           </div>
 
           {/* Col 2: Priority SEO Landing Pages */}
-          <div className="space-y-2">
-            <h4 className="font-extrabold text-white text-xs uppercase tracking-wider text-primary">Top SEO Destinations</h4>
-            <ul className="space-y-1.5 text-[11px]">
+          <div className="space-y-3">
+            <h4 className="font-extrabold text-white text-xs uppercase tracking-widest text-primary flex items-center gap-1.5">
+              <Flame className="w-3.5 h-3.5 text-primary" /> Top Destinations
+            </h4>
+            <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => setCustomerTab('mandi-tirunelveli')} className="hover:text-primary transition">
-                  Mandi in Tirunelveli
+                <button onClick={() => setCustomerTab('mandi-tirunelveli')} className="hover:text-primary transition flex items-center gap-1.5 text-left">
+                  <span>🍗</span> Mandi in Tirunelveli
                 </button>
               </li>
               <li>
-                <button onClick={() => setCustomerTab('biryani-tirunelveli')} className="hover:text-primary transition">
-                  Biryani Delivery Tirunelveli
+                <button onClick={() => setCustomerTab('biryani-tirunelveli')} className="hover:text-primary transition flex items-center gap-1.5 text-left">
+                  <span>🍲</span> Biryani Delivery Tirunelveli
                 </button>
               </li>
               <li>
-                <button onClick={() => setCustomerTab('midnight-food-tirunelveli')} className="hover:text-primary transition">
-                  Late Night Food Tirunelveli
+                <button onClick={() => setCustomerTab('midnight-food-tirunelveli')} className="hover:text-primary transition flex items-center gap-1.5 text-left">
+                  <span>🌙</span> Late Night Food Delivery
                 </button>
               </li>
               <li>
-                <button onClick={() => setCustomerTab('food-delivery-melapalayam')} className="hover:text-primary transition">
-                  Food Delivery Melapalayam 627005
+                <button onClick={() => setCustomerTab('food-delivery-melapalayam')} className="hover:text-primary transition flex items-center gap-1.5 text-left">
+                  <span>📍</span> Food Delivery Melapalayam
                 </button>
               </li>
               <li>
-                <button onClick={() => setCustomerTab('shawarma-tirunelveli')} className="hover:text-primary transition">
-                  Shawarma Delivery Tirunelveli
+                <button onClick={() => setCustomerTab('shawarma-tirunelveli')} className="hover:text-primary transition flex items-center gap-1.5 text-left">
+                  <span>🌯</span> Shawarma Delivery
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Menu Categories */}
-          <div className="space-y-2">
-            <h4 className="font-extrabold text-white text-xs uppercase tracking-wider text-primary">Popular Cuisines</h4>
-            <ul className="space-y-1.5 text-[11px]">
-              <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition">Chicken Mandi Tirunelveli</button></li>
-              <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition">Mutton Mandi Tirunelveli</button></li>
-              <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition">Beef Biryani Melapalayam</button></li>
-              <li><button onClick={() => setCustomerTab('pizza-tirunelveli')} className="hover:text-primary transition">Late Night Pizza</button></li>
-              <li><button onClick={() => setCustomerTab('fried-chicken-tirunelveli')} className="hover:text-primary transition">Fried Chicken & Burgers</button></li>
+          {/* Col 3: Popular Cuisines */}
+          <div className="space-y-3">
+            <h4 className="font-extrabold text-white text-xs uppercase tracking-widest text-primary flex items-center gap-1.5">
+              <Star className="w-3.5 h-3.5 text-primary" /> Popular Cuisines
+            </h4>
+            <ul className="space-y-2 text-xs">
+              <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition text-left">Chicken Mandi Tirunelveli</button></li>
+              <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition text-left">Royal Mutton Mandi</button></li>
+              <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition text-left">Spicy Dum Beef Biryani</button></li>
+              <li><button onClick={() => setCustomerTab('pizza-tirunelveli')} className="hover:text-primary transition text-left">Wood-Fired BBQ Pizza</button></li>
+              <li><button onClick={() => setCustomerTab('fried-chicken-tirunelveli')} className="hover:text-primary transition text-left">Crispy Burgers & Fried Chicken</button></li>
             </ul>
           </div>
 
-          {/* Col 4: Support & Legal */}
-          <div className="space-y-2">
-            <h4 className="font-extrabold text-white text-xs uppercase tracking-wider text-primary">Customer Support</h4>
-            <ul className="space-y-1.5 text-[11px]">
-              <li><button onClick={() => setCustomerTab('faq')} className="hover:text-primary transition">Frequently Asked Questions (FAQ)</button></li>
-              <li><button onClick={() => setCustomerTab('contact')} className="hover:text-primary transition">Contact Kitchen & Map</button></li>
-              <li><button onClick={() => setCustomerTab('offers')} className="hover:text-primary transition">Midnight Coupons & Offers</button></li>
-              <li><button onClick={() => setCustomerTab('sitemap')} className="hover:text-primary transition">HTML Sitemap Index</button></li>
-              <li><button onClick={() => setCustomerTab('privacy-policy')} className="hover:text-primary transition">Privacy Policy</button></li>
-              <li><button onClick={() => setCustomerTab('terms')} className="hover:text-primary transition">Terms & Conditions</button></li>
+          {/* Col 4: Support & Navigation */}
+          <div className="space-y-3">
+            <h4 className="font-extrabold text-white text-xs uppercase tracking-widest text-primary flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Customer Support
+            </h4>
+            <ul className="space-y-2 text-xs">
+              <li><button onClick={() => setCustomerTab('faq')} className="hover:text-primary transition text-left">Frequently Asked Questions (FAQ)</button></li>
+              <li><button onClick={() => setCustomerTab('contact')} className="hover:text-primary transition text-left">Contact Kitchen & Map Location</button></li>
+              <li><button onClick={() => setCustomerTab('offers')} className="hover:text-primary transition text-left">Gold Coupons & Offers</button></li>
+              <li><button onClick={() => setCustomerTab('account')} className="hover:text-primary transition text-left">My User Account & Orders</button></li>
+              <li><button onClick={() => setCustomerTab('privacy-policy')} className="hover:text-primary transition text-left">Privacy Policy</button></li>
+              <li><button onClick={() => setCustomerTab('terms')} className="hover:text-primary transition text-left">Terms & Conditions</button></li>
             </ul>
           </div>
 
         </div>
 
         {/* Bottom Rights Bar */}
-        <div className="max-w-7xl mx-auto border-t border-white/10 pt-6 text-center text-[11px] text-gray-500 space-y-2">
-          <p>© 2026 Midnight Fuel. All rights reserved. 100% Halal Certified Preparation.</p>
-          <p>Delivering late-night food to Melapalayam, Palayamkottai, Vannarpettai, Tirunelveli Town & High Ground.</p>
+        <div className="max-w-7xl mx-auto border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
+          <p className="text-center sm:text-left">© 2026 Midnight Fuel. All rights reserved. 100% Halal Certified Preparation.</p>
+          <p className="text-center sm:text-right text-gray-400 font-medium">Delivering to Melapalayam, Palayamkottai, Vannarpettai, Tirunelveli Town & High Ground.</p>
         </div>
       </footer>
     </div>

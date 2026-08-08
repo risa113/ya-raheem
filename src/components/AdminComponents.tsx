@@ -13,7 +13,7 @@ import {
 // Dedicated Admin Login Modal
 export const AdminLoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const { loginUser } = useStore();
-  const [identifier, setIdentifier] = useState<string>('8608724931');
+  const [identifier, setIdentifier] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
