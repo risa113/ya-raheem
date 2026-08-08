@@ -244,11 +244,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const setCustomerTab = (tab: CustomerTab) => {
     setCustomerTabState(tab);
     if (typeof window !== 'undefined') {
-      if (tab === 'home') {
-        window.history.pushState(null, '', window.location.pathname + window.location.search);
-      } else {
-        window.location.hash = `#${tab}`;
-      }
+      try {
+        const targetHash = tab === 'home' ? '' : `#${tab}`;
+        if (window.location.hash !== targetHash) {
+          const newUrl = tab === 'home' 
+            ? window.location.pathname + window.location.search 
+            : `${window.location.pathname}${window.location.search}#${tab}`;
+          window.history.pushState(null, '', newUrl);
+        }
+      } catch (e) {}
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };

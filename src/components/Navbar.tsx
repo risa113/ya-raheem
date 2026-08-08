@@ -445,11 +445,11 @@ export const MobileBottomNav: React.FC = () => {
   const activeOrdersCount = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-secondary/95 backdrop-blur-xl border-t border-white/10 px-2 py-1.5 flex items-center justify-around shadow-2xl">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-secondary/95 backdrop-blur-xl border-t border-white/10 px-2 py-1.5 flex items-center justify-around shadow-2xl touch-manipulation select-none">
       <button
         onClick={() => setCustomerTab('home')}
-        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'home' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition active:scale-95 touch-manipulation ${
+          customerTab === 'home' ? 'text-primary font-bold scale-105' : 'text-gray-400'
         }`}
       >
         <Flame className="w-5 h-5" />
@@ -458,8 +458,8 @@ export const MobileBottomNav: React.FC = () => {
 
       <button
         onClick={() => setCustomerTab('menu')}
-        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'menu' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition active:scale-95 touch-manipulation ${
+          customerTab === 'menu' ? 'text-primary font-bold scale-105' : 'text-gray-400'
         }`}
       >
         <Search className="w-5 h-5" />
@@ -468,8 +468,8 @@ export const MobileBottomNav: React.FC = () => {
 
       <button
         onClick={() => setCustomerTab('offers')}
-        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'offers' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition active:scale-95 touch-manipulation ${
+          customerTab === 'offers' ? 'text-primary font-bold scale-105' : 'text-gray-400'
         }`}
       >
         <Sparkles className="w-5 h-5 text-amber-400" />
@@ -478,8 +478,8 @@ export const MobileBottomNav: React.FC = () => {
 
       <button
         onClick={() => setCustomerTab('orders')}
-        className={`relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'orders' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+        className={`relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition active:scale-95 touch-manipulation ${
+          customerTab === 'orders' ? 'text-primary font-bold scale-105' : 'text-gray-400'
         }`}
       >
         <Clock className="w-5 h-5" />
@@ -493,7 +493,7 @@ export const MobileBottomNav: React.FC = () => {
 
       <button
         onClick={() => setIsCartOpen(true)}
-        className="relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-gray-400 hover:text-gray-200 transition"
+        className="relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-gray-400 transition active:scale-95 touch-manipulation"
       >
         <ShoppingBag className="w-5 h-5 text-primary" />
         <span className="text-[10px]">Cart</span>
@@ -506,8 +506,8 @@ export const MobileBottomNav: React.FC = () => {
 
       <button
         onClick={() => setCustomerTab('account')}
-        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'account' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition active:scale-95 touch-manipulation ${
+          customerTab === 'account' ? 'text-primary font-bold scale-105' : 'text-gray-400'
         }`}
       >
         <User className="w-5 h-5" />
