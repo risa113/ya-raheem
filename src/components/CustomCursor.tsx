@@ -3,10 +3,12 @@ import React, { useEffect, useState, useRef } from 'react';
 export const CustomCursor: React.FC = () => {
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: -100, y: -100 });
   const [trailingPosition, setTrailingPosition] = useState<{ x: number; y: number }>({ x: -100, y: -100 });
+  const [foodPosition, setFoodPosition] = useState<{ x: number; y: number }>({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+  const [foodIcon, setFoodIcon] = useState<string>('🍗');
 
   const requestRef = useRef<number | null>(null);
 
@@ -21,13 +23,28 @@ export const CustomCursor: React.FC = () => {
       setPosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
 
-      // Check if mouse is hovering over an interactive element
+      // Check if mouse is hovering over an interactive element or food category
       const target = e.target as HTMLElement | null;
       if (target) {
         const isInteractive = Boolean(
           target.closest('button, a, input, select, textarea, [role="button"], .glass-card, .cursor-pointer, [onClick]')
         );
         setIsHovered(isInteractive);
+
+        // Detect food category context from inner text or title
+        const textContent = target.innerText?.toLowerCase() || '';
+        if (textContent.includes('biryani')) setFoodIcon('🍲');
+        else if (textContent.includes('mandi')) setFoodIcon('🍗');
+        else if (textContent.includes('shawarma') || textContent.includes('roll')) setFoodIcon('🌯');
+        else if (textContent.includes('burger')) setFoodIcon('🍔');
+        else if (textContent.includes('pizza')) setFoodIcon('🍕');
+        else if (textContent.includes('parotta') || textContent.includes('gravy')) setFoodIcon('🥞');
+        else if (textContent.includes('noodle') || textContent.includes('rice')) setFoodIcon('🍜');
+        else if (textContent.includes('sandwich')) setFoodIcon('🥪');
+        else if (textContent.includes('combo') || textContent.includes('bucket')) setFoodIcon('🍱');
+        else if (textContent.includes('drink') || textContent.includes('mojito') || textContent.includes('dessert')) setFoodIcon('🥤');
+        else if (isInteractive) setFoodIcon('🔥');
+        else setFoodIcon('🍗');
       }
     };
 
@@ -51,7 +68,7 @@ export const CustomCursor: React.FC = () => {
     };
   }, [isVisible]);
 
-  // Smooth lerp trailing animation for the 24K Gold aura ring
+  // Smooth lerp trailing animation for the 24K Gold aura ring & food floating icon
   useEffect(() => {
     if (isTouchDevice) return;
 
@@ -64,6 +81,16 @@ export const CustomCursor: React.FC = () => {
           y: prev.y + dy * 0.22,
         };
       });
+
+      setFoodPosition(prev => {
+        const dx = position.x - prev.x;
+        const dy = position.y - prev.y;
+        return {
+          x: prev.x + dx * 0.12,
+          y: prev.y + dy * 0.12,
+        };
+      });
+
       requestRef.current = requestAnimationFrame(animateTrailing);
     };
 
@@ -95,7 +122,7 @@ export const CustomCursor: React.FC = () => {
       <div
         className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full border-2 transition-all duration-300 ease-out ${
           isHovered
-            ? 'w-14 h-14 border-amber-300 bg-amber-400/15 shadow-[0_0_30px_rgba(255,215,0,0.65)] scale-110'
+            ? 'w-14 h-14 border-amber-400 bg-amber-400/20 shadow-[0_0_30px_rgba(255,215,0,0.65)] scale-110'
             : isClicked
             ? 'w-8 h-8 border-yellow-300 bg-yellow-400/30 scale-90'
             : 'w-10 h-10 border-amber-400/75 bg-amber-400/5 shadow-[0_0_20px_rgba(255,215,0,0.4)]'
@@ -106,6 +133,21 @@ export const CustomCursor: React.FC = () => {
           }px, 0)`,
         }}
       />
+
+      {/* Floating Gourmet Food Avatar Icon next to Cursor */}
+      <div
+        className={`fixed top-0 left-0 pointer-events-none z-[10000] text-xl select-none transition-transform duration-200 filter drop-shadow-[0_4px_10px_rgba(255,215,0,0.8)] ${
+          isHovered ? 'scale-125' : 'scale-100'
+        }`}
+        style={{
+          transform: `translate3d(${foodPosition.x + 18}px, ${foodPosition.y + 14}px, 0) ${
+            isHovered ? 'scale(1.35)' : 'scale(1)'
+          }`,
+        }}
+      >
+        {foodIcon}
+      </div>
     </>
   );
 };
+
