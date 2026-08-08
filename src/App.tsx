@@ -19,6 +19,7 @@ import {
   AdminLayout, AdminDashboardView, AdminOrdersView, 
   AdminKitchenView, AdminProductsView, AdminCategoriesView, AdminSettingsView, AdminCustomersView 
 } from './components/AdminComponents';
+import { CustomCursor } from './components/CustomCursor';
 import { Flame, MapPin, PhoneCall, Clock, ShieldCheck, ExternalLink, Star } from 'lucide-react';
 
 const HomepageSeoContent: React.FC = () => {
@@ -122,6 +123,9 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-darkbg text-white font-sans selection:bg-primary selection:text-white">
+      {/* 24K Gold Ultra-Responsive Interactive Custom Cursor */}
+      <CustomCursor />
+
       {/* Sticky Header */}
       <Navbar />
 
