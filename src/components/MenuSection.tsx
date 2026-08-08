@@ -85,7 +85,7 @@ export const MenuSection: React.FC = () => {
         </div>
 
         {/* Category Horizontal Filter Bar */}
-        <div className="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 scrollbar-none">
+        <div className="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 no-scrollbar touch-pan-x snap-x scroll-smooth">
           <button
             onClick={() => setSelectedCategory('all')}
             className={`px-5 py-2.5 rounded-2xl text-xs font-black whitespace-nowrap transition border ${

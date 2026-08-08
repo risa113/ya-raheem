@@ -445,7 +445,7 @@ export const MobileBottomNav: React.FC = () => {
   const activeOrdersCount = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-secondary/95 backdrop-blur-xl border-t border-white/10 px-2 py-1.5 flex items-center justify-around shadow-2xl touch-manipulation select-none">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-secondary/95 backdrop-blur-xl border-t border-white/10 px-2 py-1.5 pb-safe flex items-center justify-around shadow-2xl touch-manipulation select-none">
       <button
         onClick={() => setCustomerTab('home')}
         className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition active:scale-95 touch-manipulation ${

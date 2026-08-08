@@ -65,6 +65,21 @@
   background: #FFD700;
 }
 
+/* Hide scrollbars for ultra-clean mobile swipe bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* iOS Safe Area Bottom Padding */
+.pb-safe {
+  padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
+}
+
 /* Glassmorphism utility classes */
 .glass-panel {
   background: rgba(10, 10, 10, 0.92);
