@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- 1. Primary Homepage -->
+  <url>
+    <loc>https://midnightfuel.in/</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&amp;fit=crop&amp;w=1200&amp;q=80</image:loc>
+      <image:title>MidnightFuelss Arabian Mandi &amp; Dum Biryani Tirunelveli</image:title>
+    </image:image>
+  </url>
+
+  <!-- 2. Full Gourmet Food Menu -->
+  <url>
+    <loc>https://midnightfuel.in/#menu</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- 3. Mandi in Tirunelveli Commercial SEO Landing Page -->
+  <url>
+    <loc>https://midnightfuel.in/#mandi-tirunelveli</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Best Chicken Mandi in Tirunelveli Melapalayam</image:title>
+    </image:image>
+  </url>
+
+  <!-- 4. Biryani Delivery Tirunelveli Commercial Page -->
+  <url>
+    <loc>https://midnightfuel.in/#biryani-tirunelveli</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&amp;fit=crop&amp;w=800&amp;q=80</image:loc>
+      <image:title>Hyderabadi Dum Biryani Melapalayam Tirunelveli</image:title>
+    </image:image>
+  </url>
+
+  <!-- 5. Late Night Food Delivery Tirunelveli -->
+  <url>
+    <loc>https://midnightfuel.in/#midnight-food-tirunelveli</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <!-- 6. Food Delivery Melapalayam Location Page -->
+  <url>
+    <loc>https://midnightfuel.in/#food-delivery-melapalayam</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <!-- 7. Shawarma Delivery Tirunelveli -->
+  <url>
+    <loc>https://midnightfuel.in/#shawarma-tirunelveli</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 8. Pizza Tirunelveli -->
+  <url>
+    <loc>https://midnightfuel.in/#pizza-tirunelveli</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 9. Fried Chicken & Burgers Tirunelveli -->
+  <url>
+    <loc>https://midnightfuel.in/#fried-chicken-tirunelveli</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 10. Offers & Coupons -->
+  <url>
+    <loc>https://midnightfuel.in/#offers</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- 11. FAQ Page -->
+  <url>
+    <loc>https://midnightfuel.in/#faq</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- 12. About Us -->
+  <url>
+    <loc>https://midnightfuel.in/#about</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- 13. Contact Kitchen & Location Map -->
+  <url>
+    <loc>https://midnightfuel.in/#contact</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- 14. HTML Sitemap -->
+  <url>
+    <loc>https://midnightfuel.in/#sitemap</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
+  <!-- 15. Privacy Policy -->
+  <url>
+    <loc>https://midnightfuel.in/#privacy-policy</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+
+  <!-- 16. Terms & Conditions -->
+  <url>
+    <loc>https://midnightfuel.in/#terms</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+
+</urlset>

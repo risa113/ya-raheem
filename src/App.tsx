@@ -20,6 +20,9 @@ import {
   AdminKitchenView, AdminProductsView, AdminCategoriesView, AdminSettingsView, AdminCustomersView 
 } from './components/AdminComponents';
 import { CustomCursor } from './components/CustomCursor';
+import { SEOHead } from './components/SEOHead';
+import { Breadcrumbs } from './components/Breadcrumbs';
+import { HtmlSitemap } from './components/HtmlSitemap';
 import { Flame, MapPin, PhoneCall, Clock, ShieldCheck, ExternalLink, Star } from 'lucide-react';
 
 const HomepageSeoContent: React.FC = () => {
@@ -123,11 +126,17 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-darkbg text-white font-sans selection:bg-primary selection:text-white">
+      {/* Dynamic Production-Grade SEO & JSON-LD Schema Engine */}
+      <SEOHead customerTab={customerTab} activeProductDetail={activeProductDetail} />
+
       {/* 24K Gold Ultra-Responsive Interactive Custom Cursor */}
       <CustomCursor />
 
       {/* Sticky Header */}
       <Navbar />
+
+      {/* Breadcrumb Navigation Bar */}
+      <Breadcrumbs customerTab={customerTab} />
 
       {/* Dynamic Main Body Content */}
       <main className="flex-1 pb-20 md:pb-6">
@@ -178,6 +187,7 @@ const MainAppContent: React.FC = () => {
         )}
 
         {customerTab === 'faq' && <FaqSeoPage />}
+        {customerTab === 'sitemap' && <HtmlSitemap />}
         {customerTab === 'privacy-policy' && <LegalPages mode="privacy" />}
         {customerTab === 'terms' && <LegalPages mode="terms" />}
       </main>
@@ -280,6 +290,7 @@ const MainAppContent: React.FC = () => {
               <li><button onClick={() => setCustomerTab('faq')} className="hover:text-primary transition">Frequently Asked Questions (FAQ)</button></li>
               <li><button onClick={() => setCustomerTab('contact')} className="hover:text-primary transition">Contact Kitchen & Map</button></li>
               <li><button onClick={() => setCustomerTab('offers')} className="hover:text-primary transition">Midnight Coupons & Offers</button></li>
+              <li><button onClick={() => setCustomerTab('sitemap')} className="hover:text-primary transition">HTML Sitemap Index</button></li>
               <li><button onClick={() => setCustomerTab('privacy-policy')} className="hover:text-primary transition">Privacy Policy</button></li>
               <li><button onClick={() => setCustomerTab('terms')} className="hover:text-primary transition">Terms & Conditions</button></li>
             </ul>

@@ -92,7 +92,15 @@ export const MandiSeoPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mandiProducts.map(p => (
               <div key={p.id} className="glass-card rounded-3xl overflow-hidden border border-white/10 p-4 space-y-3 flex flex-col justify-between">
-                <img src={p.image} alt={`${p.name} Tirunelveli`} className="w-full h-48 rounded-2xl object-cover" />
+                <img 
+                  src={p.image} 
+                  alt={`${p.name} - Authentic Arabian Mandi in Melapalayam Tirunelveli - MidnightFuelss`} 
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="250"
+                  className="w-full h-48 rounded-2xl object-cover" 
+                />
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
                     <h3 className="font-extrabold text-white text-base">{p.name}</h3>

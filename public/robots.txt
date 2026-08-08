@@ -1,0 +1,28 @@
+# MidnightFuelss (Midnight Fuel) - Official Robots Directive File
+# Site URL: https://midnightfuel.in/ & https://risa113.github.io/ya-raheem/
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /#menu
+Allow: /#mandi-tirunelveli
+Allow: /#biryani-tirunelveli
+Allow: /#midnight-food-tirunelveli
+Allow: /#food-delivery-melapalayam
+Allow: /#shawarma-tirunelveli
+Allow: /#pizza-tirunelveli
+Allow: /#fried-chicken-tirunelveli
+Allow: /#faq
+Allow: /#about
+Allow: /#contact
+Allow: /#offers
+Allow: /#sitemap
+
+# Utility & Private Paths
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /api/
+
+# XML Sitemap Location for Google Search Console & Bing Webmaster Tools
+Sitemap: https://midnightfuel.in/sitemap.xml
+Sitemap: https://risa113.github.io/ya-raheem/sitemap.xml

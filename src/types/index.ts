@@ -152,5 +152,6 @@ export type CustomerTab =
   | 'fried-chicken-tirunelveli'
   | 'faq'
   | 'privacy-policy'
-  | 'terms';
+  | 'terms'
+  | 'sitemap';
 
