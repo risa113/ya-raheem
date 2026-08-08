@@ -73,14 +73,14 @@ export const MenuSection: React.FC = () => {
         
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-black px-3.5 py-1 rounded-full border border-primary/30 uppercase tracking-widest">
-            <Flame className="w-3.5 h-3.5" /> Midnight Food Explorer
+          <div className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-400 text-xs font-black px-4 py-1 rounded-full border border-amber-500/40 uppercase tracking-widest shadow-glow-sm">
+            <Flame className="w-3.5 h-3.5 text-amber-400" /> 👑 Midnight Gourmet Explorer
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
-            Explore <span className="text-gradient-orange">Night Feasts</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-sans">
+            Explore <span className="text-gradient-gold">Luxury Night Feasts</span>
           </h2>
-          <p className="text-gray-400 text-xs sm:text-sm">
-            Cooked fresh to order in Melapalayam. Filter by category, spice level, or customer rating.
+          <p className="text-gray-300 text-xs sm:text-sm font-medium">
+            Slow-cooked Yemeni Mandi, Dum Biryani & Shawarmas cooked fresh to order in Melapalayam.
           </p>
         </div>
 
@@ -88,10 +88,10 @@ export const MenuSection: React.FC = () => {
         <div className="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 scrollbar-none">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-extrabold whitespace-nowrap transition border ${
+            className={`px-5 py-2.5 rounded-2xl text-xs font-black whitespace-nowrap transition border ${
               selectedCategory === 'all'
-                ? 'bg-primary text-white border-primary shadow-glow-sm'
-                : 'bg-secondary text-gray-300 border-white/10 hover:border-primary/50'
+                ? 'bg-gradient-to-r from-amber-400 to-yellow-600 text-black border-amber-400 shadow-glow-gold'
+                : 'bg-secondary text-gray-300 border-white/10 hover:border-amber-500/50'
             }`}
           >
             🍽️ All Dishes ({products.length})
@@ -104,15 +104,15 @@ export const MenuSection: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold whitespace-nowrap transition flex items-center gap-2 border ${
+                className={`px-4 py-2.5 rounded-2xl text-xs font-black whitespace-nowrap transition flex items-center gap-2 border ${
                   isSelected
-                    ? 'bg-primary text-white border-primary shadow-glow-sm'
-                    : 'bg-secondary text-gray-300 border-white/10 hover:border-primary/50'
+                    ? 'bg-gradient-to-r from-amber-400 to-yellow-600 text-black border-amber-400 shadow-glow-gold'
+                    : 'bg-secondary text-gray-300 border-white/10 hover:border-amber-500/50'
                 }`}
               >
                 <span className="text-sm">{cat.icon}</span>
                 <span>{cat.name}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'}`}>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full ${isSelected ? 'bg-black/20 text-black font-extrabold' : 'bg-white/10 text-gray-400'}`}>
                   {count}
                 </span>
               </button>
@@ -327,7 +327,7 @@ export const MenuSection: React.FC = () => {
                         <div>
                           {hasOffer ? (
                             <div className="flex items-baseline gap-1.5">
-                              <span className="text-xl font-black text-primary">₹{product.offerPrice}</span>
+                              <span className="text-xl font-black text-amber-400">₹{product.offerPrice}</span>
                               <span className="text-xs line-through text-gray-500">₹{product.price}</span>
                             </div>
                           ) : (
@@ -343,22 +343,22 @@ export const MenuSection: React.FC = () => {
                         ) : qty === 0 ? (
                           <button
                             onClick={() => handleAddToCartWithToast(product)}
-                            className="bg-primary/20 hover:bg-primary text-primary hover:text-white border border-primary/50 px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-glow-sm"
+                            className="bg-amber-500/20 hover:bg-amber-500 text-amber-400 hover:text-black border border-amber-500/50 px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-glow-sm"
                           >
                             <Plus className="w-4 h-4" /> ADD
                           </button>
                         ) : (
-                          <div className="flex items-center bg-secondary border border-primary/60 rounded-xl px-1.5 py-0.5 shadow-glow-sm">
+                          <div className="flex items-center bg-secondary border border-amber-500/60 rounded-xl px-1.5 py-0.5 shadow-glow-sm">
                             <button
                               onClick={() => updateQuantity(product.id, qty - 1)}
-                              className="w-6 h-6 rounded-lg bg-white/10 hover:bg-primary text-white flex items-center justify-center transition text-xs"
+                              className="w-6 h-6 rounded-lg bg-white/10 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition text-xs font-bold"
                             >
                               <Minus className="w-3.5 h-3.5" />
                             </button>
-                            <span className="px-2 text-xs font-black text-primary">{qty}</span>
+                            <span className="px-2 text-xs font-black text-amber-400">{qty}</span>
                             <button
                               onClick={() => updateQuantity(product.id, qty + 1)}
-                              className="w-6 h-6 rounded-lg bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition text-xs"
+                              className="w-6 h-6 rounded-lg bg-amber-500 hover:bg-amber-600 text-black flex items-center justify-center transition text-xs font-bold"
                             >
                               <Plus className="w-3.5 h-3.5" />
                             </button>
@@ -370,9 +370,9 @@ export const MenuSection: React.FC = () => {
                       {product.availability && (
                         <button
                           onClick={() => buyNow(product)}
-                          className="w-full bg-gradient-to-r from-primary via-emerald-600 to-amber-500 hover:from-primary-hover hover:to-amber-600 text-white font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-glow-sm hover:scale-[1.02] transition"
+                          className="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-glow-gold hover:scale-[1.02] transition"
                         >
-                          <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                          <Zap className="w-3.5 h-3.5 text-black fill-black" />
                           <span>Buy Now (Instant Order)</span>
                         </button>
                       )}

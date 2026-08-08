@@ -61,10 +61,10 @@ export const Navbar: React.FC = () => {
   ];
 
   const themeOptions: { id: ThemePalette; name: string; icon: string; bg: string; border: string }[] = [
-    { id: 'emerald', name: 'Royal Emerald & Gold', icon: '👑', bg: 'from-emerald-500 to-amber-500', border: 'border-emerald-500' },
-    { id: 'saffron', name: 'Saffron & Flame Sunset', icon: '🌇', bg: 'from-amber-500 to-orange-600', border: 'border-amber-500' },
-    { id: 'crimson', name: 'Crimson & Rose Gold', icon: '🍷', bg: 'from-rose-600 to-amber-400', border: 'border-rose-600' },
-    { id: 'amethyst', name: 'Midnight Amethyst', icon: '🔮', bg: 'from-purple-600 to-amber-400', border: 'border-purple-600' },
+    { id: 'saffron', name: '24K Saffron Gold & Noir', icon: '👑', bg: 'from-amber-400 via-amber-500 to-yellow-600', border: 'border-amber-400' },
+    { id: 'emerald', name: 'Royal Emerald & Gold', icon: '🌿', bg: 'from-emerald-500 to-amber-500', border: 'border-emerald-500' },
+    { id: 'crimson', name: 'Imperial Ruby & Velvet', icon: '🍷', bg: 'from-rose-600 to-amber-400', border: 'border-rose-600' },
+    { id: 'amethyst', name: 'Celestial Amethyst', icon: '🔮', bg: 'from-purple-600 to-amber-400', border: 'border-purple-600' },
   ];
 
   return (

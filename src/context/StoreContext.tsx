@@ -194,7 +194,7 @@ const triggerBrowserPushNotification = (order: Order) => {
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeTheme, setActiveThemeState] = useState<ThemePalette>(() => {
-    return (localStorage.getItem('mf_theme_palette') as ThemePalette) || 'emerald';
+    return (localStorage.getItem('mf_theme_palette') as ThemePalette) || 'saffron';
   });
 
   const setActiveTheme = (theme: ThemePalette) => {

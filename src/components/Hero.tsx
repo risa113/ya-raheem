@@ -100,30 +100,30 @@ export const Hero: React.FC = () => {
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             {/* Gang Badge */}
-            <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 bg-secondary/90 border border-amber-500/40 px-4 py-2 rounded-full backdrop-blur-md shadow-glass max-w-full">
-              <span className="text-xs sm:text-sm font-black text-white">Tirunelveli Midnight Cravings 🫂</span>
-              <span className="hidden sm:inline-block h-3.5 w-px bg-white/20" />
-              <span className="text-[10px] sm:text-xs font-extrabold text-amber-400 tracking-wide uppercase">
+            <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 bg-secondary/90 border border-amber-500/50 px-4 py-2 rounded-full backdrop-blur-md shadow-glow-sm max-w-full">
+              <span className="text-xs sm:text-sm font-black text-amber-200">👑 Tirunelveli's #1 Midnight Gourmet Hub</span>
+              <span className="hidden sm:inline-block h-3.5 w-px bg-amber-500/30" />
+              <span className="text-[10px] sm:text-xs font-black text-amber-400 tracking-wide uppercase">
                 ⚡ 25-Min Hot Delivery
               </span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white leading-none font-sans">
-              MIDNIGHT <span className="text-gradient-orange">FUEL</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white leading-none font-sans">
+              <span className="text-gradient-platinum">MIDNIGHT</span> <span className="text-gradient-gold">FUEL</span>
             </h1>
 
             {/* Subheading & Timings */}
-            <p className="text-sm sm:text-xl font-bold text-gray-200 leading-normal">
-              Order Fresh Arabian Mandi, Dum Biryani & Shawarmas Delivered Nightly!
+            <p className="text-sm sm:text-xl font-bold text-gray-300 leading-normal">
+              Slow-Cooked Yemeni Arabian Mandi, Dum Biryani & Jumbo Shawarmas Delivered Hot!
             </p>
 
-            <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 bg-secondary/90 border border-white/10 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-gray-300">
+            <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 bg-secondary/90 border border-amber-500/30 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold text-gray-300 shadow-glass">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary animate-pulse shrink-0" />
-                <span>Open Nightly: <strong className="text-white font-bold">7:00 PM – 2:00 AM</strong></span>
+                <Clock className="w-4 h-4 text-amber-400 animate-pulse shrink-0" />
+                <span>Open Nightly: <strong className="text-white font-extrabold">7:00 PM – 2:00 AM</strong></span>
               </div>
-              <span className="text-[11px] text-amber-300 font-bold bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+              <span className="text-[11px] text-amber-300 font-extrabold bg-amber-500/10 px-2.5 py-0.5 rounded-md border border-amber-500/30">
                 Pre-booking open from 7:00 AM
               </span>
             </div>
@@ -132,45 +132,45 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2 w-full">
               <button
                 onClick={() => setCustomerTab('menu')}
-                className="w-full sm:w-auto bg-gradient-to-r from-primary via-emerald-600 to-amber-500 hover:from-primary-hover hover:to-amber-600 text-white font-extrabold px-8 py-3.5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-primary hover:scale-105 transition transform"
+                className="w-full sm:w-auto bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 hover:from-amber-500 hover:to-yellow-700 text-black font-black px-8 py-3.5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-gold hover:scale-105 transition transform"
               >
-                <Zap className="w-5 h-5 fill-amber-300 text-amber-300" />
-                <span>Order Food Now</span>
+                <Zap className="w-5 h-5 fill-black text-black" />
+                <span>Order Gourmet Food Now</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
 
               <div className="flex items-center gap-2.5 w-full sm:w-auto justify-center">
                 <button
                   onClick={() => setCustomerTab('offers')}
-                  className="flex-1 sm:flex-initial bg-secondary/90 hover:bg-secondary-light text-white font-bold px-5 py-3.5 rounded-2xl text-xs sm:text-sm border border-white/10 hover:border-primary/50 transition backdrop-blur-md flex items-center justify-center gap-1.5"
+                  className="flex-1 sm:flex-initial bg-secondary/90 hover:bg-secondary-light text-white font-bold px-5 py-3.5 rounded-2xl text-xs sm:text-sm border border-amber-500/30 hover:border-amber-400 transition backdrop-blur-md flex items-center justify-center gap-1.5"
                 >
                   <Tag className="w-4 h-4 text-amber-400" />
-                  <span>Use Coupon Codes</span>
+                  <span>Use Gold Coupons</span>
                 </button>
 
                 <a
                   href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-                  className="flex-1 sm:flex-initial bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-400 font-bold px-4 py-3.5 rounded-2xl text-xs sm:text-sm border border-emerald-500/30 flex items-center justify-center gap-1.5 hover:border-emerald-500 transition whitespace-nowrap"
+                  className="flex-1 sm:flex-initial bg-amber-950/40 hover:bg-amber-900/60 text-amber-400 font-bold px-4 py-3.5 rounded-2xl text-xs sm:text-sm border border-amber-500/40 flex items-center justify-center gap-1.5 hover:border-amber-400 transition whitespace-nowrap"
                 >
-                  <PhoneCall className="w-4 h-4 text-emerald-400" />
+                  <PhoneCall className="w-4 h-4 text-amber-400" />
                   <span>Call Kitchen</span>
                 </a>
               </div>
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-start gap-5 text-[11px] sm:text-xs text-gray-400 font-semibold">
+            <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-start gap-5 text-[11px] sm:text-xs text-gray-300 font-semibold">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>100% Halal Prepared</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>⭐ 4.9 Super Rated</span>
+                <span>⭐ 4.9 Super Rated Hub</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-primary" />
-                <span>Thermal Sealed Box</span>
+                <Flame className="w-4 h-4 text-amber-500" />
+                <span>Thermal Sealed Gold Box</span>
               </div>
             </div>
 
