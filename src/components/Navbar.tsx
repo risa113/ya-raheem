@@ -19,13 +19,11 @@ export const Navbar: React.FC = () => {
 
   const [showProfileMenu, setShowProfileMenu] = useState<boolean>(false);
   const [showLocationModal, setShowLocationModal] = useState<boolean>(false);
-  const [showThemeModal, setShowThemeModal] = useState<boolean>(false);
   const [selectedAddress, setSelectedAddress] = useState<string>('Bazar, Melapalayam, Tirunelveli – 627005');
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
 
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
-  const themeMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,9 +32,6 @@ export const Navbar: React.FC = () => {
       }
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsSearchFocused(false);
-      }
-      if (themeMenuRef.current && !themeMenuRef.current.contains(event.target as Node)) {
-        setShowThemeModal(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -58,13 +53,6 @@ export const Navbar: React.FC = () => {
     'Tirunelveli Town, Near Swami Temple – 627006',
     'Vannarpettai, Tirunelveli – 627003',
     'Perumalpuram, Tirunelveli – 627007',
-  ];
-
-  const themeOptions: { id: ThemePalette; name: string; icon: string; bg: string; border: string }[] = [
-    { id: 'saffron', name: '24K Saffron Gold & Noir', icon: '👑', bg: 'from-amber-400 via-amber-500 to-yellow-600', border: 'border-amber-400' },
-    { id: 'emerald', name: 'Royal Emerald & Gold', icon: '🌿', bg: 'from-emerald-500 to-amber-500', border: 'border-emerald-500' },
-    { id: 'crimson', name: 'Imperial Ruby & Velvet', icon: '🍷', bg: 'from-rose-600 to-amber-400', border: 'border-rose-600' },
-    { id: 'amethyst', name: 'Celestial Amethyst', icon: '🔮', bg: 'from-purple-600 to-amber-400', border: 'border-purple-600' },
   ];
 
   return (
