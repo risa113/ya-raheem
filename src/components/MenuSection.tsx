@@ -370,7 +370,7 @@ export const MenuSection: React.FC = () => {
                       {product.availability && (
                         <button
                           onClick={() => buyNow(product)}
-                          className="w-full bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-extrabold py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-glow-sm hover:scale-[1.02] transition"
+                          className="w-full bg-gradient-to-r from-primary via-emerald-600 to-amber-500 hover:from-primary-hover hover:to-amber-600 text-white font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-glow-sm hover:scale-[1.02] transition"
                         >
                           <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
                           <span>Buy Now (Instant Order)</span>

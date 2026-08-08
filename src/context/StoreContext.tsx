@@ -17,7 +17,13 @@ import {
 } from '../firebaseClient';
 import confetti from 'canvas-confetti';
 
+export type ThemePalette = 'emerald' | 'saffron' | 'crimson' | 'amethyst';
+
 interface StoreContextType {
+  // Theme State
+  activeTheme: ThemePalette;
+  setActiveTheme: (theme: ThemePalette) => void;
+
   // Navigation & View Mode
   viewMode: ViewMode;
   setViewMode: (mode: ViewMode) => void;
@@ -187,6 +193,20 @@ const triggerBrowserPushNotification = (order: Order) => {
 };
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [activeTheme, setActiveThemeState] = useState<ThemePalette>(() => {
+    return (localStorage.getItem('mf_theme_palette') as ThemePalette) || 'emerald';
+  });
+
+  const setActiveTheme = (theme: ThemePalette) => {
+    setActiveThemeState(theme);
+    localStorage.setItem('mf_theme_palette', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', activeTheme);
+  }, [activeTheme]);
+
   const [viewModeState, setViewModeState] = useState<ViewMode>(() => {
     return (localStorage.getItem('mf_view_mode') as ViewMode) || 'customer';
   });
@@ -706,6 +726,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <StoreContext.Provider value={{
+      activeTheme, setActiveTheme,
       viewMode, setViewMode,
       customerTab, setCustomerTab,
       adminTab, setAdminTab,

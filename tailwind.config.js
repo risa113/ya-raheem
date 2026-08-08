@@ -9,18 +9,24 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#FF5200', // Vibrant Swiggy / Zomato Fiery Orange-Red
-          hover: '#E04400',
-          light: '#FF732E',
-          glow: 'rgba(255, 82, 0, 0.45)',
+          DEFAULT: 'var(--color-primary, #10B981)', // Royal Emerald Primary
+          hover: 'var(--color-primary-hover, #059669)',
+          light: 'var(--color-primary-light, #34D399)',
+          glow: 'var(--color-primary-glow, rgba(16, 185, 129, 0.45))',
+        },
+        gold: {
+          DEFAULT: 'var(--color-gold, #F59E0B)', // Royal Gold Accent
+          hover: '#D97706',
+          light: '#FBBF24',
+          glow: 'rgba(245, 158, 11, 0.45)',
         },
         secondary: {
-          DEFAULT: '#141418', // Rich Obsidian Surface
-          light: '#1C1C22',
-          lighter: '#282832',
+          DEFAULT: 'var(--color-secondary, #0E1715)', // Rich Emerald Obsidian
+          light: 'var(--color-secondary-light, #152421)',
+          lighter: 'var(--color-secondary-lighter, #1E332F)',
         },
-        darkbg: '#0A0A0C', // Ultra Dark Background
-        card: '#121216',
+        darkbg: 'var(--color-darkbg, #060C0B)', // Deep Midnight Background
+        card: 'var(--color-card, #0B1412)',
         success: '#10B981',
         danger: '#EF4444',
         amber: {
@@ -32,11 +38,12 @@ export default {
         sans: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'glow-primary': '0 0 30px rgba(255, 82, 0, 0.4)',
-        'glow-sm': '0 0 15px rgba(255, 82, 0, 0.3)',
+        'glow-primary': '0 0 30px var(--color-primary-glow, rgba(16, 185, 129, 0.4))',
+        'glow-gold': '0 0 30px rgba(245, 158, 11, 0.4)',
+        'glow-sm': '0 0 15px var(--color-primary-glow, rgba(16, 185, 129, 0.3))',
         'glow-green': '0 0 20px rgba(16, 185, 129, 0.3)',
         'glass': '0 10px 40px 0 rgba(0, 0, 0, 0.75)',
-        'card-hover': '0 14px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 82, 0, 0.25)',
+        'card-hover': '0 14px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px var(--color-primary-glow, rgba(16, 185, 129, 0.25))',
       },
       backdropBlur: {
         xs: '2px',
@@ -55,8 +62,8 @@ export default {
           '50%': { transform: 'translateY(-8px)' },
         },
         glow: {
-          '0%': { boxShadow: '0 0 10px rgba(255, 82, 0, 0.3)' },
-          '100%': { boxShadow: '0 0 30px rgba(255, 82, 0, 0.8)' },
+          '0%': { boxShadow: '0 0 10px var(--color-primary-glow, rgba(16, 185, 129, 0.3))' },
+          '100%': { boxShadow: '0 0 30px var(--color-primary-glow, rgba(16, 185, 129, 0.8))' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },

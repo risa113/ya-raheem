@@ -52,8 +52,9 @@ export const Hero: React.FC = () => {
   return (
     <section className="relative overflow-hidden pt-6 pb-12 md:py-16 bg-darkbg border-b border-white/5">
       {/* Background Ambient Blur Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-primary/15 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-10 w-[350px] h-[350px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-primary/20 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-0 right-10 w-[400px] h-[400px] bg-amber-500/15 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-10 left-10 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10 space-y-10">
         
@@ -78,7 +79,7 @@ export const Hero: React.FC = () => {
                 }}
                 className="flex flex-col items-center gap-2 group shrink-0"
               >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-secondary-light to-secondary p-1 border border-white/10 group-hover:border-primary group-hover:shadow-glow-sm transition transform group-hover:scale-105 flex items-center justify-center relative">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-secondary-light to-secondary p-1 border border-amber-500/30 group-hover:border-primary group-hover:shadow-glow-sm transition transform group-hover:scale-105 flex items-center justify-center relative">
                   <span className="text-2xl sm:text-3xl">{cat.icon}</span>
                   <span className="absolute -bottom-1 bg-primary text-white text-[9px] font-black px-1.5 py-0.2 rounded-full opacity-0 group-hover:opacity-100 transition">
                     ORDER
@@ -99,11 +100,11 @@ export const Hero: React.FC = () => {
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             {/* Gang Badge */}
-            <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 bg-secondary/90 border border-primary/40 px-4 py-2 rounded-full backdrop-blur-md shadow-glass max-w-full">
+            <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 bg-secondary/90 border border-amber-500/40 px-4 py-2 rounded-full backdrop-blur-md shadow-glass max-w-full">
               <span className="text-xs sm:text-sm font-black text-white">Tirunelveli Midnight Cravings 🫂</span>
               <span className="hidden sm:inline-block h-3.5 w-px bg-white/20" />
-              <span className="text-[10px] sm:text-xs font-extrabold text-primary tracking-wide uppercase">
-                ⚡ 25-Min Delivery
+              <span className="text-[10px] sm:text-xs font-extrabold text-amber-400 tracking-wide uppercase">
+                ⚡ 25-Min Hot Delivery
               </span>
             </div>
 
@@ -122,7 +123,7 @@ export const Hero: React.FC = () => {
                 <Clock className="w-4 h-4 text-primary animate-pulse shrink-0" />
                 <span>Open Nightly: <strong className="text-white font-bold">7:00 PM – 2:00 AM</strong></span>
               </div>
-              <span className="text-[11px] text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+              <span className="text-[11px] text-amber-300 font-bold bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
                 Pre-booking open from 7:00 AM
               </span>
             </div>
@@ -131,7 +132,7 @@ export const Hero: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2 w-full">
               <button
                 onClick={() => setCustomerTab('menu')}
-                className="w-full sm:w-auto bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover hover:to-orange-700 text-white font-extrabold px-8 py-3.5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-primary hover:scale-105 transition transform"
+                className="w-full sm:w-auto bg-gradient-to-r from-primary via-emerald-600 to-amber-500 hover:from-primary-hover hover:to-amber-600 text-white font-extrabold px-8 py-3.5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-glow-primary hover:scale-105 transition transform"
               >
                 <Zap className="w-5 h-5 fill-amber-300 text-amber-300" />
                 <span>Order Food Now</span>
