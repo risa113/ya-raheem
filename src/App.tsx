@@ -9,7 +9,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { LiveOrderTracker } from './components/LiveOrderTracker';
 import { FloatingActions } from './components/FloatingActions';
 import { 
-  AuthModal, CustomerOrdersPage, WishlistPage, OffersPage, ContactPage, AboutPage 
+  AuthModal, CustomerOrdersPage, WishlistPage, OffersPage, ContactPage, AboutPage, AccountPage 
 } from './components/CustomerPages';
 import { 
   MandiSeoPage, BiryaniSeoPage, MidnightFoodSeoPage, MelapalayamSeoPage, 
@@ -142,6 +142,7 @@ const MainAppContent: React.FC = () => {
         {customerTab === 'contact' && <ContactPage />}
         {customerTab === 'orders' && <CustomerOrdersPage />}
         {customerTab === 'wishlist' && <WishlistPage />}
+        {customerTab === 'account' && <AccountPage />}
 
         {/* Dedicated SEO Landing Pages */}
         {customerTab === 'mandi-tirunelveli' && <MandiSeoPage />}

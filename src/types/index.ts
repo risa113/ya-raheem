@@ -143,6 +143,7 @@ export type CustomerTab =
   | 'contact' 
   | 'orders' 
   | 'wishlist'
+  | 'account'
   | 'mandi-tirunelveli'
   | 'biryani-tirunelveli'
   | 'midnight-food-tirunelveli'

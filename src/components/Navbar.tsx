@@ -506,12 +506,9 @@ export const MobileBottomNav: React.FC = () => {
       </button>
 
       <button
-        onClick={() => {
-          setActiveOrder(null);
-          setCustomerTab('orders');
-        }}
+        onClick={() => setCustomerTab('account')}
         className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${
-          customerTab === 'orders' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
+          customerTab === 'account' ? 'text-primary font-bold scale-105' : 'text-gray-400 hover:text-gray-200'
         }`}
       >
         <User className="w-5 h-5" />
