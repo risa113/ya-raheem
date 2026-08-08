@@ -222,10 +222,48 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [themeMode]);
 
-  const [viewModeState, setViewModeState] = useState<ViewMode>(() => {
-    return (localStorage.getItem('mf_view_mode') as ViewMode) || 'customer';
-  });
-  const [customerTab, setCustomerTab] = useState<CustomerTab>('home');
+  const [viewModeState, setViewModeState] = useState<ViewMode>('customer');
+
+  const getTabFromHash = (): CustomerTab => {
+    if (typeof window === 'undefined') return 'home';
+    const hash = window.location.hash.replace('#', '').trim();
+    const validTabs: CustomerTab[] = [
+      'home', 'menu', 'offers', 'about', 'contact', 'orders', 'wishlist',
+      'mandi-tirunelveli', 'biryani-tirunelveli', 'midnight-food-tirunelveli',
+      'food-delivery-melapalayam', 'shawarma-tirunelveli', 'pizza-tirunelveli',
+      'fried-chicken-tirunelveli', 'faq', 'privacy-policy', 'terms', 'sitemap'
+    ];
+    if (hash && validTabs.includes(hash as CustomerTab)) {
+      return hash as CustomerTab;
+    }
+    return 'home';
+  };
+
+  const [customerTabState, setCustomerTabState] = useState<CustomerTab>(() => getTabFromHash());
+
+  const setCustomerTab = (tab: CustomerTab) => {
+    setCustomerTabState(tab);
+    if (typeof window !== 'undefined') {
+      if (tab === 'home') {
+        window.history.pushState(null, '', window.location.pathname + window.location.search);
+      } else {
+        window.location.hash = `#${tab}`;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const tab = getTabFromHash();
+      setCustomerTabState(tab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   const [adminTabState, setAdminTabState] = useState<AdminTab>(() => {
     return (localStorage.getItem('mf_admin_tab') as AdminTab) || 'dashboard';
   });
@@ -241,6 +279,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const viewMode = viewModeState;
+  const customerTab = customerTabState;
   const adminTab = adminTabState;
 
   // Products & Categories state
