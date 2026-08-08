@@ -721,8 +721,8 @@ export const AccountPage: React.FC = () => {
         <div className="absolute -right-8 -top-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
         
         {isLoggedIn ? (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 w-full">
+            <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
               <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-amber-300 text-black flex items-center justify-center font-black text-2xl shadow-lg ring-4 ring-primary/20">
                 {userName ? userName.charAt(0).toUpperCase() : 'U'}
               </div>
