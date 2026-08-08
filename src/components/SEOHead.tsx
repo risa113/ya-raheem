@@ -240,194 +240,198 @@ export const getSeoConfigForTab = (tab: CustomerTab, activeProduct?: Product | n
 };
 
 export const SEOHead: React.FC<SEOHeadProps> = ({ customerTab, activeProductDetail }) => {
-  const seoConfig = getSeoConfigForTab(customerTab, activeProductDetail);
-
   useEffect(() => {
-    // 1. Update Document Title
-    document.title = seoConfig.title;
+    try {
+      const seoConfig = getSeoConfigForTab(customerTab, activeProductDetail);
+      if (!seoConfig) return;
 
-    // 2. Update Meta Description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', seoConfig.description);
+      // 1. Update Document Title
+      if (seoConfig.title) document.title = seoConfig.title;
 
-    // 3. Update Meta Keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.setAttribute('content', seoConfig.keywords);
+      // 2. Update Meta Description
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', seoConfig.description || '');
 
-    // 4. Update Meta Robots Directive
-    let metaRobots = document.querySelector('meta[name="robots"]');
-    if (!metaRobots) {
-      metaRobots = document.createElement('meta');
-      metaRobots.setAttribute('name', 'robots');
-      document.head.appendChild(metaRobots);
-    }
-    metaRobots.setAttribute('content', seoConfig.robots);
+      // 3. Update Meta Keywords
+      let metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (!metaKeywords) {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.setAttribute('name', 'keywords');
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute('content', seoConfig.keywords || '');
 
-    // 5. Update Canonical Tag
-    let canonicalLink = document.querySelector('link[rel="canonical"]');
-    if (!canonicalLink) {
-      canonicalLink = document.createElement('link');
-      canonicalLink.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalLink);
-    }
-    const fullCanonicalUrl = `https://midnightfuel.in${seoConfig.canonicalPath.startsWith('/') ? seoConfig.canonicalPath : '/' + seoConfig.canonicalPath}`;
-    canonicalLink.setAttribute('href', fullCanonicalUrl);
+      // 4. Update Meta Robots Directive
+      let metaRobots = document.querySelector('meta[name="robots"]');
+      if (!metaRobots) {
+        metaRobots = document.createElement('meta');
+        metaRobots.setAttribute('name', 'robots');
+        document.head.appendChild(metaRobots);
+      }
+      metaRobots.setAttribute('content', seoConfig.robots || 'index, follow');
 
-    // 6. Update Open Graph Tags
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute('content', seoConfig.title);
+      // 5. Update Canonical Tag
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalLink);
+      }
+      const fullCanonicalUrl = `https://midnightfuel.in${(seoConfig.canonicalPath || '/').startsWith('/') ? seoConfig.canonicalPath : '/' + seoConfig.canonicalPath}`;
+      canonicalLink.setAttribute('href', fullCanonicalUrl);
 
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) ogDesc.setAttribute('content', seoConfig.description);
+      // 6. Update Open Graph Tags
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', seoConfig.title || '');
 
-    const ogImg = document.querySelector('meta[property="og:image"]');
-    if (ogImg) ogImg.setAttribute('content', seoConfig.ogImage);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', seoConfig.description || '');
 
-    // 7. Update Twitter Tags
-    const twTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twTitle) twTitle.setAttribute('content', seoConfig.title);
+      const ogImg = document.querySelector('meta[property="og:image"]');
+      if (ogImg) ogImg.setAttribute('content', seoConfig.ogImage || '');
 
-    const twDesc = document.querySelector('meta[name="twitter:description"]');
-    if (twDesc) twDesc.setAttribute('content', seoConfig.description);
+      // 7. Update Twitter Tags
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.setAttribute('content', seoConfig.title || '');
 
-    const twImg = document.querySelector('meta[name="twitter:image"]');
-    if (twImg) twImg.setAttribute('content', seoConfig.ogImage);
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute('content', seoConfig.description || '');
 
-    // 8. Inject Dynamic JSON-LD Schema (Restaurant, Breadcrumbs, Product)
-    const existingSchemaScript = document.getElementById('dynamic-jsonld-schema');
-    if (existingSchemaScript) {
-      existingSchemaScript.remove();
-    }
+      const twImg = document.querySelector('meta[name="twitter:image"]');
+      if (twImg) twImg.setAttribute('content', seoConfig.ogImage || '');
 
-    const schemaDataList: any[] = [
-      // Restaurant / LocalBusiness Schema
-      {
-        '@context': 'https://schema.org',
-        '@type': 'Restaurant',
-        'name': 'MidnightFuelss',
-        'alternateName': 'Midnight Fuel Tirunelveli',
-        'image': seoConfig.ogImage,
-        'url': 'https://midnightfuel.in',
-        'telephone': '+919080139363',
-        'priceRange': '₹₹',
-        'servesCuisine': ['Arabian Mandi', 'Hyderabadi Dum Biryani', 'Shawarma', 'Fast Food', 'Late Night Food'],
-        'address': {
-          '@type': 'PostalAddress',
-          'streetAddress': 'Bazar, Near Meera Broilers',
-          'addressLocality': 'Melapalayam',
-          'addressRegion': 'Tirunelveli',
-          'postalCode': '627005',
-          'addressCountry': 'IN',
-        },
-        'geo': {
-          '@type': 'GeoCoordinates',
-          'latitude': 8.7075,
-          'longitude': 77.7280,
-        },
-        'openingHoursSpecification': [
-          {
-            '@type': 'OpeningHoursSpecification',
-            'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-            'opens': '19:00',
-            'closes': '02:00',
+      // 8. Inject Dynamic JSON-LD Schema (Restaurant, Breadcrumbs, Product)
+      const existingSchemaScript = document.getElementById('dynamic-jsonld-schema');
+      if (existingSchemaScript) {
+        existingSchemaScript.remove();
+      }
+
+      const schemaDataList: any[] = [
+        // Restaurant / LocalBusiness Schema
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Restaurant',
+          'name': 'MidnightFuelss',
+          'alternateName': 'Midnight Fuel Tirunelveli',
+          'image': seoConfig.ogImage,
+          'url': 'https://midnightfuel.in',
+          'telephone': '+919080139363',
+          'priceRange': '₹₹',
+          'servesCuisine': ['Arabian Mandi', 'Hyderabadi Dum Biryani', 'Shawarma', 'Fast Food', 'Late Night Food'],
+          'address': {
+            '@type': 'PostalAddress',
+            'streetAddress': 'Bazar, Near Meera Broilers',
+            'addressLocality': 'Melapalayam',
+            'addressRegion': 'Tirunelveli',
+            'postalCode': '627005',
+            'addressCountry': 'IN',
           },
-        ],
-        'hasMenu': 'https://midnightfuel.in/#menu',
-        'acceptsReservations': 'True',
-      },
-      // BreadcrumbList Schema
-      {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        'itemListElement': seoConfig.breadcrumbs.map((b, index) => ({
-          '@type': 'ListItem',
-          'position': index + 1,
-          'name': b.name,
-          'item': b.item,
-        })),
-      },
-    ];
-
-    // Add Product Schema if inspecting a product
-    if (activeProductDetail) {
-      schemaDataList.push({
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        'name': activeProductDetail.name,
-        'image': activeProductDetail.image,
-        'description': activeProductDetail.description,
-        'offers': {
-          '@type': 'Offer',
-          'priceCurrency': 'INR',
-          'price': activeProductDetail.offerPrice || activeProductDetail.price,
-          'availability': activeProductDetail.availability ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-          'seller': {
-            '@type': 'Organization',
-            'name': 'MidnightFuelss',
+          'geo': {
+            '@type': 'GeoCoordinates',
+            'latitude': 8.7075,
+            'longitude': 77.7280,
           },
+          'openingHoursSpecification': [
+            {
+              '@type': 'OpeningHoursSpecification',
+              'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+              'opens': '19:00',
+              'closes': '02:00',
+            },
+          ],
+          'hasMenu': 'https://midnightfuel.in/#menu',
+          'acceptsReservations': 'True',
         },
-        'aggregateRating': {
-          '@type': 'AggregateRating',
-          'ratingValue': activeProductDetail.rating || 4.9,
-          'reviewCount': activeProductDetail.reviewsCount || 120,
+        // BreadcrumbList Schema
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          'itemListElement': (seoConfig.breadcrumbs || []).map((b, index) => ({
+            '@type': 'ListItem',
+            'position': index + 1,
+            'name': b.name,
+            'item': b.item,
+          })),
         },
-      });
-    }
+      ];
 
-    // Add FAQPage Schema if on FAQ tab
-    if (customerTab === 'faq') {
-      schemaDataList.push({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        'mainEntity': [
-          {
-            '@type': 'Question',
-            'name': 'What are MidnightFuelss kitchen opening hours in Tirunelveli?',
-            'acceptedAnswer': {
-              '@type': 'Answer',
-              'text': 'MidnightFuelss kitchen is open daily from 7:00 PM to 2:00 AM for late-night food delivery in Melapalayam and Tirunelveli.',
+      // Add Product Schema if inspecting a product
+      if (activeProductDetail) {
+        schemaDataList.push({
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          'name': activeProductDetail.name,
+          'image': activeProductDetail.image,
+          'description': activeProductDetail.description,
+          'offers': {
+            '@type': 'Offer',
+            'priceCurrency': 'INR',
+            'price': activeProductDetail.offerPrice || activeProductDetail.price,
+            'availability': activeProductDetail.availability ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+            'seller': {
+              '@type': 'Organization',
+              'name': 'MidnightFuelss',
             },
           },
-          {
-            '@type': 'Question',
-            'name': 'Is all food from MidnightFuelss 100% Halal certified?',
-            'acceptedAnswer': {
-              '@type': 'Answer',
-              'text': 'Yes, all chicken, mutton, and beef dishes at MidnightFuelss are 100% Halal certified and freshly prepared daily.',
-            },
+          'aggregateRating': {
+            '@type': 'AggregateRating',
+            'ratingValue': activeProductDetail.rating || 4.9,
+            'reviewCount': activeProductDetail.reviewsCount || 120,
           },
-          {
-            '@type': 'Question',
-            'name': 'Which locations in Tirunelveli do you deliver to?',
-            'acceptedAnswer': {
-              '@type': 'Answer',
-              'text': 'We deliver hot food to Melapalayam, Palayamkottai, Perumalpuram, Vannarpettai, Tirunelveli Town, and High Ground.',
+        });
+      }
+
+      // Add FAQPage Schema if on FAQ tab
+      if (customerTab === 'faq') {
+        schemaDataList.push({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          'mainEntity': [
+            {
+              '@type': 'Question',
+              'name': 'What are MidnightFuelss kitchen opening hours in Tirunelveli?',
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': 'MidnightFuelss kitchen is open daily from 7:00 PM to 2:00 AM for late-night food delivery in Melapalayam and Tirunelveli.',
+              },
             },
-          },
-        ],
-      });
+            {
+              '@type': 'Question',
+              'name': 'Is all food from MidnightFuelss 100% Halal certified?',
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': 'Yes, all chicken, mutton, and beef dishes at MidnightFuelss are 100% Halal certified and freshly prepared daily.',
+              },
+            },
+            {
+              '@type': 'Question',
+              'name': 'Which locations in Tirunelveli do you deliver to?',
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': 'We deliver hot food to Melapalayam, Palayamkottai, Perumalpuram, Vannarpettai, Tirunelveli Town, and High Ground.',
+              },
+            },
+          ],
+        });
+      }
+
+      const script = document.createElement('script');
+      script.id = 'dynamic-jsonld-schema';
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(schemaDataList);
+      document.head.appendChild(script);
+
+      // 9. Fire GA4 Page View Tracking Event
+      trackPageView(seoConfig.title, seoConfig.canonicalPath);
+    } catch (err) {
+      console.warn('SEOHead effect warning:', err);
     }
-
-    const script = document.createElement('script');
-    script.id = 'dynamic-jsonld-schema';
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(schemaDataList);
-    document.head.appendChild(script);
-
-    // 9. Fire GA4 Page View Tracking Event
-    trackPageView(seoConfig.title, seoConfig.canonicalPath);
-
-  }, [customerTab, activeProductDetail, seoConfig]);
+  }, [customerTab, activeProductDetail]);
 
   return null;
 };

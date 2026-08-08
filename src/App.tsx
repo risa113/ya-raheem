@@ -308,11 +308,32 @@ const MainAppContent: React.FC = () => {
   );
 };
 
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: false };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('Safe ErrorBoundary caught error:', error, errorInfo);
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
 export function App() {
   return (
-    <StoreProvider>
-      <MainAppContent />
-    </StoreProvider>
+    <ErrorBoundary>
+      <StoreProvider>
+        <MainAppContent />
+      </StoreProvider>
+    </ErrorBoundary>
   );
 }
 
