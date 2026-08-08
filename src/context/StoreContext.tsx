@@ -253,7 +253,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           window.history.pushState(null, '', newUrl);
         }
       } catch (e) {}
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -261,7 +260,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleHashChange = () => {
       const tab = getTabFromHash();
       setCustomerTabState(tab);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     window.addEventListener('hashchange', handleHashChange);
