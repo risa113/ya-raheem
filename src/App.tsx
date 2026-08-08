@@ -19,9 +19,6 @@ import {
   AdminLayout, AdminDashboardView, AdminOrdersView, 
   AdminKitchenView, AdminProductsView, AdminCategoriesView, AdminSettingsView, AdminCustomersView 
 } from './components/AdminComponents';
-import { SEOHead } from './components/SEOHead';
-import { Breadcrumbs } from './components/Breadcrumbs';
-import { HtmlSitemap } from './components/HtmlSitemap';
 import { Flame, MapPin, PhoneCall, Clock, ShieldCheck, ExternalLink, Star } from 'lucide-react';
 
 const HomepageSeoContent: React.FC = () => {
@@ -125,14 +122,8 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-darkbg text-white font-sans selection:bg-primary selection:text-white">
-      {/* Dynamic Production-Grade SEO Title Engine */}
-      <SEOHead customerTab={customerTab} activeProductDetail={activeProductDetail} />
-
       {/* Sticky Header */}
       <Navbar />
-
-      {/* Breadcrumb Navigation Bar */}
-      <Breadcrumbs customerTab={customerTab} />
 
       {/* Dynamic Main Body Content */}
       <main className="flex-1 pb-20 md:pb-6">
@@ -183,7 +174,6 @@ const MainAppContent: React.FC = () => {
         )}
 
         {customerTab === 'faq' && <FaqSeoPage />}
-        {customerTab === 'sitemap' && <HtmlSitemap />}
         {customerTab === 'privacy-policy' && <LegalPages mode="privacy" />}
         {customerTab === 'terms' && <LegalPages mode="terms" />}
       </main>
