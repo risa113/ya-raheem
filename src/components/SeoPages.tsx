@@ -5,33 +5,33 @@ import {
   ShieldCheck, CheckCircle2, ChevronRight, MessageCircle, HelpCircle, ExternalLink, Zap, Heart, Tag
 } from 'lucide-react';
 
-// Common SEO Banner Header Component
+// Common SEO Banner Header Component matching iOS UI Kit style
 const SeoHeader: React.FC<{ title: string; subtitle: string; tag: string }> = ({ title, subtitle, tag }) => {
   return (
-    <div className="bg-gradient-to-r from-primary/20 via-secondary to-secondary border-b border-primary/30 py-8 px-4 text-center space-y-3">
-      <span className="inline-flex items-center gap-1.5 bg-primary/20 text-primary text-xs font-black px-3.5 py-1 rounded-full border border-primary/40 uppercase tracking-widest">
+    <div className="bg-white dark:bg-secondary border-b border-black/5 dark:border-white/10 py-10 px-4 text-center space-y-3 transition-colors shadow-ios-sm">
+      <span className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">
         <Sparkles className="w-3.5 h-3.5" /> {tag}
       </span>
-      <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">{title}</h1>
-      <p className="text-gray-300 text-xs sm:text-sm max-w-3xl mx-auto leading-relaxed">{subtitle}</p>
+      <h1 className="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight leading-tight font-sans">{title}</h1>
+      <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm max-w-3xl mx-auto leading-relaxed font-medium">{subtitle}</p>
     </div>
   );
 };
 
-// Google Business Profile Review Strategy Banner Component
+// Google Business Profile Review Strategy Banner Component matching Food Delivery iOS UI Kit
 export const GoogleReviewBanner: React.FC = () => {
   const { settings } = useStore();
   const googleReviewUrl = `https://search.google.com/local/writereview?placeid=ChIJMidnightFuelMelapalayam`;
 
   return (
-    <div className="glass-panel p-5 rounded-3xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-secondary to-secondary flex flex-col sm:flex-row items-center justify-between gap-4 my-8 shadow-xl">
-      <div className="flex items-center gap-3 text-center sm:text-left">
-        <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-black text-2xl shrink-0">
+    <div className="bg-white dark:bg-secondary p-6 rounded-3xl border border-black/5 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 my-8 shadow-ios-card transition-colors">
+      <div className="flex items-center gap-3.5 text-center sm:text-left">
+        <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-black text-2xl shrink-0">
           ⭐
         </div>
         <div>
-          <h3 className="text-base font-extrabold text-white">Loved your Midnight Feast?</h3>
-          <p className="text-xs text-gray-300">
+          <h3 className="text-base font-black text-gray-900 dark:text-white">Loved your Midnight Feast?</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
             Share your experience on Google! Mention your favorite Mandi, Biryani or 2 AM delivery in Tirunelveli & Melapalayam.
           </p>
         </div>
@@ -41,7 +41,7 @@ export const GoogleReviewBanner: React.FC = () => {
         href={googleReviewUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-extrabold px-5 py-2.5 rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg shrink-0 transition"
+        className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover text-white font-black px-6 py-3 rounded-2xl text-xs flex items-center justify-center gap-2 shadow-ios-orange shrink-0 transition uppercase tracking-wider"
       >
         <span>Leave Google Review</span>
         <ExternalLink className="w-4 h-4" />
@@ -67,53 +67,50 @@ export const MandiSeoPage: React.FC = () => {
         
         {/* SEO Highlights Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <div className="glass-card p-4 rounded-2xl border-l-4 border-l-primary space-y-1">
-            <h3 className="font-extrabold text-white text-sm">🍗 Slow-Cooked Chicken Mandi</h3>
-            <p className="text-gray-400">Marinated for 12 hours and cooked over charcoal. Served with garlic toum and red salsa.</p>
+          <div className="bg-white dark:bg-secondary p-5 rounded-3xl border border-black/5 dark:border-white/10 border-l-4 border-l-primary space-y-1 shadow-ios-card">
+            <h3 className="font-black text-gray-900 dark:text-white text-sm">🍗 Slow-Cooked Chicken Mandi</h3>
+            <p className="text-gray-500 dark:text-gray-400 font-medium">Marinated for 12 hours and cooked over charcoal. Served with garlic toum and red salsa.</p>
           </div>
 
-          <div className="glass-card p-4 rounded-2xl border-l-4 border-l-amber-500 space-y-1">
-            <h3 className="font-extrabold text-white text-sm">🍖 Royal Mutton Mandi</h3>
-            <p className="text-gray-400">Mouth-melting tender lamb shoulder pieces over saffron-infused ghee mandi rice.</p>
+          <div className="bg-white dark:bg-secondary p-5 rounded-3xl border border-black/5 dark:border-white/10 border-l-4 border-l-amber-500 space-y-1 shadow-ios-card">
+            <h3 className="font-black text-gray-900 dark:text-white text-sm">🍖 Royal Mutton Mandi</h3>
+            <p className="text-gray-500 dark:text-gray-400 font-medium">Mouth-melting tender lamb shoulder pieces over saffron-infused ghee mandi rice.</p>
           </div>
 
-          <div className="glass-card p-4 rounded-2xl border-l-4 border-l-emerald-500 space-y-1">
-            <h3 className="font-extrabold text-white text-sm">⚡ 25-Min Express Mandi Delivery</h3>
-            <p className="text-gray-400">Thermal sealed insulated box keeps Mandi piping hot right to your doorstep until 2 AM.</p>
+          <div className="bg-white dark:bg-secondary p-5 rounded-3xl border border-black/5 dark:border-white/10 border-l-4 border-l-emerald-500 space-y-1 shadow-ios-card">
+            <h3 className="font-black text-gray-900 dark:text-white text-sm">⚡ 25-Min Express Mandi Delivery</h3>
+            <p className="text-gray-500 dark:text-gray-400 font-medium">Thermal sealed box keeps Mandi piping hot right to your doorstep until 2 AM.</p>
           </div>
         </div>
 
         {/* Mandi Menu Grid */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-black text-white flex items-center gap-2">
+          <h2 className="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
             <Flame className="w-6 h-6 text-primary" /> Arabian Mandi Specials Menu
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mandiProducts.map(p => (
-              <div key={p.id} className="glass-card rounded-3xl overflow-hidden border border-white/10 p-4 space-y-3 flex flex-col justify-between">
+              <div key={p.id} className="bg-white dark:bg-secondary rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 p-4 space-y-3 flex flex-col justify-between shadow-ios-card">
                 <img 
                   src={p.image} 
-                  alt={`${p.name} - Authentic Arabian Mandi in Melapalayam Tirunelveli - MidnightFuelss`} 
+                  alt={`${p.name} - Authentic Arabian Mandi in Melapalayam Tirunelveli`} 
                   loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="250"
                   className="w-full h-48 rounded-2xl object-cover" 
                 />
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-extrabold text-white text-base">{p.name}</h3>
+                    <h3 className="font-black text-gray-900 dark:text-white text-base">{p.name}</h3>
                     <span className="bg-emerald-600 text-white font-extrabold text-xs px-2 py-0.5 rounded-lg">⭐ {p.rating || 4.9}</span>
                   </div>
-                  <p className="text-gray-400 text-xs leading-relaxed">{p.description}</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed font-medium">{p.description}</p>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-white/10">
                   <span className="text-xl font-black text-primary">₹{p.offerPrice || p.price}</span>
                   <button
                     onClick={() => addToCart(p)}
-                    className="bg-primary hover:bg-primary-hover text-white font-extrabold px-4 py-2 rounded-xl text-xs shadow-glow-sm transition"
+                    className="bg-primary hover:bg-primary-hover text-white font-black px-4 py-2 rounded-xl text-xs shadow-ios-orange transition"
                   >
                     + ADD MANDI
                   </button>
@@ -145,18 +142,18 @@ export const BiryaniSeoPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {biryaniProducts.map(p => (
-            <div key={p.id} className="glass-card rounded-3xl overflow-hidden border border-white/10 p-4 space-y-3 flex flex-col justify-between">
+            <div key={p.id} className="bg-white dark:bg-secondary rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 p-4 space-y-3 flex flex-col justify-between shadow-ios-card">
               <img src={p.image} alt={`${p.name} Tirunelveli`} className="w-full h-48 rounded-2xl object-cover" />
               <div className="space-y-1">
-                <h3 className="font-extrabold text-white text-base">{p.name}</h3>
-                <p className="text-gray-400 text-xs leading-relaxed">{p.description}</p>
+                <h3 className="font-black text-gray-900 dark:text-white text-base">{p.name}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed font-medium">{p.description}</p>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-white/10">
                 <span className="text-xl font-black text-primary">₹{p.offerPrice || p.price}</span>
                 <button
                   onClick={() => addToCart(p)}
-                  className="bg-primary hover:bg-primary-hover text-white font-extrabold px-4 py-2 rounded-xl text-xs shadow-glow-sm transition"
+                  className="bg-primary hover:bg-primary-hover text-white font-black px-4 py-2 rounded-xl text-xs shadow-ios-orange transition"
                 >
                   + ADD BIRYANI
                 </button>
@@ -173,31 +170,31 @@ export const BiryaniSeoPage: React.FC = () => {
 
 // 3. Dedicated Midnight Food Page (/midnight-food-tirunelveli)
 export const MidnightFoodSeoPage: React.FC = () => {
-  const { products, addToCart, settings } = useStore();
+  const { products, addToCart } = useStore();
 
   return (
     <div className="space-y-8 pb-12">
       <SeoHeader 
         tag="OPEN NIGHTLY 7:00 PM – 2:00 AM"
         title="Late Night Food Delivery in Tirunelveli"
-        subtitle="Craving food after midnight? Midnight Fuel delivers piping hot Mandi, Dum Biryani, Jumbo Shawarma, Crisp Parottas, and Monster Burgers until 2:00 AM across Melapalayam and Tirunelveli city."
+        subtitle="Craving food after midnight? Food App delivers piping hot Mandi, Dum Biryani, Jumbo Shawarma, Crisp Parottas, and Monster Burgers until 2:00 AM across Melapalayam and Tirunelveli city."
       />
 
       <div className="max-w-7xl mx-auto px-4 space-y-8">
         
         {/* Operating Timings Feature Box */}
-        <div className="glass-panel p-6 rounded-3xl border border-primary/40 space-y-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/20 text-primary font-black text-xs px-3 py-1 rounded-full uppercase">
+        <div className="bg-white dark:bg-secondary p-6 rounded-3xl border border-primary/30 space-y-4 text-center shadow-ios-card">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary font-black text-xs px-3 py-1 rounded-full uppercase">
             <Clock className="w-4 h-4 animate-pulse" /> Operating Hours & Booking
           </div>
-          <h2 className="text-2xl font-black text-white">Never Sleep Hungry in Tirunelveli</h2>
+          <h2 className="text-2xl font-black text-gray-900 dark:text-white">Never Sleep Hungry in Tirunelveli</h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm">
-            <div className="bg-secondary p-3 rounded-2xl border border-white/10">
-              <span className="text-gray-400 block text-xs">ORDER BOOKING</span>
-              <strong className="text-white text-base">7:00 AM – 2:00 AM</strong>
+            <div className="bg-secondary-soft dark:bg-darkbg p-4 rounded-2xl border border-black/5 dark:border-white/10">
+              <span className="text-gray-400 block text-xs font-bold">ORDER BOOKING</span>
+              <strong className="text-gray-900 dark:text-white text-base">7:00 AM – 2:00 AM</strong>
             </div>
-            <div className="bg-secondary p-3 rounded-2xl border border-white/10">
-              <span className="text-gray-400 block text-xs">KITCHEN DELIVERY</span>
+            <div className="bg-secondary-soft dark:bg-darkbg p-4 rounded-2xl border border-black/5 dark:border-white/10">
+              <span className="text-gray-400 block text-xs font-bold">KITCHEN DELIVERY</span>
               <strong className="text-primary text-base">7:00 PM – 2:00 AM</strong>
             </div>
           </div>
@@ -205,15 +202,15 @@ export const MidnightFoodSeoPage: React.FC = () => {
 
         {/* Featured Midnight Dishes */}
         <div className="space-y-4">
-          <h3 className="text-xl font-extrabold text-white">Popular 2 AM Night Cravings</h3>
+          <h3 className="text-xl font-black text-gray-900 dark:text-white">Popular 2 AM Night Cravings</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {products.slice(0, 8).map(p => (
-              <div key={p.id} className="glass-card p-3 rounded-2xl space-y-2">
+              <div key={p.id} className="bg-white dark:bg-secondary p-3.5 rounded-2xl space-y-2 border border-black/5 dark:border-white/10 shadow-ios-card">
                 <img src={p.image} alt={p.name} className="w-full h-36 rounded-xl object-cover" />
-                <h4 className="font-extrabold text-white text-xs truncate">{p.name}</h4>
+                <h4 className="font-black text-gray-900 dark:text-white text-xs truncate">{p.name}</h4>
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-black text-primary">₹{p.offerPrice || p.price}</span>
-                  <button onClick={() => addToCart(p)} className="bg-primary text-white text-[10px] font-black px-2.5 py-1 rounded-lg">
+                  <button onClick={() => addToCart(p)} className="bg-primary text-white text-[10px] font-black px-3 py-1 rounded-xl shadow-ios-orange">
                     + ADD
                   </button>
                 </div>
@@ -242,19 +239,19 @@ export const MelapalayamSeoPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <h2 className="text-xl font-black text-white">Why Order from Midnight Fuel Melapalayam?</h2>
-            <ul className="space-y-2 text-xs text-gray-300">
+          <div className="bg-white dark:bg-secondary p-6 rounded-3xl space-y-4 border border-black/5 dark:border-white/10 shadow-ios-card">
+            <h2 className="text-xl font-black text-gray-900 dark:text-white">Why Order from Food App Melapalayam?</h2>
+            <ul className="space-y-2 text-xs text-gray-600 dark:text-gray-300 font-medium">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span><strong>Fastest Local Delivery:</strong> Under 20 minutes across Melapalayam 627005.</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span><strong>100% Halal Ingredients:</strong> Freshly slaughtered chicken, mutton & beef cooked daily.</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span><strong>Night Owl Headquarters:</strong> Serving hot food until 2:00 AM every night.</span>
               </li>
             </ul>
@@ -262,17 +259,17 @@ export const MelapalayamSeoPage: React.FC = () => {
             <div className="pt-2">
               <a
                 href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-                className="bg-primary hover:bg-primary-hover text-white font-extrabold px-6 py-3 rounded-2xl text-xs inline-flex items-center gap-2 shadow-glow-sm"
+                className="bg-primary hover:bg-primary-hover text-white font-black px-6 py-3 rounded-2xl text-xs inline-flex items-center gap-2 shadow-ios-orange"
               >
                 <PhoneCall className="w-4 h-4" /> Call Melapalayam Kitchen ({settings.phone})
               </a>
             </div>
           </div>
 
-          <div className="glass-card p-4 rounded-3xl">
-            <h3 className="text-xs font-bold text-gray-400 uppercase mb-2">Melapalayam Hub Coordinates</h3>
-            <p className="text-xs font-bold text-white mb-2">📍 Bazar, Near Meera Broilers, Melapalayam, Tirunelveli – 627005</p>
-            <div className="h-60 rounded-2xl bg-secondary border border-white/10 flex items-center justify-center text-xs text-gray-400">
+          <div className="bg-white dark:bg-secondary p-4 rounded-3xl border border-black/5 dark:border-white/10 shadow-ios-card">
+            <h3 className="text-xs font-black text-gray-400 uppercase mb-2">Melapalayam Hub Coordinates</h3>
+            <p className="text-xs font-black text-gray-900 dark:text-white mb-2">📍 Bazar, Near Meera Broilers, Melapalayam, Tirunelveli – 627005</p>
+            <div className="h-60 rounded-2xl bg-secondary-soft dark:bg-darkbg border border-black/5 dark:border-white/10 flex items-center justify-center text-xs text-gray-500 font-bold">
               🗺️ GPS Pin: 8.7075 N, 77.7280 E (Melapalayam)
             </div>
           </div>
@@ -300,18 +297,18 @@ export const DishCategorySeoPage: React.FC<{ categoryKey: string; title: string;
       <div className="max-w-7xl mx-auto px-4 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {categoryProducts.map(p => (
-            <div key={p.id} className="glass-card rounded-3xl overflow-hidden border border-white/10 p-4 space-y-3 flex flex-col justify-between">
+            <div key={p.id} className="bg-white dark:bg-secondary rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 p-4 space-y-3 flex flex-col justify-between shadow-ios-card">
               <img src={p.image} alt={`${p.name} Tirunelveli`} className="w-full h-48 rounded-2xl object-cover" />
               <div className="space-y-1">
-                <h3 className="font-extrabold text-white text-base">{p.name}</h3>
-                <p className="text-gray-400 text-xs leading-relaxed">{p.description}</p>
+                <h3 className="font-black text-gray-900 dark:text-white text-base">{p.name}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed font-medium">{p.description}</p>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-white/10">
                 <span className="text-xl font-black text-primary">₹{p.offerPrice || p.price}</span>
                 <button
                   onClick={() => addToCart(p)}
-                  className="bg-primary hover:bg-primary-hover text-white font-extrabold px-4 py-2 rounded-xl text-xs shadow-glow-sm transition"
+                  className="bg-primary hover:bg-primary-hover text-white font-black px-4 py-2 rounded-xl text-xs shadow-ios-orange transition"
                 >
                   + ADD ITEM
                 </button>
@@ -326,46 +323,45 @@ export const DishCategorySeoPage: React.FC<{ categoryKey: string; title: string;
   );
 };
 
-// 6. Frequently Asked Questions Page (/faq)
+// FAQ Page
 export const FaqSeoPage: React.FC = () => {
   const faqs = [
     {
-      q: 'What are Midnight Fuel opening hours in Tirunelveli?',
-      a: 'We are open for late-night hot food delivery every night from 7:00 PM to 2:00 AM. Pre-order booking line opens daily from 7:00 AM.'
-    },
-    {
-      q: 'Where is Midnight Fuel located in Melapalayam?',
-      a: 'Our main kitchen is located at Bazar, Near Meera Broilers, Melapalayam, Tirunelveli – 627005.'
+      q: 'What are the delivery timings of Food App in Tirunelveli?',
+      a: 'We operate nightly from 7:00 PM to 2:00 AM for live instant delivery across Melapalayam and Tirunelveli. Pre-bookings can be placed anytime from 7:00 AM onwards.'
     },
     {
       q: 'Is all food 100% Halal certified?',
-      a: 'Yes, 100% of our chicken, mutton, and beef dishes are prepared using strictly Halal certified ingredients.'
+      a: 'Yes, 100% Halal. All chicken, mutton, and beef are slaughtered according to strict Halal procedures daily.'
     },
     {
-      q: 'What is the delivery time for Arabian Mandi and Biryani?',
-      a: 'Average delivery time is 20-30 minutes across Melapalayam, Palayamkottai, and Tirunelveli city.'
+      q: 'Which locations in Tirunelveli do you deliver to?',
+      a: 'We provide 20-minute delivery to Melapalayam (627005), High Ground, Palayamkottai (627002), Vannarpettai (627003), Tirunelveli Town (627006), and Perumalpuram (627007).'
     },
     {
-      q: 'What payment methods do you accept?',
-      a: 'We accept Cash on Delivery (COD), UPI (GPay, PhonePe, Paytm, BHIM), Credit/Debit Cards, and NetBanking via Razorpay.'
+      q: 'What payment methods are supported?',
+      a: 'We accept Cash on Delivery (COD) as well as instant Online UPI (GPay, PhonePe, Paytm), Credit Cards, Debit Cards, and Net Banking.'
     }
   ];
 
   return (
     <div className="space-y-8 pb-12">
       <SeoHeader 
-        tag="HELP & FAQS"
-        title="Frequently Asked Questions"
-        subtitle="Everything you need to know about food delivery, Mandi pre-orders, delivery areas in Tirunelveli, and late-night timings."
+        tag="CUSTOMER SUPPORT & HELP"
+        title="Frequently Asked Questions (FAQ)"
+        subtitle="Got questions about our late night food delivery, Halal certification, or menu? Find instant answers below."
       />
 
-      <div className="max-w-4xl mx-auto px-4 space-y-4">
-        {faqs.map((faq, i) => (
-          <div key={i} className="glass-card p-5 rounded-2xl space-y-2 border border-white/10">
-            <h3 className="text-base font-extrabold text-white flex items-center gap-2">
-              <HelpCircle className="w-5 h-5 text-primary shrink-0" /> {faq.q}
+      <div className="max-w-3xl mx-auto px-4 space-y-4">
+        {faqs.map((f, i) => (
+          <div key={i} className="bg-white dark:bg-secondary p-5 rounded-3xl border border-black/5 dark:border-white/10 space-y-2 shadow-ios-card">
+            <h3 className="font-black text-gray-900 dark:text-white text-base flex items-start gap-2">
+              <HelpCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <span>{f.q}</span>
             </h3>
-            <p className="text-xs text-gray-300 pl-7 leading-relaxed">{faq.a}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed pl-7 font-medium">
+              {f.a}
+            </p>
           </div>
         ))}
 
@@ -375,21 +371,20 @@ export const FaqSeoPage: React.FC = () => {
   );
 };
 
-// 7. Privacy Policy & Terms Pages
+// Legal Pages (Privacy & Terms)
 export const LegalPages: React.FC<{ mode: 'privacy' | 'terms' }> = ({ mode }) => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-      <h1 className="text-3xl font-black text-white">
-        {mode === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions'}
-      </h1>
-      <div className="glass-card p-6 rounded-3xl text-xs text-gray-300 space-y-4 leading-relaxed border border-white/10">
-        <p>
-          Welcome to <strong>Midnight Fuel</strong> (Melapalayam, Tirunelveli). We value your privacy and are committed to protecting your personal data when ordering food.
+      <div className="bg-white dark:bg-secondary p-6 sm:p-8 rounded-3xl border border-black/5 dark:border-white/10 space-y-4 shadow-ios-card">
+        <h1 className="text-2xl font-black text-gray-900 dark:text-white">
+          {mode === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions'}
+        </h1>
+        <p className="text-xs text-gray-500 dark:text-gray-400 font-medium leading-relaxed">
+          {mode === 'privacy'
+            ? 'Food App respects your privacy. We collect your delivery address and contact information solely to fulfill your food orders and provide live GPS driver tracking updates.'
+            : 'By using Food App, you agree to comply with our terms regarding late night orders, delivery area limits (Tirunelveli & Melapalayam), and order cancellation policies.'
+          }
         </p>
-        <h3 className="font-extrabold text-white text-sm">1. Data Collection</h3>
-        <p>We collect customer contact information (Name, Mobile Phone Number, Delivery Address, Pincode) solely for fulfilling food orders and delivery dispatch.</p>
-        <h3 className="font-extrabold text-white text-sm">2. Payments & Security</h3>
-        <p>All online transactions are encrypted via official Razorpay SSL gateways. We do not store credit card CVV numbers.</p>
       </div>
     </div>
   );
