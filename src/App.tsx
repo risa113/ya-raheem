@@ -351,14 +351,37 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
   }
 
   static getDerivedStateFromError() {
-    return { hasError: false };
+    return { hasError: true };
   }
 
   componentDidCatch(error: any, errorInfo: any) {
-    console.error('Safe ErrorBoundary caught error:', error, errorInfo);
+    console.error('ErrorBoundary caught error:', error, errorInfo);
   }
 
   render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-lightbg dark:bg-darkbg text-gray-900 dark:text-white flex items-center justify-center p-6 text-center">
+          <div className="bg-white dark:bg-secondary p-8 rounded-3xl border border-black/5 dark:border-white/10 max-w-md w-full space-y-4 shadow-ios-lg">
+            <div className="text-4xl">⚠️</div>
+            <h2 className="text-xl font-black">Something went wrong</h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-bold">An unexpected runtime error occurred. Please click below to reset to storefront home.</p>
+            <button
+              onClick={() => {
+                try {
+                  localStorage.removeItem('mf_view_mode');
+                  window.location.hash = '';
+                } catch (e) {}
+                window.location.reload();
+              }}
+              className="bg-primary hover:bg-primary-hover text-white font-black px-6 py-3 rounded-2xl text-xs uppercase shadow-ios-orange transition"
+            >
+              Reset to Storefront Home 🏠
+            </button>
+          </div>
+        </div>
+      );
+    }
     return this.props.children;
   }
 }
@@ -367,7 +390,7 @@ export function App() {
   return (
     <ErrorBoundary>
       <StoreProvider>
-        <MainAppContent />
+        <AppContent />
       </StoreProvider>
     </ErrorBoundary>
   );
