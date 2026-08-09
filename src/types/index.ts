@@ -144,6 +144,7 @@ export type CustomerTab =
   | 'orders' 
   | 'wishlist'
   | 'account'
+  | 'catering-tirunelveli'
   | 'mandi-tirunelveli'
   | 'biryani-tirunelveli'
   | 'midnight-food-tirunelveli'

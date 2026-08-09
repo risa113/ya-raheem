@@ -14,8 +14,9 @@ import {
 } from './components/CustomerPages';
 import { 
   MandiSeoPage, BiryaniSeoPage, MidnightFoodSeoPage, MelapalayamSeoPage, 
-  DishCategorySeoPage, FaqSeoPage, LegalPages, GoogleReviewBanner 
+  DishCategorySeoPage, FaqSeoPage, LegalPages, GoogleReviewBanner, CateringSeoPage 
 } from './components/SeoPages';
+import { SeoManager } from './components/SeoManager';
 import { 
   AdminLayout, AdminDashboardView, AdminOrdersView, 
   AdminKitchenView, AdminProductsView, AdminCategoriesView, AdminSettingsView, AdminCustomersView 
@@ -32,18 +33,34 @@ const HomepageSeoContent: React.FC = () => {
         {/* H1 & H2 SEO Structure */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <span className="text-xs bg-primary/10 text-primary font-black px-3.5 py-1 rounded-full uppercase tracking-wider">
-            🔥 TIRUNELVELI'S #1 FOOD DELIVERY APP
+            🔥 TIRUNELVELI'S #1 FOOD DELIVERY & CATERING APP
           </span>
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Late Night Food Delivery in Tirunelveli
+            Late Night Food Delivery & Catering in Tirunelveli
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">
-            Food App is Melapalayam's premier food delivery destination, serving slow-cooked Arabian Mandi, authentic Hyderabadi Dum Biryani, jumbo shawarmas, and wood-fired pizzas until 2:00 AM every night.
+            Midnight Fuel is Melapalayam's premier food delivery destination and bulk catering provider, serving slow-cooked Arabian Mandi, authentic Hyderabadi Dum Biryani, jumbo shawarmas, and event catering until 2:00 AM every night.
           </p>
         </div>
 
         {/* Keyword Clusters Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div 
+            onClick={() => setCustomerTab('catering-tirunelveli')}
+            className="bg-white dark:bg-secondary p-6 rounded-3xl space-y-2 border border-black/5 dark:border-white/10 hover:border-primary cursor-pointer transition shadow-ios-card group"
+          >
+            <div className="text-3xl">👑</div>
+            <h2 className="text-lg font-black text-gray-900 dark:text-white group-hover:text-primary transition">
+              Catering & Bulk Orders
+            </h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+              Arabian Mandi & Dum Biryani catering for Weddings, Sunnat feasts & events in Tirunelveli.
+            </p>
+            <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
+              Catering Packages & Quote →
+            </span>
+          </div>
+
           <div 
             onClick={() => setCustomerTab('mandi-tirunelveli')}
             className="bg-white dark:bg-secondary p-6 rounded-3xl space-y-2 border border-black/5 dark:border-white/10 hover:border-primary cursor-pointer transition shadow-ios-card group"
@@ -53,7 +70,7 @@ const HomepageSeoContent: React.FC = () => {
               Mandi & Biryani Delivery
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-              Order Chicken Mandi, Mutton Mandi, Beef Mandi, and Seeraga Samba Dum Biryani cooked fresh and served hot.
+              Order Chicken Mandi, Mutton Mandi, Beef Mandi, and Seeraga Samba Dum Biryani cooked fresh.
             </p>
             <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
               Explore Mandi Menu →
@@ -69,7 +86,7 @@ const HomepageSeoContent: React.FC = () => {
               Midnight Food Delivery
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-              Craving 2 AM night food? Express delivery across Melapalayam (627005) near Bazar, High Ground, and Tirunelveli city.
+              Craving 2 AM night food? Express delivery across Melapalayam (627005) and Tirunelveli.
             </p>
             <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
               View 2 AM Night Menu →
@@ -85,7 +102,7 @@ const HomepageSeoContent: React.FC = () => {
               Order Fresh Food Online
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-              From Cheese Shawarma to Fiery BBQ Pizza and Monster Burgers, order fresh online with instant live map tracking.
+              From Cheese Shawarma to Fiery BBQ Pizza and Monster Burgers, order fresh online.
             </p>
             <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
               Order Food Now →
@@ -100,31 +117,34 @@ const HomepageSeoContent: React.FC = () => {
   );
 };
 
-const MainAppContent: React.FC = () => {
-  const { viewMode, customerTab, setCustomerTab, adminTab, isCheckoutOpen, setIsCheckoutOpen } = useStore();
+const AppContent: React.FC = () => {
+  const { 
+    viewMode, adminTab, customerTab, isCheckoutOpen, setIsCheckoutOpen 
+  } = useStore();
+
   const [isOffersModalOpen, setIsOffersModalOpen] = useState<boolean>(false);
 
-  // Trigger promotional popup modal once on first visit
   useEffect(() => {
     const timer = setTimeout(() => {
-      const hasSeenPromo = sessionStorage.getItem('seen_ios_promo');
-      if (!hasSeenPromo) {
+      const modalShown = sessionStorage.getItem('mf_hurry_modal_shown');
+      if (!modalShown && viewMode === 'customer') {
         setIsOffersModalOpen(true);
-        sessionStorage.setItem('seen_ios_promo', 'true');
+        sessionStorage.setItem('mf_hurry_modal_shown', 'true');
       }
-    }, 1500);
+    }, 4000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [viewMode]);
 
   if (viewMode === 'admin') {
     return (
       <AdminLayout>
+        <SeoManager />
         {adminTab === 'dashboard' && <AdminDashboardView />}
         {adminTab === 'orders' && <AdminOrdersView />}
         {adminTab === 'kitchen' && <AdminKitchenView />}
         {adminTab === 'products' && <AdminProductsView />}
         {adminTab === 'categories' && <AdminCategoriesView />}
-        {adminTab === 'coupons' && <AdminSettingsView />}
+        {adminTab === 'coupons' && <AdminProductsView />}
         {adminTab === 'banners' && <AdminDashboardView />}
         {adminTab === 'customers' && <AdminCustomersView />}
         {adminTab === 'analytics' && <AdminDashboardView />}
@@ -135,18 +155,19 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-lightbg dark:bg-darkbg text-gray-900 dark:text-white font-sans transition-colors">
-      {/* Sticky Header */}
+    <div className="min-h-screen bg-lightbg dark:bg-darkbg text-gray-900 dark:text-white font-sans flex flex-col selection:bg-primary selection:text-white transition-colors">
+      <SeoManager />
+      
+      {/* iOS Header Navbar */}
       <Navbar />
 
-      {/* Dynamic Main Body Content */}
-      <main className="flex-1 pb-20 md:pb-6">
+      {/* Main Page Dynamic Router */}
+      <main className="flex-1">
         {customerTab === 'home' && (
           <>
             <Hero />
             <MenuSection />
             <HomepageSeoContent />
-            <ContactPage />
           </>
         )}
 
@@ -159,6 +180,7 @@ const MainAppContent: React.FC = () => {
         {customerTab === 'account' && <AccountPage />}
 
         {/* Dedicated SEO Landing Pages */}
+        {customerTab === 'catering-tirunelveli' && <CateringSeoPage />}
         {customerTab === 'mandi-tirunelveli' && <MandiSeoPage />}
         {customerTab === 'biryani-tirunelveli' && <BiryaniSeoPage />}
         {customerTab === 'midnight-food-tirunelveli' && <MidnightFoodSeoPage />}

@@ -241,6 +241,12 @@ export const Navbar: React.FC = () => {
               All Categories
             </button>
             <button
+              onClick={() => setCustomerTab('catering-tirunelveli')}
+              className={`flex items-center gap-1 transition hover:text-primary ${customerTab === 'catering-tirunelveli' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
+            >
+              👑 Catering & Bulk Orders
+            </button>
+            <button
               onClick={() => setCustomerTab('offers')}
               className={`flex items-center gap-1 transition hover:text-primary ${customerTab === 'offers' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
             >

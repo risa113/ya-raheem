@@ -239,7 +239,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const hash = window.location.hash.replace('#', '').trim();
     const validTabs: CustomerTab[] = [
       'home', 'menu', 'offers', 'about', 'contact', 'orders', 'wishlist', 'account',
-      'mandi-tirunelveli', 'biryani-tirunelveli', 'midnight-food-tirunelveli',
+      'catering-tirunelveli', 'mandi-tirunelveli', 'biryani-tirunelveli', 'midnight-food-tirunelveli',
       'food-delivery-melapalayam', 'shawarma-tirunelveli', 'pizza-tirunelveli',
       'fried-chicken-tirunelveli', 'faq', 'privacy-policy', 'terms', 'sitemap'
     ];
