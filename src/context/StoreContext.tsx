@@ -222,7 +222,17 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [themeMode]);
 
-  const [viewModeState, setViewModeState] = useState<ViewMode>('customer');
+  const getViewModeFromStorage = (): ViewMode => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace('#', '').trim();
+      if (hash.startsWith('admin')) return 'admin';
+      const saved = localStorage.getItem('mf_view_mode') as ViewMode;
+      if (saved === 'admin') return 'admin';
+    }
+    return 'customer';
+  };
+
+  const [viewModeState, setViewModeState] = useState<ViewMode>(() => getViewModeFromStorage());
 
   const getTabFromHash = (): CustomerTab => {
     if (typeof window === 'undefined') return 'home';
@@ -239,7 +249,25 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'home';
   };
 
+  const getAdminTabFromStorage = (): AdminTab => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace('#', '').trim();
+      if (hash.startsWith('admin-')) {
+        const tabKey = hash.replace('admin-', '') as AdminTab;
+        const validAdminTabs: AdminTab[] = [
+          'dashboard', 'orders', 'kitchen', 'products', 'categories',
+          'coupons', 'banners', 'customers', 'analytics', 'reviews', 'settings'
+        ];
+        if (validAdminTabs.includes(tabKey)) return tabKey;
+      }
+      const saved = localStorage.getItem('mf_admin_tab') as AdminTab;
+      if (saved) return saved;
+    }
+    return 'dashboard';
+  };
+
   const [customerTabState, setCustomerTabState] = useState<CustomerTab>(() => getTabFromHash());
+  const [adminTabState, setAdminTabState] = useState<AdminTab>(() => getAdminTabFromStorage());
 
   const setCustomerTab = (tab: CustomerTab) => {
     setCustomerTabState(tab);
@@ -256,29 +284,66 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const setViewMode = (mode: ViewMode) => {
+    setViewModeState(mode);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('mf_view_mode', mode);
+        if (mode === 'admin') {
+          const targetHash = `#admin-${adminTabState}`;
+          if (window.location.hash !== targetHash) {
+            const newUrl = `${window.location.pathname}${window.location.search}${targetHash}`;
+            window.history.pushState(null, '', newUrl);
+          }
+        } else {
+          const targetHash = customerTabState === 'home' ? '' : `#${customerTabState}`;
+          const newUrl = customerTabState === 'home' 
+            ? window.location.pathname + window.location.search 
+            : `${window.location.pathname}${window.location.search}${targetHash}`;
+          window.history.pushState(null, '', newUrl);
+        }
+      } catch (e) {}
+    }
+  };
+
+  const setAdminTab = (tab: AdminTab) => {
+    setAdminTabState(tab);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('mf_admin_tab', tab);
+        localStorage.setItem('mf_view_mode', 'admin');
+        setViewModeState('admin');
+        const targetHash = `#admin-${tab}`;
+        if (window.location.hash !== targetHash) {
+          const newUrl = `${window.location.pathname}${window.location.search}${targetHash}`;
+          window.history.pushState(null, '', newUrl);
+        }
+      } catch (e) {}
+    }
+  };
+
   useEffect(() => {
     const handleHashChange = () => {
-      const tab = getTabFromHash();
-      setCustomerTabState(tab);
+      const hash = window.location.hash.replace('#', '').trim();
+      if (hash.startsWith('admin')) {
+        setViewModeState('admin');
+        localStorage.setItem('mf_view_mode', 'admin');
+        if (hash.startsWith('admin-')) {
+          const tabKey = hash.replace('admin-', '') as AdminTab;
+          setAdminTabState(tabKey);
+          localStorage.setItem('mf_admin_tab', tabKey);
+        }
+      } else {
+        setViewModeState('customer');
+        localStorage.setItem('mf_view_mode', 'customer');
+        const tab = getTabFromHash();
+        setCustomerTabState(tab);
+      }
     };
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  const [adminTabState, setAdminTabState] = useState<AdminTab>(() => {
-    return (localStorage.getItem('mf_admin_tab') as AdminTab) || 'dashboard';
-  });
-
-  const setViewMode = (mode: ViewMode) => {
-    setViewModeState(mode);
-    localStorage.setItem('mf_view_mode', mode);
-  };
-
-  const setAdminTab = (tab: AdminTab) => {
-    setAdminTabState(tab);
-    localStorage.setItem('mf_admin_tab', tab);
-  };
 
   // Safe localStorage helper to prevent syntax crashes from corrupted state
   const safeParseJSON = <T,>(key: string, fallback: T): T => {
