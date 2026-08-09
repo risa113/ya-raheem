@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
   return (
     <section className="relative overflow-hidden pt-4 pb-8 bg-lightbg dark:bg-darkbg border-b border-black/5 dark:border-white/5 transition-colors">
       
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6 sm:space-y-8">
         
         {/* User Greeting Bar (Matching UI Kit header "Hey Halal, Good Afternoon!") */}
         <div className="flex items-center justify-between">
@@ -119,7 +119,7 @@ export const Hero: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto pb-3 pt-1 no-scrollbar touch-pan-x snap-x">
+          <div className="flex items-center gap-3 sm:gap-6 overflow-x-auto pb-3 pt-1 no-scrollbar touch-pan-x snap-x">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -129,12 +129,12 @@ export const Hero: React.FC = () => {
                 }}
                 className="flex flex-col items-center group shrink-0"
               >
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white dark:bg-secondary p-1 border border-black/5 dark:border-white/10 group-hover:border-primary group-hover:shadow-ios-orange transition-all duration-300 transform group-hover:-translate-y-1 relative shrink-0 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-white dark:bg-secondary p-1 border border-black/5 dark:border-white/10 group-hover:border-primary group-hover:shadow-ios-orange transition-all duration-300 transform group-hover:-translate-y-1 relative shrink-0 flex items-center justify-center overflow-hidden">
                   {cat.image ? (
                     <img 
                       src={cat.image} 
                       alt={cat.name} 
-                      className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover rounded-xl sm:rounded-2xl group-hover:scale-105 transition-transform duration-500" 
                     />
                   ) : (
                     <span className="text-3xl">{cat.icon}</span>
@@ -152,17 +152,17 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Hero Interactive Showcase Slider */}
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+        <div className="grid lg:grid-cols-12 gap-5 lg:gap-10 items-center">
           
           {/* Left Column Promotional Showcase Card */}
           <div className="lg:col-span-7">
-            <div className="bg-white dark:bg-secondary border border-black/5 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-ios-card space-y-5 relative overflow-hidden">
+            <div className="bg-white dark:bg-secondary border border-black/5 dark:border-white/10 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-ios-card space-y-4 sm:space-y-5 relative overflow-hidden">
               
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider">
                 <Flame className="w-4 h-4" /> {currentBanner.tag}
               </div>
 
-              <h1 className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white leading-tight font-sans">
+              <h1 className="text-xl sm:text-4xl font-black text-gray-900 dark:text-white leading-tight font-sans">
                 {currentBanner.title}
               </h1>
 
@@ -173,14 +173,14 @@ export const Hero: React.FC = () => {
               <div className="flex items-center gap-3 pt-2">
                 <button
                   onClick={() => setCustomerTab('menu')}
-                  className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover text-white font-black px-6 py-3 rounded-full text-xs sm:text-sm flex items-center gap-2 shadow-ios-orange transition transform hover:scale-105"
+                  className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover text-white font-black px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm flex items-center gap-2 shadow-ios-orange transition transform hover:scale-105"
                 >
                   <span>ORDER NOW</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
-                <div className="flex items-baseline gap-1.5 px-4 py-2 rounded-2xl bg-secondary-soft dark:bg-darkbg">
-                  <span className="text-xl font-black text-primary">{currentBanner.price}</span>
+                <div className="flex items-baseline gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-secondary-soft dark:bg-darkbg">
+                  <span className="text-lg sm:text-xl font-black text-primary">{currentBanner.price}</span>
                   <span className="text-xs line-through text-gray-400">{currentBanner.oldPrice}</span>
                 </div>
               </div>
@@ -203,16 +203,16 @@ export const Hero: React.FC = () => {
 
           {/* Right Column Banner Photo Showcase */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-ios-lg group border border-black/5 dark:border-white/10">
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-ios-lg group border border-black/5 dark:border-white/10">
               <img
                 src={currentBanner.image}
                 alt={currentBanner.title}
-                className="w-full h-[260px] sm:h-[320px] object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-[220px] sm:h-[320px] object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 text-white">
                 <span className="text-xs font-black uppercase text-primary tracking-wider">FEATURED DISH</span>
-                <h3 className="text-lg font-black">{currentBanner.title}</h3>
+                <h3 className="text-base sm:text-lg font-black">{currentBanner.title}</h3>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ export const Hero: React.FC = () => {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {featuredKitchenStations.map((station) => (
               <div
                 key={station.id}
@@ -241,7 +241,7 @@ export const Hero: React.FC = () => {
                   setSelectedCategory(station.id);
                   setCustomerTab('menu');
                 }}
-                className="bg-white dark:bg-secondary border border-black/5 dark:border-white/10 rounded-3xl overflow-hidden shadow-ios-card hover:border-primary/50 transition cursor-pointer group"
+                className="bg-white dark:bg-secondary border border-black/5 dark:border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-ios-card hover:border-primary/50 transition cursor-pointer group"
               >
                 <div className="relative h-44 overflow-hidden">
                   <img 

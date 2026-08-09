@@ -69,15 +69,15 @@ export const MenuSection: React.FC = () => {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         
         {/* Section Heading */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider mb-1">
+            <div className="inline-flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-1">
               <Flame className="w-3.5 h-3.5" /> Popular Foods
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white tracking-tight font-sans">
+            <h2 className="text-xl sm:text-4xl font-black text-gray-900 dark:text-white tracking-tight font-sans">
               Popular <span className="text-primary">Dishes & Menu</span>
             </h2>
           </div>
@@ -91,7 +91,7 @@ export const MenuSection: React.FC = () => {
         <div className="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 no-scrollbar touch-pan-x snap-x scroll-smooth">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`px-5 py-2.5 rounded-full text-xs font-black whitespace-nowrap transition shadow-sm ${
+            className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-black whitespace-nowrap transition shadow-sm ${
               selectedCategory === 'all'
                 ? 'bg-primary text-white shadow-ios-orange'
                 : 'bg-white dark:bg-secondary text-gray-700 dark:text-gray-300 border border-black/5 dark:border-white/10 hover:border-primary'
@@ -107,7 +107,7 @@ export const MenuSection: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2.5 rounded-full text-xs font-black whitespace-nowrap transition flex items-center gap-2 shadow-sm ${
+                className={`px-3.5 sm:px-4 py-2.5 rounded-full text-xs font-black whitespace-nowrap transition flex items-center gap-2 shadow-sm ${
                   isSelected
                     ? 'bg-primary text-white shadow-ios-orange'
                     : 'bg-white dark:bg-secondary text-gray-700 dark:text-gray-300 border border-black/5 dark:border-white/10 hover:border-primary'
@@ -128,7 +128,7 @@ export const MenuSection: React.FC = () => {
         </div>
 
         {/* Filter Chips & Sorting Row */}
-        <div className="bg-white dark:bg-secondary p-4 rounded-3xl border border-black/5 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-ios-card">
+        <div className="bg-white dark:bg-secondary p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-black/5 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 sm:gap-4 text-xs font-bold text-gray-700 dark:text-gray-300 shadow-ios-card">
           
           {/* Toggles Chips */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -136,7 +136,7 @@ export const MenuSection: React.FC = () => {
             {/* Pure Veg */}
             <button
               onClick={() => setIsVegOnly(!isVegOnly)}
-              className={`px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
+              className={`px-3 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
                 isVegOnly 
                   ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-extrabold'
                   : 'bg-secondary-soft dark:bg-darkbg border-black/5 dark:border-white/10 text-gray-500 dark:text-gray-400'
@@ -151,7 +151,7 @@ export const MenuSection: React.FC = () => {
             {/* Bestsellers */}
             <button
               onClick={() => setPopularOnly(!popularOnly)}
-              className={`px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
+              className={`px-3 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
                 popularOnly 
                   ? 'bg-primary/10 border-primary text-primary font-extrabold'
                   : 'bg-secondary-soft dark:bg-darkbg border-black/5 dark:border-white/10 text-gray-500 dark:text-gray-400'
@@ -164,7 +164,7 @@ export const MenuSection: React.FC = () => {
             {/* Rating 4.5+ */}
             <button
               onClick={() => setMinRating(minRating === 4.5 ? 0 : 4.5)}
-              className={`px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
+              className={`px-3 py-1.5 rounded-full border flex items-center gap-1.5 transition ${
                 minRating === 4.5 
                   ? 'bg-amber-500/10 border-amber-500 text-amber-600 dark:text-amber-400 font-extrabold'
                   : 'bg-secondary-soft dark:bg-darkbg border-black/5 dark:border-white/10 text-gray-500 dark:text-gray-400'
@@ -214,7 +214,7 @@ export const MenuSection: React.FC = () => {
 
         {/* Product Grid - Matching iOS Food UI Kit Card Style */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 bg-white dark:bg-secondary rounded-3xl border border-black/5 dark:border-white/10 space-y-3 shadow-ios-card">
+          <div className="text-center py-16 bg-white dark:bg-secondary rounded-2xl sm:rounded-3xl border border-black/5 dark:border-white/10 space-y-3 shadow-ios-card">
             <div className="text-5xl">🍔</div>
             <h3 className="text-lg font-extrabold text-gray-900 dark:text-white">No Dishes Found</h3>
             <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm max-w-sm mx-auto">
@@ -222,7 +222,7 @@ export const MenuSection: React.FC = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredProducts.map(product => {
               const qty = getItemQuantityInCart(product.id);
               const isWishlisted = wishlist.includes(product.id);
@@ -232,7 +232,7 @@ export const MenuSection: React.FC = () => {
               return (
                 <div 
                   key={product.id}
-                  className="bg-white dark:bg-secondary rounded-3xl overflow-hidden flex flex-col group relative border border-black/5 dark:border-white/10 hover:border-primary/50 transition-all duration-300 shadow-ios-card"
+                  className="bg-white dark:bg-secondary rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col group relative border border-black/5 dark:border-white/10 hover:border-primary/50 transition-all duration-300 shadow-ios-card"
                 >
                   {/* Top Image Container */}
                   <div className="relative h-48 sm:h-52 overflow-hidden bg-secondary-soft dark:bg-darkbg">
