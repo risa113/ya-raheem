@@ -68,7 +68,7 @@ export const MandiSeoPage: React.FC = () => {
         {/* SEO Highlights Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div className="bg-white dark:bg-secondary p-5 rounded-3xl border border-black/5 dark:border-white/10 border-l-4 border-l-primary space-y-1 shadow-ios-card">
-            <h3 className="font-black text-gray-900 dark:text-white text-sm">🍗 Slow-Cooked Chicken Mandi</h3>
+            <h3 className="font-black text-gray-900 dark:text-white text-sm">👑 Royal Charcoal Grilled Chicken Mandi</h3>
             <p className="text-gray-500 dark:text-gray-400 font-medium">Marinated for 12 hours and cooked over charcoal. Served with garlic toum and red salsa.</p>
           </div>
 

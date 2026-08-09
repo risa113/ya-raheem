@@ -55,7 +55,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-3',
     name: 'Tirunelveli Beef Mandi',
-    description: 'Slow-braised beef shanks spiced with traditional Tirunelveli midnight masala served with buttery mandi rice.',
+    description: 'Tender succulent beef shanks spiced with traditional Tirunelveli midnight masala served with buttery mandi rice.',
     category: 'mandi',
     price: 520,
     offerPrice: 450,

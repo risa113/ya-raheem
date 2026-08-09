@@ -21,7 +21,7 @@ export const SeoManager: React.FC = () => {
       keywords: 'Midnight Cravings Tirunelveli, food delivery in Tirunelveli, late night food delivery Tirunelveli, catering in Tirunelveli, Mandi in Tirunelveli, biryani delivery Tirunelveli, food delivery Melapalayam',
       canonical: 'https://midnightfuel.in/',
       ogTitle: 'Midnight Cravings | Late Night Food Delivery & Catering in Tirunelveli',
-      ogDescription: 'Tirunelveli #1 Late Night Food & Catering Service. Slow-cooked Arabian Mandi, dum biryani & gourmet food delivered hot until 2 AM in Melapalayam.',
+      ogDescription: 'Tirunelveli #1 Late Night Food & Catering Service. Royal Arabian Mandi, dum biryani & gourmet food delivered hot until 2 AM in Melapalayam.',
     };
 
     if (viewMode === 'admin') {

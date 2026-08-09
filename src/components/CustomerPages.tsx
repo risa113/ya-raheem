@@ -689,7 +689,7 @@ export const AboutPage: React.FC = () => {
         <div className="glass-card p-6 rounded-2xl text-center space-y-2">
           <div className="text-3xl">🍗</div>
           <h3 className="text-base font-bold text-white">Authentic Mandi</h3>
-          <p className="text-xs text-gray-400">Slow-cooked Yemeni mandi with charred spiced meats and ghee basmati.</p>
+          <p className="text-xs text-gray-400">Authentic Yemeni Mandi prepared with aromatic spices and ghee basmati.</p>
         </div>
 
         <div className="glass-card p-6 rounded-2xl text-center space-y-2">

@@ -30,7 +30,7 @@ export const Hero: React.FC = () => {
     {
       id: 3,
       tag: 'YEMENI MANDI FEAST',
-      title: 'Slow-Cooked Arabian Chicken Mandi',
+      title: '👑 Royal Arabian Dum Chicken Mandi',
       subtitle: 'Saffron spiced basmati rice with charcoal roasted chicken',
       image: 'https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1000&q=80',
       price: '₹280',
