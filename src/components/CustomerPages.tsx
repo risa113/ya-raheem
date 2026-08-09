@@ -717,47 +717,46 @@ export const AccountPage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-      {/* Account Profile Header */}
-      <div className="glass-card p-6 rounded-3xl border border-primary/30 relative overflow-hidden shadow-2xl">
-        <div className="absolute -right-8 -top-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Account Profile Header matching Phase 2 UI Kit */}
+      <div className="bg-white dark:bg-secondary p-6 rounded-3xl border border-black/5 dark:border-white/10 relative overflow-hidden shadow-ios-card transition-colors">
         
         {isLoggedIn ? (
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 w-full">
             <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-amber-300 text-black flex items-center justify-center font-black text-2xl shadow-lg ring-4 ring-primary/20">
-                {userName ? userName.charAt(0).toUpperCase() : 'U'}
+              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-orange-500 text-white flex items-center justify-center font-black text-2xl shadow-ios-orange">
+                {userName ? userName.charAt(0).toUpperCase() : '8'}
               </div>
               <div className="space-y-1">
                 <div className="flex items-center justify-center sm:justify-start gap-2">
-                  <h2 className="text-xl font-extrabold text-white">{userName || 'Gourmet Customer'}</h2>
-                  <span className="bg-primary/20 text-primary text-[10px] font-black px-2.5 py-0.5 rounded-full border border-primary/30 uppercase tracking-wide">
-                    {userRole || 'VIP Member'}
+                  <h2 className="text-xl font-black text-gray-900 dark:text-white">{userName || userPhone || 'Customer'}</h2>
+                  <span className="bg-primary/10 text-primary text-[10px] font-black px-3 py-0.5 rounded-full border border-primary/20 uppercase tracking-wide">
+                    {userRole || 'ADMIN'}
                   </span>
                 </div>
-                <p className="text-xs text-gray-300 font-medium">📱 {userPhone || 'Not set'}</p>
-                {userEmail && <p className="text-xs text-gray-400">✉️ {userEmail}</p>}
+                <p className="text-xs text-gray-600 dark:text-gray-300 font-bold">📱 {userPhone || '8608724931'}</p>
+                {userEmail && <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">✉️ {userEmail}</p>}
               </div>
             </div>
 
             <button
               onClick={logoutUser}
-              className="bg-danger/20 hover:bg-danger/30 text-danger border border-danger/40 px-5 py-2.5 rounded-2xl text-xs font-bold transition flex items-center gap-2"
+              className="bg-red-500/10 hover:bg-red-500/20 text-danger border border-red-500/20 px-5 py-2.5 rounded-2xl text-xs font-black transition flex items-center gap-2"
             >
               <LogOut className="w-4 h-4" /> Log Out
             </button>
           </div>
         ) : (
           <div className="text-center py-4 space-y-4">
-            <div className="w-14 h-14 mx-auto rounded-full bg-primary/20 text-primary flex items-center justify-center">
+            <div className="w-14 h-14 mx-auto rounded-full bg-primary/10 text-primary flex items-center justify-center">
               <User className="w-7 h-7" />
             </div>
             <div className="space-y-1">
-              <h2 className="text-xl font-extrabold text-white">Welcome to Midnight Fuel</h2>
-              <p className="text-xs text-gray-300">Log in or create an account to track orders, save favorite dishes & access member discounts!</p>
+              <h2 className="text-xl font-black text-gray-900 dark:text-white">Welcome to Food App</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Log in or create an account to track orders, save favorite dishes & access member discounts!</p>
             </div>
             <button
               onClick={() => setIsAuthModalOpen(true)}
-              className="bg-gradient-to-r from-primary via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-primary text-black font-extrabold px-8 py-3 rounded-2xl text-sm shadow-xl transition transform hover:scale-105 inline-flex items-center gap-2"
+              className="bg-primary hover:bg-primary-hover text-white font-black px-8 py-3 rounded-2xl text-sm shadow-ios-orange transition inline-flex items-center gap-2 uppercase tracking-wider"
             >
               <User className="w-4 h-4" /> Log In / Sign Up Now
             </button>
@@ -770,91 +769,91 @@ export const AccountPage: React.FC = () => {
         {/* Orders Card */}
         <button
           onClick={() => setCustomerTab('orders')}
-          className="glass-card p-5 rounded-2xl text-left hover:border-primary/50 transition group flex items-center justify-between"
+          className="bg-white dark:bg-secondary p-5 rounded-3xl text-left border border-black/5 dark:border-white/10 hover:border-primary transition group flex items-center justify-between shadow-ios-card"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
               <ShoppingBag className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-primary transition">My Orders</h3>
-              <p className="text-xs text-gray-400">{orders.length} order history & live tracking</p>
+              <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-primary transition">My Orders</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{orders.length} order history & live tracking</p>
             </div>
           </div>
-          <span className="text-gray-500 group-hover:text-primary transition">→</span>
+          <span className="text-gray-400 group-hover:text-primary font-black transition">→</span>
         </button>
 
         {/* Wishlist Card */}
         <button
           onClick={() => setCustomerTab('wishlist')}
-          className="glass-card p-5 rounded-2xl text-left hover:border-primary/50 transition group flex items-center justify-between"
+          className="bg-white dark:bg-secondary p-5 rounded-3xl text-left border border-black/5 dark:border-white/10 hover:border-primary transition group flex items-center justify-between shadow-ios-card"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-500 flex items-center justify-center font-bold">
               <Heart className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-primary transition">Saved Wishlist</h3>
-              <p className="text-xs text-gray-400">{wishlist.length} saved gourmet dishes</p>
+              <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-primary transition">Saved Wishlist</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{wishlist.length} saved gourmet dishes</p>
             </div>
           </div>
-          <span className="text-gray-500 group-hover:text-primary transition">→</span>
+          <span className="text-gray-400 group-hover:text-primary font-black transition">→</span>
         </button>
 
         {/* Offers & Coupons */}
         <button
           onClick={() => setCustomerTab('offers')}
-          className="glass-card p-5 rounded-2xl text-left hover:border-primary/50 transition group flex items-center justify-between"
+          className="bg-white dark:bg-secondary p-5 rounded-3xl text-left border border-black/5 dark:border-white/10 hover:border-primary transition group flex items-center justify-between shadow-ios-card"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold">
               <Sparkles className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white group-hover:text-primary transition">Gold Coupons & Offers</h3>
-              <p className="text-xs text-gray-400">View night owl discounts & promo codes</p>
+              <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-primary transition">Gold Coupons & Offers</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">View night owl discounts & promo codes</p>
             </div>
           </div>
-          <span className="text-gray-500 group-hover:text-primary transition">→</span>
+          <span className="text-gray-400 group-hover:text-primary font-black transition">→</span>
         </button>
 
         {/* Store Admin Mode Switch */}
         <button
           onClick={() => setViewMode('admin')}
-          className="glass-card p-5 rounded-2xl text-left hover:border-amber-400/60 transition group flex items-center justify-between bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/30"
+          className="bg-white dark:bg-secondary p-5 rounded-3xl text-left hover:border-primary transition group flex items-center justify-between border border-amber-500/30 shadow-ios-card"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-400 text-black flex items-center justify-center font-extrabold text-lg shadow-md">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-extrabold text-lg shadow-sm">
               👑
             </div>
             <div>
-              <h3 className="text-sm font-bold text-amber-400">Kitchen & Admin Portal</h3>
-              <p className="text-xs text-gray-400">Switch to Store Manager & Orders Dashboard</p>
+              <h3 className="text-sm font-black text-amber-600 dark:text-amber-400">Kitchen & Admin Portal</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Switch to Store Manager & Orders Dashboard</p>
             </div>
           </div>
-          <span className="text-amber-400 font-bold text-xs bg-amber-400/20 px-3 py-1 rounded-full border border-amber-400/30">
+          <span className="text-amber-600 dark:text-amber-400 font-black text-xs bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
             Open ⚙️
           </span>
         </button>
       </div>
 
       {/* Support & Kitchen Contact */}
-      <div className="glass-card p-5 rounded-2xl space-y-3">
-        <h3 className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
+      <div className="bg-white dark:bg-secondary p-6 rounded-3xl border border-black/5 dark:border-white/10 space-y-4 shadow-ios-card">
+        <h3 className="text-xs font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-primary" /> 24/7 Kitchen Support
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <a
             href="tel:+919080139363"
-            className="bg-secondary/60 hover:bg-secondary border border-white/10 p-3 rounded-xl text-xs font-bold text-white flex items-center justify-center gap-2 transition"
+            className="bg-secondary-soft dark:bg-darkbg hover:bg-primary/10 border border-black/5 dark:border-white/10 p-3.5 rounded-2xl text-xs font-black text-gray-900 dark:text-white flex items-center justify-center gap-2 transition"
           >
             <PhoneCall className="w-4 h-4 text-primary" /> Call +91 90801 39363
           </a>
           <a
-            href="https://wa.me/919080139363?text=Hi%20Midnight%20Fuel%20Kitchen,%20I%20have%20an%20account%20query"
+            href="https://wa.me/919080139363?text=Hi%20Food%20App%20Kitchen,%20I%20have%20an%20account%20query"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/40 p-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition"
+            className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 p-3.5 rounded-2xl text-xs font-black flex items-center justify-center gap-2 transition"
           >
             <MessageCircle className="w-4 h-4" /> WhatsApp Support
           </a>
