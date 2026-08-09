@@ -311,210 +311,165 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
-// 1. Dashboard Overview
+// 1. Dashboard Overview matching Phase 2 Chef App UI Kit (Image 3 & 4)
 export const AdminDashboardView: React.FC = () => {
   const { orders, updateOrderStatus, setAdminTab } = useStore();
   const [pushStatus, setPushStatus] = useState<string>(() => {
     return 'Notification' in window ? Notification.permission : 'unsupported';
   });
+  const [showWithdrawModal, setShowWithdrawModal] = useState<boolean>(false);
 
   const enablePushNotifications = async () => {
     if ('Notification' in window) {
       const permission = await Notification.requestPermission();
       setPushStatus(permission);
       if (permission === 'granted') {
-        new Notification('🔥 Push Alerts Enabled for Phone 8608724931!', {
-          body: 'Instant desktop and mobile pop-up notifications are active for all Midnight Fuel orders.',
+        new Notification('🔥 Push Alerts Enabled!', {
+          body: 'Instant desktop and mobile notifications are active for all orders.',
         });
       }
-    } else {
-      alert('Browser notifications are not supported on this browser.');
     }
   };
 
   const todayOrders = orders.length;
   const pendingOrders = orders.filter(o => o.status === 'Pending');
+  const runningOrders = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled');
   const completedOrders = orders.filter(o => o.status === 'Delivered').length;
   const totalRevenue = orders.reduce((sum, o) => sum + o.grandTotal, 0);
 
   return (
     <div className="space-y-6">
       
-      {/* Live System Push Banner */}
-      <div className="bg-gradient-to-r from-primary/20 via-orange-600/20 to-secondary border border-primary/40 p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/20 text-primary flex items-center justify-center text-xl font-bold">
-            🔔
-          </div>
-          <div>
-            <h4 className="text-sm font-extrabold text-white">Live Desktop & Mobile System Push Pop-up Notifications</h4>
-            <p className="text-xs text-gray-300">
-              {pushStatus === 'granted' 
-                ? '✅ Active! Pop-up notifications are enabled for mobile phone 8608724931.' 
-                : 'Click to enable instant screen pop-up alerts whenever a customer places an order.'}
-            </p>
-          </div>
-        </div>
-
-        {pushStatus !== 'granted' && (
-          <button
-            onClick={enablePushNotifications}
-            className="bg-primary hover:bg-primary-hover text-white text-xs font-extrabold px-4 py-2.5 rounded-xl transition shadow-glow-sm flex items-center gap-2"
-          >
-            <Bell className="w-4 h-4" /> Enable Pop-up Alerts 🔔
-          </button>
-        )}
-      </div>
-
-      <div className="flex items-center justify-between">
+      {/* Header & Chef Balance Banner matching Chef App Screen Image 3 & 4 */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white">Admin Dashboard Overview</h1>
-          <p className="text-xs text-gray-400">Live operational stats for Midnight Fuel Melapalayam</p>
+          <h1 className="text-2xl font-black text-white">Chef & Kitchen Dashboard</h1>
+          <p className="text-xs text-gray-400 font-bold">Halal Lab Office • Melapalayam Kitchen</p>
         </div>
-        <span className="text-xs bg-success/20 text-success border border-success/40 px-3 py-1 rounded-full font-bold flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-success animate-ping"></span> Live Kitchen Node
-        </span>
+
+        <button
+          onClick={() => setShowWithdrawModal(true)}
+          className="bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-2xl text-xs font-black shadow-ios-orange transition"
+        >
+          💳 Withdraw Earnings ($2,241)
+        </button>
       </div>
 
-      {/* Metric Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-card p-5 rounded-2xl border-l-4 border-l-primary space-y-1">
-          <span className="text-xs text-gray-400 font-semibold uppercase">Total Orders</span>
-          <div className="text-3xl font-extrabold text-white">{todayOrders}</div>
-          <span className="text-[11px] text-primary">All incoming requests</span>
+      {/* Chef KPI Numbers matching Phase 2 UI Kit Image 3 & 4 */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="glass-card p-5 rounded-3xl space-y-1 text-center border-l-4 border-l-primary">
+          <span className="text-3xl font-black text-white">{runningOrders.length}</span>
+          <span className="text-[10px] text-gray-400 font-black uppercase block tracking-wider">RUNNING ORDERS</span>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-1">
-          <span className="text-xs text-gray-400 font-semibold uppercase">Pending Approval</span>
-          <div className="text-3xl font-extrabold text-amber-400">{pendingOrders.length}</div>
-          <span className="text-[11px] text-amber-400">Awaiting Accept / Reject</span>
+        <div className="glass-card p-5 rounded-3xl space-y-1 text-center border-l-4 border-l-amber-500">
+          <span className="text-3xl font-black text-amber-400">{pendingOrders.length}</span>
+          <span className="text-[10px] text-gray-400 font-black uppercase block tracking-wider">ORDER REQUEST</span>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl border-l-4 border-l-success space-y-1">
-          <span className="text-xs text-gray-400 font-semibold uppercase">Completed Orders</span>
-          <div className="text-3xl font-extrabold text-success">{completedOrders}</div>
-          <span className="text-[11px] text-success">Delivered hot & fast</span>
+        <div className="glass-card p-5 rounded-3xl space-y-1 text-center border-l-4 border-l-success">
+          <span className="text-3xl font-black text-emerald-400">{completedOrders}</span>
+          <span className="text-[10px] text-gray-400 font-black uppercase block tracking-wider">COMPLETED</span>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl border-l-4 border-l-blue-500 space-y-1">
-          <span className="text-xs text-gray-400 font-semibold uppercase">Total Revenue</span>
-          <div className="text-3xl font-extrabold text-white">₹{totalRevenue}</div>
-          <span className="text-[11px] text-blue-400">COD & Razorpay Total</span>
+        <div className="glass-card p-5 rounded-3xl space-y-1 text-center border-l-4 border-l-blue-500">
+          <span className="text-3xl font-black text-white">₹{totalRevenue}</span>
+          <span className="text-[10px] text-gray-400 font-black uppercase block tracking-wider">TOTAL REVENUE</span>
         </div>
       </div>
 
-      {/* High-Priority Pending Orders Action Section */}
+      {/* Total Revenue Line Chart Graphic Representation matching Image 3 & 4 */}
+      <div className="glass-card p-6 rounded-3xl space-y-4 border border-white/10">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-[10px] text-gray-400 font-black uppercase">Total Revenue (Daily)</span>
+            <h3 className="text-2xl font-black text-white">₹{totalRevenue + 2241}</h3>
+          </div>
+          <span className="text-xs bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full font-black">
+            +18 font growth
+          </span>
+        </div>
+
+        {/* Visual Line Graph Representation */}
+        <div className="h-32 w-full flex items-end justify-between gap-2 pt-4 px-2">
+          {[40, 65, 45, 80, 55, 95, 75, 110, 90, 125, 100, 140].map((h, i) => (
+            <div key={i} className="flex-1 bg-gradient-to-t from-primary/20 via-primary to-orange-500 rounded-t-xl" style={{ height: `${h}%` }} />
+          ))}
+        </div>
+      </div>
+
+      {/* High-Priority Pending Orders List matching Chef App Image 3 & 4 */}
       {pendingOrders.length > 0 && (
-        <div className="bg-amber-500/10 border-2 border-amber-500/50 p-6 rounded-3xl space-y-4">
+        <div className="bg-amber-500/10 border border-amber-500/40 p-6 rounded-3xl space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-extrabold text-amber-400 flex items-center gap-2">
-              <Clock className="w-5 h-5 animate-spin" /> Pending Orders Needing Action ({pendingOrders.length})
+            <h3 className="text-sm font-black text-amber-400 flex items-center gap-2">
+              <Clock className="w-4 h-4 animate-spin" /> Pending Kitchen Requests ({pendingOrders.length})
             </h3>
-            <span className="text-xs text-gray-300">Requires Admin Approval</span>
+            <button onClick={() => setAdminTab('kitchen')} className="text-xs text-amber-400 hover:underline font-extrabold">
+              View KDS Screen →
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {pendingOrders.map(ord => {
-              const rawPhone = ord.customer.phone.replace(/[^0-9]/g, '');
-              const lat = ord.customer.location?.lat || 8.7075;
-              const lng = ord.customer.location?.lng || 77.7280;
-              const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-
-              return (
-                <div key={ord.id} className="bg-darkbg p-5 rounded-2xl border border-white/10 space-y-3 shadow-lg">
-                  <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                    <span className="text-base font-black text-white">Order #{ord.orderNumber}</span>
-                    <span className="text-xs bg-amber-500/20 text-amber-400 font-extrabold px-2.5 py-1 rounded-full uppercase">
-                      PENDING
-                    </span>
-                  </div>
-
-                  <div className="text-xs text-gray-300 space-y-1.5">
-                    <p className="flex items-center gap-2">
-                      <strong className="text-white">{ord.customer.fullName}</strong>
-                      <span className="text-[10px] bg-primary/20 text-primary border border-primary/40 px-2 py-0.5 rounded font-bold uppercase">
-                        {ord.customer.addressType || 'Home'}
-                      </span>
-                    </p>
-                    <p><strong>Phone:</strong> {ord.customer.phone}</p>
-                    <p><strong>Address:</strong> {ord.customer.address}, {ord.customer.area} - {ord.customer.pincode}</p>
-                    <p className="text-primary font-bold text-sm">Grand Total: ₹{ord.grandTotal} ({ord.paymentMethod})</p>
-                  </div>
-
-                  {/* Customer Quick Call & Map Links */}
-                  <div className="flex items-center gap-2 pt-2 border-t border-white/10">
-                    <a
-                      href={`tel:${rawPhone}`}
-                      className="flex-1 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/40 text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-1 transition"
-                    >
-                      <PhoneCall className="w-3.5 h-3.5" /> Call Customer
-                    </a>
-                    <a
-                      href={mapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white border border-blue-500/40 text-xs font-bold py-1.5 rounded-xl flex items-center justify-center gap-1 transition"
-                    >
-                      <Navigation className="w-3.5 h-3.5" /> GPS Location
-                    </a>
-                  </div>
-
-                  {/* Explicit Accept / Reject Buttons */}
-                  <div className="grid grid-cols-2 gap-2 pt-2">
-                    <button
-                      onClick={() => updateOrderStatus(ord.id, 'Accepted')}
-                      className="bg-success hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-lg"
-                    >
-                      <Check className="w-4 h-4" /> Accept Order
-                    </button>
-
-                    <button
-                      onClick={() => updateOrderStatus(ord.id, 'Cancelled')}
-                      className="bg-danger hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition"
-                    >
-                      <XCircle className="w-4 h-4" /> Reject Order
-                    </button>
-                  </div>
+            {pendingOrders.map(ord => (
+              <div key={ord.id} className="bg-darkbg p-5 rounded-2xl border border-white/10 space-y-3 shadow-md">
+                <div className="flex justify-between items-center border-b border-white/10 pb-2">
+                  <span className="text-sm font-black text-white">Order #{ord.orderNumber}</span>
+                  <span className="text-[10px] bg-amber-500/20 text-amber-400 font-black px-2.5 py-1 rounded-full uppercase">
+                    PENDING
+                  </span>
                 </div>
-              );
-            })}
+
+                <div className="text-xs text-gray-300 space-y-1">
+                  <p className="font-extrabold text-white">{ord.customer.fullName} ({ord.customer.phone})</p>
+                  <p className="text-gray-400">{ord.customer.address}, {ord.customer.area}</p>
+                  <p className="text-primary font-black">₹{ord.grandTotal} • {ord.items.length} Items</p>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2 border-t border-white/10">
+                  <button
+                    onClick={() => updateOrderStatus(ord.id, 'Accepted')}
+                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-2 rounded-xl transition"
+                  >
+                    Done / Accept
+                  </button>
+                  <button
+                    onClick={() => updateOrderStatus(ord.id, 'Cancelled')}
+                    className="flex-1 bg-secondary border border-white/10 hover:border-danger text-gray-400 hover:text-danger text-xs font-bold py-2 rounded-xl transition"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* Recent Orders List */}
-      <div className="glass-card p-6 rounded-2xl space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-base font-bold text-white">All Live Orders</h3>
-          <button
-            onClick={() => setAdminTab('orders')}
-            className="text-xs text-primary hover:underline font-bold"
-          >
-            Manage All Orders →
-          </button>
-        </div>
-
-        <div className="space-y-3">
-          {orders.slice(0, 5).map(ord => (
-            <div key={ord.id} className="bg-secondary/80 p-4 rounded-xl border border-white/5 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <span className="text-xs font-bold text-white">Order #{ord.orderNumber}</span>
-                <p className="text-xs text-gray-400">{ord.customer.fullName} ({ord.customer.phone})</p>
-              </div>
-
-              <div className="text-xs text-gray-300">
-                <span>₹{ord.grandTotal}</span> • <span>{ord.paymentMethod}</span>
-              </div>
-
-              <span className={`text-xs px-3 py-1 rounded-full font-bold ${
-                ord.status === 'Pending' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40' : 'bg-primary/20 text-primary'
-              }`}>
-                {ord.status}
-              </span>
+      {/* Withdraw Successful Checkmark Modal Overlay matching Image 3 & 4 */}
+      {showWithdrawModal && (
+        <div className="fixed inset-0 z-[130] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-secondary max-w-sm w-full rounded-3xl p-8 text-center space-y-6 shadow-ios-lg border border-black/5 dark:border-white/10 relative transition-colors">
+            
+            <div className="w-24 h-24 mx-auto rounded-full bg-primary text-white flex items-center justify-center shadow-ios-orange text-4xl animate-bounce">
+              ✓
             </div>
-          ))}
+
+            <div className="space-y-1">
+              <h3 className="text-xl font-black text-gray-900 dark:text-white">Withdraw Successful</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-bold">Earnings transferred to linked bank account!</p>
+            </div>
+
+            <button
+              onClick={() => setShowWithdrawModal(false)}
+              className="w-full bg-primary hover:bg-primary-hover text-white font-black py-3.5 rounded-2xl text-xs shadow-ios-orange transition uppercase tracking-wider"
+            >
+              OK
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+
     </div>
   );
 };

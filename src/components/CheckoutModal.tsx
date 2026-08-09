@@ -5,7 +5,7 @@ import { MapPicker } from './MapPicker';
 import { launchRazorpayPayment } from '../services/api';
 import { 
   X, MapPin, Phone, User, CreditCard, Wallet, 
-  CheckCircle, ArrowRight, ShieldCheck, Home, Building, Navigation, Clock 
+  CheckCircle, ArrowRight, ShieldCheck, Home, Building, Plus, Lock, Check
 } from 'lucide-react';
 
 export interface CheckoutModalProps {
@@ -26,19 +26,24 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const [fullName, setFullName] = useState<string>(userName || '');
   const [phone, setPhone] = useState<string>(userPhone || '');
-  const [altPhone, setAltPhone] = useState<string>('');
   const [addressType, setAddressType] = useState<'Home' | 'Office' | 'Other'>('Home');
-  const [address, setAddress] = useState<string>('');
-  const [landmark, setLandmark] = useState<string>('');
+  const [address, setAddress] = useState<string>('2464 Royal Ln. Mesa, New Jersey 34567');
   const [area, setArea] = useState<string>('Melapalayam');
   const [pincode, setPincode] = useState<string>('627005');
-  const [notes, setNotes] = useState<string>('');
   
-  // Melapalayam, Tirunelveli Default Pin Coordinates
+  // Coordinates
   const [lat, setLat] = useState<number>(8.7075);
   const [lng, setLng] = useState<number>(77.7280);
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('COD');
+  const [paymentMethod, setPaymentMethod] = useState<'Cash' | 'Visa' | 'Mastercard' | 'Paypal'>('Mastercard');
+  const [showAddCardModal, setShowAddCardModal] = useState<boolean>(false);
+  
+  // Card form state
+  const [cardHolder, setCardHolder] = useState<string>('Vishal Khadok');
+  const [cardNumber, setCardNumber] = useState<string>('2134 5678 9101 4362');
+  const [expireDate, setExpireDate] = useState<string>('09/2028');
+  const [cvc, setCvc] = useState<string>('345');
+
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
 
@@ -54,302 +59,226 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       return;
     }
 
-    if (!fullName.trim() || !phone.trim() || !address.trim() || !area.trim()) {
-      setErrorMsg('Please fill in your Name, Phone Number, Address Type, and Delivery Address.');
+    if (!fullName.trim() || !phone.trim() || !address.trim()) {
+      setErrorMsg('Please fill in your Name, Phone Number, and Delivery Address.');
       return;
     }
 
     const customer: CustomerInfo = {
       fullName,
       phone,
-      altPhone,
       addressType,
       address,
-      landmark,
       area,
       pincode,
       location: { lat, lng },
-      notes,
     };
 
-    if (paymentMethod === 'ONLINE_RAZORPAY') {
-      setLoading(true);
-      await launchRazorpayPayment(
-        grandTotal,
-        fullName,
-        phone,
-        (paymentResponse) => {
-          setLoading(false);
-          const order = placeOrder(customer, 'ONLINE_RAZORPAY');
-          order.paid = true;
-          onOrderCompleted();
-        },
-        (err) => {
-          setLoading(false);
-          setErrorMsg(`Online Payment Failed: ${err}`);
-        }
-      );
-    } else {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        placeOrder(customer, 'COD');
-        onOrderCompleted();
-      }, 600);
-    }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      placeOrder(customer, paymentMethod === 'Cash' ? 'COD' : 'ONLINE_RAZORPAY');
+      onOrderCompleted();
+    }, 600);
   };
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-darkbg border border-white/10 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6 space-y-5 shadow-2xl relative">
+      <div className="bg-white dark:bg-secondary border border-black/5 dark:border-white/10 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-5 sm:p-7 space-y-6 shadow-ios-lg relative text-gray-900 dark:text-white transition-colors">
         
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        {/* Header matching Phase 2 UI Kit */}
+        <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-4">
           <div>
-            <span className="text-[11px] bg-primary/20 text-primary px-2.5 py-0.5 rounded-full font-extrabold uppercase">
-              ⚡ Checkout & Delivery Location
-            </span>
-            <h2 className="text-xl font-extrabold text-white mt-1">Complete Your Midnight Order</h2>
+            <h2 className="text-xl font-black">Payment & Checkout</h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-bold">Select payment method & delivery location</p>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-white p-1"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-900 dark:hover:text-white p-1">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {errorMsg && (
-          <div className="bg-danger/10 border border-danger/40 text-danger p-3 rounded-xl text-xs font-bold text-center">
+          <div className="bg-danger/10 border border-danger/40 text-danger p-3 rounded-2xl text-xs font-bold text-center">
             ⚠️ {errorMsg}
           </div>
         )}
 
-        <form onSubmit={handlePlaceOrderSubmit} className="space-y-5">
-          
-          {/* Section 1: Customer Contact Info */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold text-primary uppercase tracking-wider flex items-center gap-1.5">
-              <User className="w-4 h-4" /> 1. Customer Contact Details
-            </h3>
+        {/* Payment Tabs Bar matching Image 2 & 5 of UI Kit */}
+        <div className="space-y-3">
+          <label className="text-xs font-black uppercase text-gray-400 tracking-wider">
+            Select Payment Method
+          </label>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Full Name *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Mohamed Aslam"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Mobile Phone Number *</label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="e.g. 9080139363"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-xs font-semibold text-gray-300 mb-1 block">Alternative Contact Number (Optional)</label>
-              <input
-                type="tel"
-                placeholder="e.g. 9876543210 (Family / Alternate)"
-                value={altPhone}
-                onChange={(e) => setAltPhone(e.target.value)}
-                className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Section 2: Address Type & Exact Delivery Location */}
-          <div className="space-y-3 pt-2 border-t border-white/10">
-            <h3 className="text-xs font-bold text-primary uppercase tracking-wider flex items-center gap-1.5">
-              <MapPin className="w-4 h-4" /> 2. Delivery Address & GPS Coordinates
-            </h3>
-
-            {/* Address Type Selector: Home / Office / Other */}
-            <div>
-              <label className="text-xs font-semibold text-gray-300 mb-1.5 block">Save Address As *</label>
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { id: 'Home', label: 'Home', icon: Home },
-                  { id: 'Office', label: 'Office', icon: Building },
-                  { id: 'Other', label: 'Other', icon: MapPin },
-                ].map(type => {
-                  const Icon = type.icon;
-                  const isSelected = addressType === type.id;
-                  return (
-                    <button
-                      key={type.id}
-                      type="button"
-                      onClick={() => setAddressType(type.id as any)}
-                      className={`flex items-center justify-center gap-2 p-2.5 rounded-xl text-xs font-bold transition border ${
-                        isSelected 
-                          ? 'bg-primary text-white border-primary shadow-glow-sm' 
-                          : 'bg-secondary text-gray-400 border-white/10 hover:text-white'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" /> {type.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Door Number & Street Name */}
-            <div>
-              <label className="text-xs font-semibold text-gray-300 mb-1 block">Door / House / Flat No & Street Address *</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. Door No 42/B, Main Street, Near Mosque"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Landmark</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Near Meera Broilers"
-                  value={landmark}
-                  onChange={(e) => setLandmark(e.target.value)}
-                  className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Area / Locality *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Melapalayam"
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                  className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Pincode *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="627005"
-                  value={pincode}
-                  onChange={(e) => setPincode(e.target.value)}
-                  className="w-full bg-secondary text-xs text-white p-2.5 rounded-xl border border-white/10 focus:border-primary focus:outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Interactive OpenStreetMap Pin Picker */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-gray-300 flex items-center justify-between">
-                <span>Exact GPS Pin Position</span>
-                <span className="text-[10px] text-primary">GPS: {lat.toFixed(4)}, {lng.toFixed(4)}</span>
-              </label>
-              <MapPicker
-                mode="picker"
-                initialLat={lat}
-                initialLng={lng}
-                height="160px"
-                onLocationSelect={(newLat, newLng) => {
-                  setLat(newLat);
-                  setLng(newLng);
-                }}
-              />
-            </div>
-
-          </div>
-
-          {/* Section 3: Payment Method */}
-          <div className="space-y-3 pt-2 border-t border-white/10">
-            <h3 className="text-xs font-bold text-primary uppercase tracking-wider flex items-center gap-1.5">
-              <CreditCard className="w-4 h-4" /> 3. Select Payment Method
-            </h3>
-
-            <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              { id: 'Cash', label: 'Cash', icon: '💵' },
+              { id: 'Visa', label: 'Visa', icon: '💳' },
+              { id: 'Mastercard', label: 'Mastercard', icon: '🔴🟡' },
+              { id: 'Paypal', label: 'Paypal', icon: '🅿️' },
+            ].map((pm) => (
               <button
+                key={pm.id}
                 type="button"
-                onClick={() => setPaymentMethod('COD')}
-                className={`p-3 rounded-2xl border text-left space-y-1 transition ${
-                  paymentMethod === 'COD' ? 'bg-primary/20 border-primary text-white shadow-glow-sm' : 'bg-secondary border-white/10 text-gray-400'
+                onClick={() => setPaymentMethod(pm.id as any)}
+                className={`py-3 px-2 rounded-2xl text-xs font-black border transition flex flex-col items-center gap-1 ${
+                  paymentMethod === pm.id
+                    ? 'bg-primary text-white border-primary shadow-ios-orange'
+                    : 'bg-secondary-soft dark:bg-darkbg text-gray-700 dark:text-gray-300 border-black/5 dark:border-white/10 hover:border-primary'
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                    💵 Cash on Delivery
-                  </span>
-                  {paymentMethod === 'COD' && <CheckCircle className="w-4 h-4 text-primary" />}
-                </div>
-                <p className="text-[10px] text-gray-400">Pay cash upon hot food arrival</p>
+                <span className="text-lg">{pm.icon}</span>
+                <span>{pm.label}</span>
               </button>
+            ))}
+          </div>
+
+          {/* Saved Card Option Card */}
+          {paymentMethod !== 'Cash' && (
+            <div className="bg-secondary-soft dark:bg-darkbg p-4 rounded-2xl border border-black/5 dark:border-white/10 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-2xl">🔴🟡</span>
+                  <div>
+                    <h4 className="text-xs font-black">Master Card</h4>
+                    <p className="text-[10px] text-gray-400 font-mono">•••• •••• •••• 436</p>
+                  </div>
+                </div>
+                <Check className="w-5 h-5 text-primary font-black" />
+              </div>
 
               <button
                 type="button"
-                onClick={() => setPaymentMethod('ONLINE_RAZORPAY')}
-                className={`p-3 rounded-2xl border text-left space-y-1 transition ${
-                  paymentMethod === 'ONLINE_RAZORPAY' ? 'bg-primary/20 border-primary text-white shadow-glow-sm' : 'bg-secondary border-white/10 text-gray-400'
-                }`}
+                onClick={() => setShowAddCardModal(true)}
+                className="w-full py-2.5 border-2 border-dashed border-primary/40 text-primary font-black text-xs rounded-xl flex items-center justify-center gap-1.5 hover:bg-primary/10 transition uppercase tracking-wider"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                    💳 Razorpay UPI / Card
-                  </span>
-                  {paymentMethod === 'ONLINE_RAZORPAY' && <CheckCircle className="w-4 h-4 text-primary" />}
-                </div>
-                <p className="text-[10px] text-gray-400">Instant UPI, GPay, PhonePe, Cards</p>
+                <Plus className="w-4 h-4" /> ADD NEW CARD
               </button>
+            </div>
+          )}
+        </div>
+
+        {/* Address Selection Section */}
+        <div className="space-y-3 pt-3 border-t border-gray-100 dark:border-white/10">
+          <label className="text-xs font-black uppercase text-gray-400 tracking-wider">
+            Delivery Address
+          </label>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="bg-secondary-soft dark:bg-darkbg border-2 border-primary p-3.5 rounded-2xl space-y-1 relative">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-primary flex items-center gap-1">
+                  <Home className="w-3.5 h-3.5" /> HOME
+                </span>
+                <Check className="w-4 h-4 text-primary" />
+              </div>
+              <p className="text-xs font-bold text-gray-900 dark:text-white line-clamp-2">{address}</p>
+            </div>
+
+            <div className="bg-secondary-soft dark:bg-darkbg border border-black/5 dark:border-white/10 p-3.5 rounded-2xl space-y-1 opacity-70">
+              <span className="text-xs font-black text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                <Building className="w-3.5 h-3.5" /> WORK
+              </span>
+              <p className="text-xs font-bold text-gray-700 dark:text-gray-300">3891 Ranchview Dr. Richardson, California</p>
             </div>
           </div>
 
-          {/* Order Summary & Submit Button */}
-          <div className="bg-secondary/90 p-4 rounded-2xl border border-white/10 space-y-3">
-            <div className="flex justify-between text-xs text-gray-300">
-              <span>Subtotal ({cart.length} items)</span>
-              <span>₹{subtotal}</span>
+          <MapPicker
+            mode="picker"
+            initialLat={lat}
+            initialLng={lng}
+            height="140px"
+            onLocationSelect={(nLat, nLng) => {
+              setLat(nLat);
+              setLng(nLng);
+            }}
+          />
+        </div>
+
+        {/* Total & Confirm Button */}
+        <div className="pt-4 border-t border-gray-100 dark:border-white/10 space-y-3">
+          <div className="flex items-baseline justify-between">
+            <span className="text-xs text-gray-500 font-bold uppercase">TOTAL PAYMENT</span>
+            <span className="text-2xl font-black text-primary">₹{grandTotal}</span>
+          </div>
+
+          <button
+            onClick={handlePlaceOrderSubmit}
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover text-white font-black py-4 rounded-2xl text-sm shadow-ios-orange transition transform active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider disabled:opacity-50"
+          >
+            <span>{loading ? 'Processing...' : 'PAY & CONFIRM'}</span>
+          </button>
+        </div>
+
+      </div>
+
+      {/* Add Card Modal Overlay matching Image 2 & 5 */}
+      {showAddCardModal && (
+        <div className="fixed inset-0 z-[120] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-secondary max-w-sm w-full rounded-3xl p-6 space-y-4 shadow-ios-lg relative text-gray-900 dark:text-white">
+            <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-3">
+              <h3 className="text-base font-black">Add Card</h3>
+              <button onClick={() => setShowAddCardModal(false)} className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <div className="flex justify-between text-xs text-gray-300">
-              <span>Delivery Fee</span>
-              <span>₹{deliveryCharge}</span>
-            </div>
-            {discount > 0 && (
-              <div className="flex justify-between text-xs text-emerald-400 font-bold">
-                <span>Discount Applied</span>
-                <span>-₹{discount}</span>
+
+            <div className="space-y-3">
+              <div>
+                <label className="text-[11px] font-black uppercase text-gray-400 block mb-1">Card Holder Name</label>
+                <input
+                  type="text"
+                  value={cardHolder}
+                  onChange={(e) => setCardHolder(e.target.value)}
+                  className="w-full bg-secondary-soft dark:bg-darkbg text-xs font-bold text-gray-900 dark:text-white p-3 rounded-xl border border-black/5 dark:border-white/10 focus:border-primary focus:outline-none"
+                />
               </div>
-            )}
-            <div className="flex justify-between text-sm font-extrabold text-white pt-2 border-t border-white/10">
-              <span>Grand Total</span>
-              <span className="text-primary text-base">₹{grandTotal}</span>
+
+              <div>
+                <label className="text-[11px] font-black uppercase text-gray-400 block mb-1">Card Number</label>
+                <input
+                  type="text"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                  className="w-full bg-secondary-soft dark:bg-darkbg text-xs font-mono font-bold text-gray-900 dark:text-white p-3 rounded-xl border border-black/5 dark:border-white/10 focus:border-primary focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[11px] font-black uppercase text-gray-400 block mb-1">Expire Date</label>
+                  <input
+                    type="text"
+                    value={expireDate}
+                    onChange={(e) => setExpireDate(e.target.value)}
+                    className="w-full bg-secondary-soft dark:bg-darkbg text-xs font-bold text-gray-900 dark:text-white p-3 rounded-xl border border-black/5 dark:border-white/10 focus:border-primary focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-gray-400 block mb-1">CVC</label>
+                  <input
+                    type="password"
+                    maxLength={4}
+                    value={cvc}
+                    onChange={(e) => setCvc(e.target.value)}
+                    className="w-full bg-secondary-soft dark:bg-darkbg text-xs font-bold text-gray-900 dark:text-white p-3 rounded-xl border border-black/5 dark:border-white/10 focus:border-primary focus:outline-none"
+                  />
+                </div>
+              </div>
             </div>
 
             <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-primary hover:bg-primary-hover text-white font-extrabold py-3.5 rounded-xl text-sm transition shadow-glow-sm flex items-center justify-center gap-2"
+              type="button"
+              onClick={() => setShowAddCardModal(false)}
+              className="w-full bg-primary hover:bg-primary-hover text-white font-black py-3.5 rounded-2xl text-xs shadow-ios-orange transition uppercase tracking-wider"
             >
-              {loading ? 'Processing Order...' : `Place Order (₹${grandTotal}) →`}
+              ADD & MAKE PAYMENT
             </button>
           </div>
+        </div>
+      )}
 
-        </form>
-
-      </div>
     </div>
   );
 };

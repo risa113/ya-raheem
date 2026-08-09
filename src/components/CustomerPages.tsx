@@ -317,157 +317,158 @@ export const AuthModal: React.FC = () => {
   );
 };
 
-// Customer Orders & Profile Page with Logout Option
+// Customer Orders Page with Ongoing vs History Tabs matching Phase 2 UI Kit
 export const CustomerOrdersPage: React.FC = () => {
   const { 
     orders, activeOrder, setActiveOrder, setCustomerTab, addToCart, 
     isLoggedIn, userName, userPhone, userEmail, userRole, logoutUser, setIsAuthModalOpen 
   } = useStore();
 
+  const [activeTab, setActiveTab] = useState<'ongoing' | 'history'>('ongoing');
+
+  const ongoingOrders = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled');
+  const historyOrders = orders.filter(o => o.status === 'Delivered' || o.status === 'Cancelled');
+  const displayedOrders = activeTab === 'ongoing' ? ongoingOrders : historyOrders;
+
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6">
-      {/* Account Details & User Info Profile Card */}
-      <div className="glass-panel p-5 sm:p-6 rounded-3xl space-y-4 shadow-2xl border border-primary/30">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary to-orange-600 text-white flex items-center justify-center font-extrabold text-xl sm:text-3xl shadow-glow-sm">
-              {userName ? userName.charAt(0).toUpperCase() : '👤'}
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg sm:text-2xl font-extrabold text-white">{userName || 'Guest Customer'}</h2>
-                <span className="text-[10px] bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded font-bold uppercase">
-                  {userRole || 'Customer'}
-                </span>
-              </div>
-              <p className="text-xs text-gray-300 mt-0.5">
-                📞 {userPhone || '+91 90801 39363'} {userEmail ? `• ✉️ ${userEmail}` : ''}
-              </p>
-              <p className="text-[11px] text-gray-400 mt-0.5">📍 Location: Melapalayam, Tirunelveli</p>
-            </div>
-          </div>
-
-          {/* Account Login / Logout Action Buttons */}
-          <div className="flex items-center gap-2">
-            {isLoggedIn ? (
-              <button
-                onClick={logoutUser}
-                className="flex items-center gap-1.5 bg-danger/20 hover:bg-danger text-danger hover:text-white border border-danger/40 px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-sm"
-              >
-                <LogOut className="w-4 h-4" /> Log Out Account
-              </button>
-            ) : (
-              <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-extrabold transition shadow-glow-sm"
-              >
-                <Key className="w-4 h-4" /> Sign In / Login
-              </button>
-            )}
-          </div>
+      
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-black text-gray-900 dark:text-white">My Orders</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold">Track active orders & view order history</p>
         </div>
 
-        {/* User Account Quick Stats */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-1 text-center text-xs">
-          <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
-            <span className="text-gray-400 block text-[10px] uppercase font-bold">Total Orders</span>
-            <span className="text-sm sm:text-base font-extrabold text-white">{orders.length}</span>
-          </div>
-          <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
-            <span className="text-gray-400 block text-[10px] uppercase font-bold">Account Status</span>
-            <span className={`text-xs sm:text-sm font-extrabold ${isLoggedIn ? 'text-emerald-400' : 'text-amber-400'}`}>
-              {isLoggedIn ? '🟢 Logged In' : '🟡 Guest Customer'}
-            </span>
-          </div>
-          <div className="bg-secondary/70 p-2.5 rounded-xl border border-white/5">
-            <span className="text-gray-400 block text-[10px] uppercase font-bold">City</span>
-            <span className="text-xs sm:text-sm font-extrabold text-primary">Melapalayam</span>
-          </div>
-        </div>
+        <button
+          onClick={() => setCustomerTab('menu')}
+          className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-full text-xs font-black shadow-ios-orange transition"
+        >
+          + New Order
+        </button>
       </div>
 
-      {/* Embedded Live Order Tracker View if an active order is selected */}
+      {/* Ongoing vs History Tab Switcher matching Phase 2 UI Kit Image 2 & 5 */}
+      <div className="flex bg-secondary-soft dark:bg-secondary border border-black/5 dark:border-white/10 p-1.5 rounded-full text-xs font-black text-gray-600 dark:text-gray-300">
+        <button
+          onClick={() => setActiveTab('ongoing')}
+          className={`flex-1 py-2.5 rounded-full transition ${
+            activeTab === 'ongoing'
+              ? 'bg-primary text-white shadow-ios-orange'
+              : 'hover:text-gray-900 dark:hover:text-white'
+          }`}
+        >
+          Ongoing ({ongoingOrders.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab('history')}
+          className={`flex-1 py-2.5 rounded-full transition ${
+            activeTab === 'history'
+              ? 'bg-primary text-white shadow-ios-orange'
+              : 'hover:text-gray-900 dark:hover:text-white'
+          }`}
+        >
+          History ({historyOrders.length})
+        </button>
+      </div>
+
+      {/* Embedded Live Order Tracker View if active order selected */}
       {activeOrder && (
-        <div className="glass-panel p-4 sm:p-6 rounded-3xl space-y-4 border border-emerald-500/40">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <h3 className="text-base font-extrabold text-emerald-400 flex items-center gap-2">
+        <div className="bg-white dark:bg-secondary p-4 sm:p-6 rounded-3xl space-y-4 border border-emerald-500/40 shadow-ios-card">
+          <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-3">
+            <h3 className="text-base font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
               <Sparkles className="w-5 h-5 animate-pulse" /> Live Active Order (#{activeOrder.orderNumber})
             </h3>
             <button
               onClick={() => setActiveOrder(null)}
-              className="text-xs text-gray-400 hover:text-white font-bold"
+              className="text-xs text-gray-400 hover:text-gray-900 dark:hover:text-white font-bold"
             >
-              Hide Live Map ✕
+              Close ✕
             </button>
           </div>
           <LiveOrderTracker />
         </div>
       )}
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-bold text-white flex items-center gap-2">
-          <ShoppingBag className="w-5 h-5 text-primary" /> My Order History
-        </h3>
-
-        {orders.length === 0 ? (
-          <div className="glass-card p-12 text-center space-y-3 rounded-2xl">
-            <div className="text-4xl">📜</div>
-            <h4 className="text-base font-bold text-white">No Orders Placed Yet</h4>
-            <p className="text-xs text-gray-400">Order Mandi or Biryani now to see your order history here!</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {orders.map((ord) => (
-              <div key={ord.id} className="glass-card p-5 rounded-2xl space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+      {/* Orders List matching Phase 2 UI Kit Image 2 & 5 */}
+      {displayedOrders.length === 0 ? (
+        <div className="bg-white dark:bg-secondary p-12 text-center space-y-3 rounded-3xl border border-black/5 dark:border-white/10 shadow-ios-card">
+          <div className="text-5xl">📦</div>
+          <h4 className="text-base font-black text-gray-900 dark:text-white">No {activeTab} orders found</h4>
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Order delicious meals from our menu now!</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {displayedOrders.map((ord) => (
+            <div key={ord.id} className="bg-white dark:bg-secondary p-5 rounded-3xl space-y-4 border border-black/5 dark:border-white/10 shadow-ios-card">
+              
+              {/* Card Top Row */}
+              <div className="flex items-center justify-between border-b border-gray-100 dark:border-white/5 pb-3">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={ord.items[0]?.product.image || "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=200&q=80"}
+                    alt="Order Food"
+                    className="w-12 h-12 rounded-2xl object-cover"
+                  />
                   <div>
-                    <span className="text-xs text-primary font-bold">Order #{ord.orderNumber}</span>
-                    <span className="text-[11px] text-gray-400 ml-3">{ord.orderTime}</span>
+                    <h4 className="text-sm font-black text-gray-900 dark:text-white">Uttora Coffee House / Bistro</h4>
+                    <span className="text-[10px] text-gray-400 font-mono">#{ord.orderNumber} • {ord.orderTime}</span>
                   </div>
-                  <span className="text-xs bg-primary/20 text-primary px-3 py-1 rounded-full font-bold uppercase">
-                    {ord.status}
-                  </span>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-gray-300">
-                  {ord.items.map((it, i) => (
-                    <div key={i} className="flex justify-between">
-                      <span>{it.quantity}x {it.product.name}</span>
-                      <span className="font-bold text-white">₹{(it.product.offerPrice || it.product.price) * it.quantity}</span>
-                    </div>
-                  ))}
-                </div>
+                <span className={`text-xs px-3 py-1 rounded-full font-black uppercase ${
+                  ord.status === 'Delivered'
+                    ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    : ord.status === 'Cancelled'
+                    ? 'bg-red-500/10 text-red-500'
+                    : 'bg-primary/10 text-primary'
+                }`}>
+                  {ord.status}
+                </span>
+              </div>
 
-                <div className="flex flex-wrap items-center justify-between pt-3 border-t border-white/10 gap-2">
-                  <span className="text-sm font-extrabold text-white">Grand Total: ₹{ord.grandTotal}</span>
-                  
-                  <div className="flex gap-2">
+              {/* Items Summary */}
+              <div className="space-y-1 text-xs text-gray-700 dark:text-gray-300 font-semibold">
+                {ord.items.map((it, i) => (
+                  <div key={i} className="flex justify-between">
+                    <span>{it.quantity}x {it.product.name}</span>
+                    <span className="font-black text-gray-900 dark:text-white">₹{(it.product.offerPrice || it.product.price) * it.quantity}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Action Buttons matching Phase 2 UI Kit */}
+              <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-white/5 gap-2 flex-wrap">
+                <span className="text-base font-black text-primary">₹{ord.grandTotal}</span>
+                
+                <div className="flex items-center gap-2">
+                  {ord.status !== 'Delivered' && ord.status !== 'Cancelled' ? (
+                    <button
+                      onClick={() => setActiveOrder(ord)}
+                      className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-black shadow-ios-orange transition"
+                    >
+                      Track Order
+                    </button>
+                  ) : (
                     <button
                       onClick={() => {
                         ord.items.forEach(it => addToCart(it.product, it.quantity));
+                        setCustomerTab('menu');
                       }}
-                      className="bg-secondary border border-white/10 hover:border-primary text-gray-200 hover:text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition"
+                      className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-black shadow-ios-orange transition"
                     >
-                      <RefreshCw className="w-3.5 h-3.5 text-primary" /> Order Again
+                      Re-Order
                     </button>
-
-                    <button
-                      onClick={() => {
-                        setActiveOrder(ord);
-                        setCustomerTab('orders');
-                      }}
-                      className="bg-primary hover:bg-primary-hover text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-glow-sm"
-                    >
-                      Track Live
-                    </button>
-                  </div>
+                  )}
                 </div>
-
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+
+            </div>
+          ))}
+        </div>
+      )}
+
     </div>
   );
 };
@@ -840,7 +841,7 @@ export const AccountPage: React.FC = () => {
       {/* Support & Kitchen Contact */}
       <div className="glass-card p-5 rounded-2xl space-y-3">
         <h3 className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-primary" /> 24/7 Tirunelveli Kitchen Support
+          <ShieldCheck className="w-4 h-4 text-primary" /> 24/7 Kitchen Support
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <a
@@ -862,3 +863,92 @@ export const AccountPage: React.FC = () => {
     </div>
   );
 };
+
+// Promotional Hurry Offers Modal Overlay (Matching Image 1 & 2 of UI Kit)
+export const HurryOffersModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+      <div className="relative max-w-sm w-full rounded-3xl p-6 text-center space-y-5 shadow-ios-lg promo-popup-card text-white overflow-hidden">
+        
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center font-bold text-sm transition"
+        >
+          ✕
+        </button>
+
+        {/* Confetti decoration */}
+        <div className="text-4xl animate-bounce">🎉</div>
+
+        <div className="space-y-1">
+          <h3 className="text-3xl font-black tracking-tight text-white font-sans">
+            Hurry Offers!
+          </h3>
+          <p className="text-xs font-semibold text-white/90">Exclusive Night Owl Coupon</p>
+        </div>
+
+        {/* Coupon Code Pill */}
+        <div className="bg-black/30 border border-white/40 rounded-2xl py-3 px-4 inline-block font-mono font-black text-xl tracking-widest text-amber-200 shadow-inner">
+          #1243CD2
+        </div>
+
+        <p className="text-xs font-bold text-white leading-relaxed">
+          Use the coupon get 25% discount on all burgers, pizzas & Mandi combos!
+        </p>
+
+        <button
+          onClick={onClose}
+          className="w-full bg-white text-primary hover:bg-gray-100 font-black py-3.5 rounded-2xl text-sm shadow-ios-lg transition transform active:scale-95 uppercase tracking-wider"
+        >
+          GOT IT
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Location Access Prompt Modal (Matching Image 5 of UI Kit)
+export const LocationAccessModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+      <div className="bg-white dark:bg-secondary max-w-sm w-full rounded-3xl p-8 text-center space-y-6 shadow-ios-lg border border-black/5 dark:border-white/10 relative transition-colors">
+        
+        {/* Map pin vector artwork */}
+        <div className="w-32 h-32 mx-auto rounded-full bg-orange-500/10 flex items-center justify-center relative">
+          <div className="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center shadow-ios-orange animate-pulse">
+            <MapPin className="w-10 h-10" />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tight">
+            LOCATION ACCESS
+          </h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-bold leading-relaxed">
+            FOOD APP WILL ACCESS YOUR LOCATION ONLY WHILE USING THE APP TO DELIVER HOT MEALS TO YOUR DOORSTEP.
+          </p>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="w-full bg-gradient-to-r from-primary to-orange-600 hover:from-primary-hover text-white font-black py-3.5 rounded-full text-xs shadow-ios-orange transition transform active:scale-95 uppercase tracking-wider"
+        >
+          ACCESS LOCATION
+        </button>
+
+        <button
+          onClick={onClose}
+          className="text-xs text-gray-400 font-bold hover:underline block mx-auto"
+        >
+          Skip for now
+        </button>
+      </div>
+    </div>
+  );
+};
+

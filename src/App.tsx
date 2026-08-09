@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StoreProvider, useStore } from './context/StoreContext';
 import { Navbar, MobileBottomNav } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -9,7 +9,8 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { LiveOrderTracker } from './components/LiveOrderTracker';
 import { FloatingActions } from './components/FloatingActions';
 import { 
-  AuthModal, CustomerOrdersPage, WishlistPage, OffersPage, ContactPage, AboutPage, AccountPage 
+  AuthModal, CustomerOrdersPage, WishlistPage, OffersPage, ContactPage, AboutPage, AccountPage,
+  HurryOffersModal, LocationAccessModal
 } from './components/CustomerPages';
 import { 
   MandiSeoPage, BiryaniSeoPage, MidnightFoodSeoPage, MelapalayamSeoPage, 
@@ -25,68 +26,68 @@ const HomepageSeoContent: React.FC = () => {
   const { setCustomerTab } = useStore();
 
   return (
-    <section className="bg-secondary/40 py-12 border-t border-white/10">
+    <section className="bg-secondary-soft dark:bg-secondary/40 py-12 border-t border-black/5 dark:border-white/10 transition-colors">
       <div className="max-w-7xl mx-auto px-4 space-y-8">
         
-        {/* H1 & H2 SEO Structure Requested by User */}
+        {/* H1 & H2 SEO Structure */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="text-xs bg-primary/20 text-primary font-black px-3.5 py-1 rounded-full border border-primary/30 uppercase tracking-widest">
-            🔥 TIRUNELVELI'S #1 LATE NIGHT FOOD HUB
+          <span className="text-xs bg-primary/10 text-primary font-black px-3.5 py-1 rounded-full uppercase tracking-wider">
+            🔥 TIRUNELVELI'S #1 FOOD DELIVERY APP
           </span>
-          <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
             Late Night Food Delivery in Tirunelveli
           </h1>
-          <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-            Midnight Fuel is Melapalayam's premier late-night food destination, serving slow-cooked Arabian Mandi, authentic Hyderabadi Dum Biryani, jumbo shawarmas, and wood-fired pizzas until 2:00 AM every night.
+          <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm leading-relaxed font-medium">
+            Food App is Melapalayam's premier food delivery destination, serving slow-cooked Arabian Mandi, authentic Hyderabadi Dum Biryani, jumbo shawarmas, and wood-fired pizzas until 2:00 AM every night.
           </p>
         </div>
 
-        {/* H2 Keyword Clusters Grid */}
+        {/* Keyword Clusters Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div 
             onClick={() => setCustomerTab('mandi-tirunelveli')}
-            className="glass-card p-6 rounded-3xl space-y-2 border border-white/10 hover:border-primary cursor-pointer transition group"
+            className="bg-white dark:bg-secondary p-6 rounded-3xl space-y-2 border border-black/5 dark:border-white/10 hover:border-primary cursor-pointer transition shadow-ios-card group"
           >
             <div className="text-3xl">🍗</div>
-            <h2 className="text-lg font-extrabold text-white group-hover:text-primary transition">
-              Mandi & Biryani Delivery in Tirunelveli
+            <h2 className="text-lg font-black text-gray-900 dark:text-white group-hover:text-primary transition">
+              Mandi & Biryani Delivery
             </h2>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Order Chicken Mandi, Mutton Mandi, Beef Mandi, and Seeraga Samba Dum Biryani cooked with fresh spices and served hot.
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+              Order Chicken Mandi, Mutton Mandi, Beef Mandi, and Seeraga Samba Dum Biryani cooked fresh and served hot.
             </p>
-            <span className="text-xs text-primary font-extrabold block pt-2 group-hover:underline">
+            <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
               Explore Mandi Menu →
             </span>
           </div>
 
           <div 
             onClick={() => setCustomerTab('midnight-food-tirunelveli')}
-            className="glass-card p-6 rounded-3xl space-y-2 border border-white/10 hover:border-primary cursor-pointer transition group"
+            className="bg-white dark:bg-secondary p-6 rounded-3xl space-y-2 border border-black/5 dark:border-white/10 hover:border-primary cursor-pointer transition shadow-ios-card group"
           >
             <div className="text-3xl">🌙</div>
-            <h2 className="text-lg font-extrabold text-white group-hover:text-primary transition">
-              Midnight Food Delivery in Melapalayam
+            <h2 className="text-lg font-black text-gray-900 dark:text-white group-hover:text-primary transition">
+              Midnight Food Delivery
             </h2>
-            <p className="text-xs text-gray-400 leading-relaxed">
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
               Craving 2 AM night food? Express delivery across Melapalayam (627005) near Bazar, High Ground, and Tirunelveli city.
             </p>
-            <span className="text-xs text-primary font-extrabold block pt-2 group-hover:underline">
+            <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
               View 2 AM Night Menu →
             </span>
           </div>
 
           <div 
             onClick={() => setCustomerTab('menu')}
-            className="glass-card p-6 rounded-3xl space-y-2 border border-white/10 hover:border-primary cursor-pointer transition group"
+            className="bg-white dark:bg-secondary p-6 rounded-3xl space-y-2 border border-black/5 dark:border-white/10 hover:border-primary cursor-pointer transition shadow-ios-card group"
           >
             <div className="text-3xl">🍔</div>
-            <h2 className="text-lg font-extrabold text-white group-hover:text-primary transition">
-              Order Fresh Food Online in Tirunelveli
+            <h2 className="text-lg font-black text-gray-900 dark:text-white group-hover:text-primary transition">
+              Order Fresh Food Online
             </h2>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              From Rumali Cheese Shawarma to Fiery BBQ Pizza and Monster Burgers, order fresh online with instant live map tracking.
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+              From Cheese Shawarma to Fiery BBQ Pizza and Monster Burgers, order fresh online with instant live map tracking.
             </p>
-            <span className="text-xs text-primary font-extrabold block pt-2 group-hover:underline">
+            <span className="text-xs text-primary font-black block pt-2 group-hover:underline">
               Order Food Now →
             </span>
           </div>
@@ -100,7 +101,20 @@ const HomepageSeoContent: React.FC = () => {
 };
 
 const MainAppContent: React.FC = () => {
-  const { viewMode, customerTab, setCustomerTab, adminTab, activeOrder, isCheckoutOpen, setIsCheckoutOpen } = useStore();
+  const { viewMode, customerTab, setCustomerTab, adminTab, isCheckoutOpen, setIsCheckoutOpen } = useStore();
+  const [isOffersModalOpen, setIsOffersModalOpen] = useState<boolean>(false);
+
+  // Trigger promotional popup modal once on first visit
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const hasSeenPromo = sessionStorage.getItem('seen_ios_promo');
+      if (!hasSeenPromo) {
+        setIsOffersModalOpen(true);
+        sessionStorage.setItem('seen_ios_promo', 'true');
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (viewMode === 'admin') {
     return (
@@ -121,7 +135,7 @@ const MainAppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-darkbg text-white font-sans selection:bg-primary selection:text-white">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-lightbg dark:bg-darkbg text-gray-900 dark:text-white font-sans transition-colors">
       {/* Sticky Header */}
       <Navbar />
 
@@ -185,6 +199,12 @@ const MainAppContent: React.FC = () => {
       {/* Product Detail Modal */}
       <ProductDetailModal />
 
+      {/* Promotional Hurry Offers Modal */}
+      <HurryOffersModal 
+        isOpen={isOffersModalOpen}
+        onClose={() => setIsOffersModalOpen(false)}
+      />
+
       {/* Cart Drawer */}
       <CartDrawer onOpenCheckout={() => setIsCheckoutOpen(true)} />
 
@@ -204,7 +224,7 @@ const MainAppContent: React.FC = () => {
       <MobileBottomNav />
 
       {/* Premium Justified & Aligned Footer */}
-      <footer className="bg-secondary/95 border-t border-white/10 py-12 px-4 sm:px-8 text-xs text-gray-400 space-y-10 pb-28 md:pb-12">
+      <footer className="bg-white dark:bg-secondary/95 border-t border-black/5 dark:border-white/10 py-12 px-4 sm:px-8 text-xs text-gray-500 dark:text-gray-400 space-y-10 pb-28 md:pb-12 transition-colors">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 text-left items-start">
           
           {/* Col 1: Brand Info */}
@@ -213,26 +233,26 @@ const MainAppContent: React.FC = () => {
               onClick={() => setCustomerTab('home')}
               className="flex items-center gap-2.5 cursor-pointer group"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center text-white shadow-glow-sm">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center text-white shadow-ios-orange">
                 <Flame className="w-5 h-5" />
               </div>
-              <span className="font-black text-xl text-white tracking-tight">MIDNIGHT<span className="text-primary">FUEL</span></span>
+              <span className="font-black text-xl text-gray-900 dark:text-white tracking-tight">Food<span className="text-primary">.</span></span>
             </div>
-            <p className="text-gray-400 text-xs leading-relaxed text-justify">
-              Tirunelveli's premier late night food delivery hub operating daily 7:00 PM – 2:00 AM. Serving slow-cooked Arabian Mandi, Hyderabadi Dum Biryani, Gourmet Shawarmas, and Crisp Fast Food across Melapalayam.
+            <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed text-justify font-medium">
+              Tirunelveli's premier food delivery hub operating daily 7:00 PM – 2:00 AM. Serving slow-cooked Arabian Mandi, Hyderabadi Dum Biryani, Gourmet Shawarmas, and Crisp Fast Food across Melapalayam.
             </p>
-            <div className="text-[11px] text-gray-400 space-y-1 pt-1 border-t border-white/5">
+            <div className="text-[11px] text-gray-500 dark:text-gray-400 space-y-1 pt-1 border-t border-gray-100 dark:border-white/5 font-semibold">
               <p className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-primary shrink-0" /> Bazar, Melapalayam, Tirunelveli - 627005</p>
               <p className="flex items-center gap-1.5"><PhoneCall className="w-3.5 h-3.5 text-primary shrink-0" /> +91 90801 39363</p>
             </div>
           </div>
 
-          {/* Col 2: Priority SEO Landing Pages */}
+          {/* Col 2: Priority Destinations */}
           <div className="space-y-3">
-            <h4 className="font-extrabold text-white text-xs uppercase tracking-widest text-primary flex items-center gap-1.5">
+            <h4 className="font-black text-gray-900 dark:text-white text-xs uppercase tracking-wider text-primary flex items-center gap-1.5">
               <Flame className="w-3.5 h-3.5 text-primary" /> Top Destinations
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs font-semibold">
               <li>
                 <button onClick={() => setCustomerTab('mandi-tirunelveli')} className="hover:text-primary transition flex items-center gap-1.5 text-left">
                   <span>🍗</span> Mandi in Tirunelveli
@@ -263,10 +283,10 @@ const MainAppContent: React.FC = () => {
 
           {/* Col 3: Popular Cuisines */}
           <div className="space-y-3">
-            <h4 className="font-extrabold text-white text-xs uppercase tracking-widest text-primary flex items-center gap-1.5">
+            <h4 className="font-black text-gray-900 dark:text-white text-xs uppercase tracking-wider text-primary flex items-center gap-1.5">
               <Star className="w-3.5 h-3.5 text-primary" /> Popular Cuisines
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs font-semibold">
               <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition text-left">Chicken Mandi Tirunelveli</button></li>
               <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition text-left">Royal Mutton Mandi</button></li>
               <li><button onClick={() => setCustomerTab('menu')} className="hover:text-primary transition text-left">Spicy Dum Beef Biryani</button></li>
@@ -277,10 +297,10 @@ const MainAppContent: React.FC = () => {
 
           {/* Col 4: Support & Navigation */}
           <div className="space-y-3">
-            <h4 className="font-extrabold text-white text-xs uppercase tracking-widest text-primary flex items-center gap-1.5">
+            <h4 className="font-black text-gray-900 dark:text-white text-xs uppercase tracking-wider text-primary flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Customer Support
             </h4>
-            <ul className="space-y-2 text-xs">
+            <ul className="space-y-2 text-xs font-semibold">
               <li><button onClick={() => setCustomerTab('faq')} className="hover:text-primary transition text-left">Frequently Asked Questions (FAQ)</button></li>
               <li><button onClick={() => setCustomerTab('contact')} className="hover:text-primary transition text-left">Contact Kitchen & Map Location</button></li>
               <li><button onClick={() => setCustomerTab('offers')} className="hover:text-primary transition text-left">Gold Coupons & Offers</button></li>
@@ -293,8 +313,8 @@ const MainAppContent: React.FC = () => {
         </div>
 
         {/* Bottom Rights Bar */}
-        <div className="max-w-7xl mx-auto border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
-          <p className="text-center sm:text-left">© 2026 Midnight Fuel. All rights reserved. 100% Halal Certified Preparation.</p>
+        <div className="max-w-7xl mx-auto border-t border-gray-100 dark:border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
+          <p className="text-center sm:text-left">© 2026 Food Delivery App. All rights reserved. 100% Halal Certified Preparation.</p>
           <p className="text-center sm:text-right text-gray-400 font-medium">Delivering to Melapalayam, Palayamkottai, Vannarpettai, Tirunelveli Town & High Ground.</p>
         </div>
       </footer>
@@ -332,4 +352,3 @@ export function App() {
 }
 
 export default App;
-

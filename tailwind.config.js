@@ -9,47 +9,51 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#FFD700', // Pure 24K Metallic Gold
-          hover: '#E6B800',
-          light: '#FFE44D',
-          glow: 'rgba(255, 215, 0, 0.45)',
+          DEFAULT: '#FF641A', // Signature Food Delivery iOS Orange
+          hover: '#E5530D',
+          light: '#FF8347',
+          dark: '#D94300',
+          glow: 'rgba(255, 100, 26, 0.35)',
         },
-        gold: {
-          DEFAULT: '#FFD700', // 24K Pure Gold
-          hover: '#D4AF37',
-          light: '#FFF099',
-          dark: '#B8860B',
-          glow: 'rgba(255, 215, 0, 0.5)',
+        foodOrange: {
+          DEFAULT: '#FC6011',
+          light: '#FF7A38',
+          dark: '#E04A00',
+          gradient: '#FF5500',
         },
-        ruby: {
-          DEFAULT: '#E11D48',
-          hover: '#BE123C',
-          light: '#FB7185',
+        foodYellow: {
+          DEFAULT: '#FFB800',
+          light: '#FFCE38',
         },
         secondary: {
-          DEFAULT: '#0A0A0A', // Deep Charcoal Black Surface
-          light: '#121212',
-          lighter: '#1A1A1A',
+          DEFAULT: '#1E1E2C', // Deep Slate / Navy Surface for Dark Mode
+          light: '#28293D',
+          lighter: '#32344A',
+          soft: '#F4F5F7', // Light Mode Secondary Surface
         },
-        darkbg: '#000000', // Pure Pitch Black Background
-        card: '#080808',
+        lightbg: '#F8F9FA',
+        darkbg: '#14141E',
+        card: {
+          light: '#FFFFFF',
+          dark: '#1E1E2C',
+        },
         success: '#10B981',
         danger: '#EF4444',
         amber: {
-          DEFAULT: '#FFD700',
-          light: '#FFE44D',
+          DEFAULT: '#FFB800',
+          light: '#FFD043',
         }
       },
       fontFamily: {
-        sans: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Outfit', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
-        'glow-primary': '0 0 35px rgba(255, 215, 0, 0.45)',
-        'glow-gold': '0 0 35px rgba(255, 215, 0, 0.55)',
-        'glow-sm': '0 0 18px rgba(255, 215, 0, 0.35)',
-        'glow-green': '0 0 20px rgba(16, 185, 129, 0.3)',
-        'glass': '0 10px 40px 0 rgba(0, 0, 0, 0.95)',
-        'card-hover': '0 20px 50px -10px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 215, 0, 0.35)',
+        'ios-sm': '0 4px 15px rgba(0, 0, 0, 0.05)',
+        'ios-card': '0 8px 30px rgba(0, 0, 0, 0.06)',
+        'ios-lg': '0 14px 40px rgba(0, 0, 0, 0.12)',
+        'ios-orange': '0 10px 25px rgba(255, 100, 26, 0.35)',
+        'glow-primary': '0 0 30px rgba(255, 100, 26, 0.4)',
+        'glow-sm': '0 0 15px rgba(255, 100, 26, 0.3)',
       },
       backdropBlur: {
         xs: '2px',
@@ -68,8 +72,8 @@ export default {
           '50%': { transform: 'translateY(-8px)' },
         },
         glow: {
-          '0%': { boxShadow: '0 0 10px rgba(255, 215, 0, 0.3)' },
-          '100%': { boxShadow: '0 0 35px rgba(255, 215, 0, 0.85)' },
+          '0%': { boxShadow: '0 0 10px rgba(255, 100, 26, 0.2)' },
+          '100%': { boxShadow: '0 0 35px rgba(255, 100, 26, 0.7)' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
@@ -84,4 +88,3 @@ export default {
   },
   plugins: [],
 }
-
