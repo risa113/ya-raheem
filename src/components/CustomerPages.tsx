@@ -533,48 +533,23 @@ export const WishlistPage: React.FC = () => {
   );
 };
 
-// Offers Page
+// Offers Page (Disabled)
 export const OffersPage: React.FC = () => {
-  const { coupons, setCustomerTab } = useStore();
+  const { setCustomerTab } = useStore();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
-      <div className="text-center space-y-2">
-        <span className="text-xs bg-amber-500/20 text-amber-400 font-bold px-3 py-1 rounded-full border border-amber-500/40">
-          ✨ MIDNIGHT DEALS
-        </span>
-        <h2 className="text-3xl font-extrabold text-white">Midnight Coupons & Offers</h2>
-        <p className="text-gray-400 text-xs">Apply promo codes at checkout to save on your orders</p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {coupons.map(c => (
-          <div key={c.id} className="glass-card p-5 rounded-2xl border-l-4 border-l-primary space-y-3 relative overflow-hidden">
-            <div className="flex justify-between items-start">
-              <div>
-                <span className="text-lg font-black text-white tracking-widest bg-primary/20 text-primary border border-primary/40 px-3 py-1 rounded-lg inline-block">
-                  {c.code}
-                </span>
-                <p className="text-xs font-bold text-gray-200 mt-2">
-                  {c.discountType === 'fixed' ? `Flat ₹${c.discountValue} OFF` : `${c.discountValue}% OFF`}
-                </p>
-              </div>
-              <Sparkles className="w-5 h-5 text-amber-400" />
-            </div>
-
-            <p className="text-[11px] text-gray-400">
-              Valid on orders above ₹{c.minOrderAmount}. Expires {c.expiryDate}.
-            </p>
-
-            <button
-              onClick={() => setCustomerTab('menu')}
-              className="text-xs font-bold text-primary hover:underline block"
-            >
-              Use Code Now →
-            </button>
-          </div>
-        ))}
-      </div>
+    <div className="max-w-4xl mx-auto px-4 py-16 text-center space-y-4">
+      <div className="text-4xl">🍽️</div>
+      <h2 className="text-2xl font-black text-gray-900 dark:text-white">Explore Our Delicious Menu</h2>
+      <p className="text-gray-500 dark:text-gray-400 text-xs font-medium max-w-sm mx-auto">
+        All our dishes are prepared fresh with authentic ingredients. Order online now!
+      </p>
+      <button
+        onClick={() => setCustomerTab('menu')}
+        className="bg-primary hover:bg-primary-hover text-white font-black px-6 py-3 rounded-2xl text-xs uppercase shadow-ios-orange transition"
+      >
+        View Full Menu →
+      </button>
     </div>
   );
 };
@@ -800,18 +775,18 @@ export const AccountPage: React.FC = () => {
           <span className="text-gray-400 group-hover:text-primary font-black transition">→</span>
         </button>
 
-        {/* Offers & Coupons */}
+        {/* Catering & Bulk Orders */}
         <button
-          onClick={() => setCustomerTab('offers')}
+          onClick={() => setCustomerTab('catering-tirunelveli')}
           className="bg-white dark:bg-secondary p-5 rounded-3xl text-left border border-black/5 dark:border-white/10 hover:border-primary transition group flex items-center justify-between shadow-ios-card"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold">
-              <Sparkles className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold text-xl">
+              👑
             </div>
             <div>
-              <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-primary transition">Gold Coupons & Offers</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">View night owl discounts & promo codes</p>
+              <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-primary transition">Catering & Bulk Orders</h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Book Arabian Mandi & Biryani for events</p>
             </div>
           </div>
           <span className="text-gray-400 group-hover:text-primary font-black transition">→</span>
@@ -863,50 +838,9 @@ export const AccountPage: React.FC = () => {
   );
 };
 
-// Promotional Hurry Offers Modal Overlay (Matching Image 1 & 2 of UI Kit)
-export const HurryOffersModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-[120] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
-      <div className="relative max-w-sm w-full rounded-3xl p-6 text-center space-y-5 shadow-ios-lg promo-popup-card text-white overflow-hidden">
-        
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center font-bold text-sm transition"
-        >
-          ✕
-        </button>
-
-        {/* Confetti decoration */}
-        <div className="text-4xl animate-bounce">🎉</div>
-
-        <div className="space-y-1">
-          <h3 className="text-3xl font-black tracking-tight text-white font-sans">
-            Hurry Offers!
-          </h3>
-          <p className="text-xs font-semibold text-white/90">Exclusive Night Owl Coupon</p>
-        </div>
-
-        {/* Coupon Code Pill */}
-        <div className="bg-black/30 border border-white/40 rounded-2xl py-3 px-4 inline-block font-mono font-black text-xl tracking-widest text-amber-200 shadow-inner">
-          #1243CD2
-        </div>
-
-        <p className="text-xs font-bold text-white leading-relaxed">
-          Use the coupon get 25% discount on all burgers, pizzas & Mandi combos!
-        </p>
-
-        <button
-          onClick={onClose}
-          className="w-full bg-white text-primary hover:bg-gray-100 font-black py-3.5 rounded-2xl text-sm shadow-ios-lg transition transform active:scale-95 uppercase tracking-wider"
-        >
-          GOT IT
-        </button>
-      </div>
-    </div>
-  );
+// Promotional Hurry Offers Modal Overlay (Disabled)
+export const HurryOffersModal: React.FC<{ isOpen: boolean; onClose: () => void }> = () => {
+  return null;
 };
 
 // Location Access Prompt Modal (Matching Image 5 of UI Kit)

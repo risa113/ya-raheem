@@ -178,69 +178,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenCheckout }) => {
                   })}
                 </div>
 
-                {/* Coupon Code Section */}
-                <div className="bg-secondary-soft dark:bg-secondary border border-black/5 dark:border-white/10 p-3.5 rounded-2xl space-y-2.5">
-                  <div className="flex items-center justify-between text-xs font-black text-gray-900 dark:text-white">
-                    <span className="flex items-center gap-1.5">
-                      <Tag className="w-4 h-4 text-primary" /> Apply Promo Coupon
-                    </span>
-                  </div>
-
-                  {/* Quick Apply Coupons */}
-                  <div className="space-y-1.5">
-                    {quickCoupons.map((c) => (
-                      <div 
-                        key={c.code} 
-                        className="flex items-center justify-between bg-white dark:bg-darkbg p-2 rounded-xl border border-black/5 dark:border-white/10 text-xs"
-                      >
-                        <div>
-                          <p className="font-black text-primary">{c.code}</p>
-                          <p className="text-[10px] text-gray-500 dark:text-gray-400">{c.text}</p>
-                        </div>
-                        <button
-                          onClick={() => handleQuickApply(c.code)}
-                          className="bg-primary/10 hover:bg-primary text-primary hover:text-white px-2.5 py-1 rounded-lg text-[10px] font-black transition"
-                        >
-                          APPLY
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-
-                  {appliedCoupon ? (
-                    <div className="flex items-center justify-between bg-emerald-500/10 border border-emerald-500/30 px-3 py-2 rounded-xl text-xs text-emerald-600 dark:text-emerald-400 font-black">
-                      <span className="flex items-center gap-1">
-                        <Check className="w-4 h-4" /> Coupon '{appliedCoupon.code}' Applied!
-                      </span>
-                      <button onClick={removeCoupon} className="text-xs text-gray-500 hover:text-gray-900 dark:hover:text-white underline">
-                        Remove
-                      </button>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleApplyCoupon} className="flex gap-2 pt-1">
-                      <input
-                        type="text"
-                        placeholder="Or enter coupon code"
-                        value={couponInput}
-                        onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-                        className="flex-1 bg-white dark:bg-darkbg text-xs text-gray-900 dark:text-white px-3 py-2 rounded-xl border border-black/5 dark:border-white/10 focus:border-primary focus:outline-none uppercase font-bold"
-                      />
-                      <button
-                        type="submit"
-                        className="bg-primary hover:bg-primary-hover text-white text-xs font-black px-3.5 py-2 rounded-xl transition shadow-ios-orange"
-                      >
-                        Apply
-                      </button>
-                    </form>
-                  )}
-
-                  {couponMsg && (
-                    <p className={`text-[11px] font-bold ${couponMsg.success ? 'text-emerald-600 dark:text-emerald-400' : 'text-danger'}`}>
-                      {couponMsg.text}
-                    </p>
-                  )}
-                </div>
-
                 {/* Delivery Tip Option */}
                 <div className="bg-secondary-soft dark:bg-secondary border border-black/5 dark:border-white/10 p-3.5 rounded-2xl space-y-2">
                   <div className="flex items-center justify-between text-xs font-black text-gray-900 dark:text-white">

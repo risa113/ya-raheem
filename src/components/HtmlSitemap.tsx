@@ -95,8 +95,8 @@ export const HtmlSitemap: React.FC = () => {
               </button>
             </li>
             <li>
-              <button onClick={() => setCustomerTab('offers')} className="hover:text-amber-400 font-bold transition flex items-center gap-2">
-                🏷️ Midnight Coupons & Discount Offers
+              <button onClick={() => setCustomerTab('menu')} className="hover:text-amber-400 font-bold transition flex items-center gap-2">
+                🍔 Complete Food Menu & Pricing
               </button>
             </li>
             <li>

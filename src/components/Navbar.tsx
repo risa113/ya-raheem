@@ -248,33 +248,21 @@ export const Navbar: React.FC = () => {
               👑 Catering
             </button>
             <button
-              onClick={() => setCustomerTab('offers')}
-              className={`flex items-center gap-1 transition hover:text-primary ${customerTab === 'offers' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
-            >
-              <Percent className="w-4 h-4 text-primary" /> Offers
-            </button>
-            <button
               onClick={() => setCustomerTab('about')}
               className={`transition hover:text-primary ${customerTab === 'about' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
             >
               About
             </button>
+            <button
+              onClick={() => setCustomerTab('contact')}
+              className={`transition hover:text-primary ${customerTab === 'contact' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
+            >
+              Contact
+            </button>
           </nav>
 
           {/* Header Action Buttons */}
           <div className="flex items-center gap-2.5 shrink-0">
-            
-            {/* Notification Bell Badge */}
-            <button
-              onClick={() => setCustomerTab('offers')}
-              className="relative p-2 text-gray-700 dark:text-gray-300 hover:text-primary transition rounded-full hover:bg-black/5 dark:hover:bg-white/5 shrink-0"
-              title="Notifications & Offers"
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 bg-primary text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-ios-orange">
-                2
-              </span>
-            </button>
 
             {/* Wishlist Button */}
             <button
@@ -518,16 +506,6 @@ export const MobileBottomNav: React.FC = () => {
       >
         <Search className="w-5 h-5" />
         <span className="text-[10px]">Menu</span>
-      </button>
-
-      <button
-        onClick={() => setCustomerTab('offers')}
-        className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition active:scale-95 ${
-          customerTab === 'offers' ? 'text-primary font-black scale-105' : 'text-gray-400'
-        }`}
-      >
-        <Percent className="w-5 h-5 text-primary" />
-        <span className="text-[10px]">Offers</span>
       </button>
 
       <button

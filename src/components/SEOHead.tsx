@@ -162,15 +162,15 @@ export const getSeoConfigForTab = (tab: CustomerTab, activeProduct?: Product | n
 
     case 'offers':
       return {
-        title: 'Midnight Coupons & Offers | MidnightFuelss Tirunelveli',
-        description: 'Get flat ₹100 Off with code MIDNIGHT100 and 20% Off night owl discounts on Mandi, Biryani & Fast Food orders above ₹399 in Tirunelveli.',
-        keywords: 'MidnightFuelss coupon code, food delivery offers Tirunelveli, discount coupon Melapalayam biryani',
-        canonicalPath: '/#offers',
+        title: 'Fresh Food Menu & Online Ordering | Midnight Cravings Tirunelveli',
+        description: 'Order authentic Mandi, Dum Biryani, Shawarmas & Fast Food in Tirunelveli & Melapalayam.',
+        keywords: 'food delivery Tirunelveli, mandi Melapalayam, biryani delivery',
+        canonicalPath: '/#menu',
         robots: 'index, follow',
         ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80',
         breadcrumbs: [
           { name: 'Home', item: `${baseUrl}/` },
-          { name: 'Offers & Coupons', item: `${baseUrl}/#offers` },
+          { name: 'Menu', item: `${baseUrl}/#menu` },
         ],
       };
 

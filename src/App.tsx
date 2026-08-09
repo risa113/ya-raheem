@@ -9,8 +9,8 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { LiveOrderTracker } from './components/LiveOrderTracker';
 import { FloatingActions } from './components/FloatingActions';
 import { 
-  AuthModal, CustomerOrdersPage, WishlistPage, OffersPage, ContactPage, AboutPage, AccountPage,
-  HurryOffersModal, LocationAccessModal
+  AuthModal, CustomerOrdersPage, WishlistPage, ContactPage, AboutPage, AccountPage,
+  LocationAccessModal
 } from './components/CustomerPages';
 import { 
   MandiSeoPage, BiryaniSeoPage, MidnightFoodSeoPage, MelapalayamSeoPage, 
@@ -122,19 +122,6 @@ const AppContent: React.FC = () => {
     viewMode, adminTab, customerTab, isCheckoutOpen, setIsCheckoutOpen 
   } = useStore();
 
-  const [isOffersModalOpen, setIsOffersModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const modalShown = sessionStorage.getItem('mf_hurry_modal_shown');
-      if (!modalShown && viewMode === 'customer') {
-        setIsOffersModalOpen(true);
-        sessionStorage.setItem('mf_hurry_modal_shown', 'true');
-      }
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [viewMode]);
-
   if (viewMode === 'admin') {
     return (
       <AdminLayout>
@@ -172,7 +159,6 @@ const AppContent: React.FC = () => {
         )}
 
         {customerTab === 'menu' && <MenuSection />}
-        {customerTab === 'offers' && <OffersPage />}
         {customerTab === 'about' && <AboutPage />}
         {customerTab === 'contact' && <ContactPage />}
         {customerTab === 'orders' && <CustomerOrdersPage />}
@@ -220,12 +206,6 @@ const AppContent: React.FC = () => {
 
       {/* Product Detail Modal */}
       <ProductDetailModal />
-
-      {/* Promotional Hurry Offers Modal */}
-      <HurryOffersModal 
-        isOpen={isOffersModalOpen}
-        onClose={() => setIsOffersModalOpen(false)}
-      />
 
       {/* Cart Drawer */}
       <CartDrawer onOpenCheckout={() => setIsCheckoutOpen(true)} />
@@ -325,7 +305,6 @@ const AppContent: React.FC = () => {
             <ul className="space-y-2 text-xs font-semibold">
               <li><button onClick={() => setCustomerTab('faq')} className="hover:text-primary transition text-left">Frequently Asked Questions (FAQ)</button></li>
               <li><button onClick={() => setCustomerTab('contact')} className="hover:text-primary transition text-left">Contact Kitchen & Map Location</button></li>
-              <li><button onClick={() => setCustomerTab('offers')} className="hover:text-primary transition text-left">Gold Coupons & Offers</button></li>
               <li><button onClick={() => setCustomerTab('account')} className="hover:text-primary transition text-left">My User Account & Orders</button></li>
               <li><button onClick={() => setCustomerTab('privacy-policy')} className="hover:text-primary transition text-left">Privacy Policy</button></li>
               <li><button onClick={() => setCustomerTab('terms')} className="hover:text-primary transition text-left">Terms & Conditions</button></li>

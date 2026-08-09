@@ -165,12 +165,12 @@ export const SeoManager: React.FC = () => {
 
         case 'offers':
           metadata = {
-            title: 'Food Coupon Codes & Discount Offers | Midnight Fuel Tirunelveli',
-            description: 'Get up to 25% OFF and ₹100 OFF coupons on Mandi, Biryani and Late Night Food Orders in Melapalayam & Tirunelveli.',
-            keywords: 'food offers Tirunelveli, mandi discount coupon Melapalayam, biryani offer Tirunelveli',
-            canonical: 'https://midnightfuel.in/#offers',
-            ogTitle: 'Exclusive Food Discount Coupons & Offers',
-            ogDescription: 'Apply promo code #1243CD2 or MIDNIGHT100 for instant discounts!',
+            title: 'Fresh Food Menu & Online Ordering | Midnight Fuel Tirunelveli',
+            description: 'Order Mandi, Biryani, Shawarmas, Burgers and Late Night Food in Melapalayam & Tirunelveli.',
+            keywords: 'food delivery Tirunelveli, mandi Melapalayam, biryani Tirunelveli',
+            canonical: 'https://midnightfuel.in/#menu',
+            ogTitle: 'Fresh Food Menu | Midnight Fuel Tirunelveli',
+            ogDescription: 'Order hot delicious meals online for delivery across Melapalayam & Tirunelveli.',
           };
           break;
 
