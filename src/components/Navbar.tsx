@@ -159,11 +159,11 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Autocomplete Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-md mx-2 relative" ref={searchRef}>
+          <div className="hidden md:flex flex-1 max-w-md min-w-[220px] lg:min-w-[300px] mx-2 relative" ref={searchRef}>
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder="Search dishes, restaurants..."
+                placeholder="Search dishes, mandi, biryani..."
                 value={searchQuery}
                 onFocus={() => setIsSearchFocused(true)}
                 onChange={(e) => {
@@ -173,7 +173,7 @@ export const Navbar: React.FC = () => {
                     setCustomerTab('menu');
                   }
                 }}
-                className="w-full bg-secondary-soft dark:bg-secondary text-sm text-gray-900 dark:text-white placeholder-gray-400 rounded-2xl pl-10 pr-9 py-2.5 border border-black/5 dark:border-white/10 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition"
+                className="w-full bg-secondary-soft dark:bg-secondary text-sm text-gray-900 dark:text-white placeholder-gray-400 rounded-2xl pl-10 pr-9 py-2.5 border border-black/5 dark:border-white/10 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition shadow-inner font-medium"
               />
               <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" />
               {searchQuery && (
@@ -186,11 +186,12 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            {/* Live Autocomplete Dropdown */}
+            {/* Live Autocomplete Dropdown Popup */}
             {isSearchFocused && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-secondary border border-primary/30 rounded-2xl shadow-ios-lg p-2 z-50 space-y-1">
-                <div className="px-3 py-1.5 text-[10px] font-black uppercase text-gray-400 tracking-wider">
-                  Matching Dishes
+              <div className="absolute top-full left-0 sm:left-auto sm:right-0 w-[340px] sm:w-[420px] mt-2 bg-white dark:bg-secondary border border-primary/30 rounded-3xl shadow-ios-lg p-3 z-[100] space-y-1.5 transition-colors">
+                <div className="px-3 py-1 text-[10px] font-black uppercase text-gray-400 tracking-wider flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-1.5">
+                  <span>Matching Dishes ({searchResults.length})</span>
+                  <span className="text-primary font-bold">Press item to open</span>
                 </div>
                 {searchResults.map(prod => (
                   <div 
@@ -199,23 +200,23 @@ export const Navbar: React.FC = () => {
                       setActiveProductDetail(prod);
                       setIsSearchFocused(false);
                     }}
-                    className="flex items-center justify-between p-2 rounded-xl hover:bg-primary/10 cursor-pointer transition"
+                    className="flex items-center justify-between p-2.5 rounded-2xl hover:bg-primary/10 cursor-pointer transition border border-transparent hover:border-primary/20 gap-3"
                   >
-                    <div className="flex items-center gap-3">
-                      <img src={prod.image} alt={prod.name} className="w-10 h-10 rounded-xl object-cover" />
-                      <div>
-                        <h4 className="text-xs font-bold text-gray-900 dark:text-white leading-snug">{prod.name}</h4>
-                        <span className="text-[10px] text-gray-400 uppercase font-semibold">{prod.category}</span>
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <img src={prod.image} alt={prod.name} className="w-12 h-12 rounded-xl object-cover shrink-0 shadow-sm" />
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs font-black text-gray-900 dark:text-white leading-snug truncate">{prod.name}</h4>
+                        <span className="text-[10px] text-primary font-black uppercase tracking-wider block">{prod.category}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-extrabold text-primary">₹{prod.offerPrice || prod.price}</span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-xs font-black text-primary">₹{prod.offerPrice || prod.price}</span>
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
                           addToCart(prod);
                         }}
-                        className="bg-primary hover:bg-primary-hover text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg transition shadow-sm"
+                        className="bg-primary hover:bg-primary-hover text-white text-[10px] font-black px-3 py-1.5 rounded-xl transition shadow-ios-orange uppercase"
                       >
                         + ADD
                       </button>
@@ -227,7 +228,7 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-sm font-bold">
+          <nav className="hidden xl:flex items-center gap-5 text-sm font-bold shrink-0">
             <button
               onClick={() => setCustomerTab('home')}
               className={`transition hover:text-primary ${customerTab === 'home' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
@@ -244,7 +245,7 @@ export const Navbar: React.FC = () => {
               onClick={() => setCustomerTab('catering-tirunelveli')}
               className={`flex items-center gap-1 transition hover:text-primary ${customerTab === 'catering-tirunelveli' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
             >
-              👑 Catering & Bulk Orders
+              👑 Catering
             </button>
             <button
               onClick={() => setCustomerTab('offers')}
@@ -256,7 +257,7 @@ export const Navbar: React.FC = () => {
               onClick={() => setCustomerTab('about')}
               className={`transition hover:text-primary ${customerTab === 'about' ? 'text-primary font-black border-b-2 border-primary py-1' : 'text-gray-600 dark:text-gray-300'}`}
             >
-              About Us
+              About
             </button>
           </nav>
 
@@ -361,28 +362,72 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Search Input */}
-        <div className="md:hidden pb-3">
+        <div className="md:hidden pb-3 relative">
           <div className="relative w-full">
             <input
               type="text"
-              placeholder="Search dishes, restaurants..."
+              placeholder="Search dishes, mandi, biryani..."
               value={searchQuery}
+              onFocus={() => setIsSearchFocused(true)}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                if (customerTab !== 'menu') setCustomerTab('menu');
+                setIsSearchFocused(true);
+                if (customerTab !== 'menu' && e.target.value.trim().length > 2) {
+                  setCustomerTab('menu');
+                }
               }}
-              className="w-full bg-secondary-soft dark:bg-secondary text-sm text-gray-900 dark:text-white placeholder-gray-400 rounded-xl pl-9 pr-4 py-2 border border-black/5 dark:border-white/10 focus:outline-none focus:border-primary"
+              className="w-full bg-secondary-soft dark:bg-secondary text-sm text-gray-900 dark:text-white placeholder-gray-400 rounded-xl pl-9 pr-8 py-2.5 border border-black/5 dark:border-white/10 focus:outline-none focus:border-primary font-medium"
             />
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-2 text-xs text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="absolute right-3 top-3 text-xs text-gray-400 hover:text-gray-900 dark:hover:text-white"
               >
                 ✕
               </button>
             )}
           </div>
+
+          {/* Live Mobile Autocomplete Dropdown */}
+          {isSearchFocused && searchResults.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-secondary border border-primary/30 rounded-3xl shadow-ios-lg p-3 z-[100] space-y-1.5 transition-colors">
+              <div className="px-3 py-1 text-[10px] font-black uppercase text-gray-400 tracking-wider flex items-center justify-between border-b border-gray-100 dark:border-white/10 pb-1.5">
+                <span>Matching Dishes ({searchResults.length})</span>
+                <span className="text-primary font-bold">Press item</span>
+              </div>
+              {searchResults.map(prod => (
+                <div 
+                  key={prod.id}
+                  onClick={() => {
+                    setActiveProductDetail(prod);
+                    setIsSearchFocused(false);
+                  }}
+                  className="flex items-center justify-between p-2 rounded-2xl hover:bg-primary/10 cursor-pointer transition gap-2"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                    <img src={prod.image} alt={prod.name} className="w-10 h-10 rounded-xl object-cover shrink-0 shadow-sm" />
+                    <div className="min-w-0 flex-1">
+                      <h4 className="text-xs font-black text-gray-900 dark:text-white leading-snug truncate">{prod.name}</h4>
+                      <span className="text-[10px] text-primary font-bold uppercase block">{prod.category}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="text-xs font-black text-primary">₹{prod.offerPrice || prod.price}</span>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(prod);
+                      }}
+                      className="bg-primary hover:bg-primary-hover text-white text-[10px] font-black px-2.5 py-1 rounded-xl transition shadow-ios-orange uppercase"
+                    >
+                      + ADD
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
