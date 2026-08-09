@@ -39,33 +39,36 @@ export const Hero: React.FC = () => {
     }
   ];
 
-  const featuredRestaurants = [
+  const featuredKitchenStations = [
     {
-      id: 'r1',
-      name: 'Rose Garden Restaurant',
-      cuisine: 'Burger - Chicken - Rich - Wings',
-      rating: '4.7',
-      delivery: 'Free',
+      id: 'mandi',
+      name: 'Yemeni Mandi Kitchen',
+      cuisine: 'Arabian Mandi • Charcoal Grilled Chicken • Mutton',
+      rating: '4.9 ⭐',
+      delivery: 'Free Delivery',
       time: '20 min',
-      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80',
+      badge: 'TOP RATED'
     },
     {
-      id: 'r2',
-      name: 'Spicy Restaurant & Grill',
-      cuisine: 'Arabian - Mandi - Kebabs',
-      rating: '4.9',
-      delivery: 'Free',
+      id: 'biryani',
+      name: 'Hyderabadi Dum Biryani Kitchen',
+      cuisine: 'Seeraga Samba Dum Biryani • Beef Chukka • Raita',
+      rating: '4.8 ⭐',
+      delivery: 'Free Delivery',
       time: '15 min',
-      image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+      badge: 'BESTSELLER'
     },
     {
-      id: 'r3',
-      name: 'Uttora Coffee House & Pizzeria',
-      cuisine: 'Pizza - Pasta - Dessert',
-      rating: '4.8',
-      delivery: 'Free',
-      time: '25 min',
-      image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80'
+      id: 'shawarma',
+      name: 'Gourmet Shawarma & Grill Station',
+      cuisine: 'Jumbo Rumali Shawarma • BBQ Chicken • Toum Dip',
+      rating: '4.9 ⭐',
+      delivery: 'Free Delivery',
+      time: '20 min',
+      image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80',
+      badge: 'HOT SPECIAL'
     }
   ];
 
@@ -216,53 +219,58 @@ export const Hero: React.FC = () => {
 
         </div>
 
-        {/* Open Restaurants / Kitchens Cards - Matching Image 1 & 2 of UI Kit */}
+        {/* Midnight Fuel Kitchen Specialties Cards */}
         <div className="space-y-4 pt-2">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-black uppercase text-gray-900 dark:text-white tracking-wider">
-              Open Restaurants
+              Midnight Fuel Kitchen Specialties
             </h3>
             <span 
               onClick={() => setCustomerTab('menu')}
               className="text-xs text-primary font-bold hover:underline cursor-pointer flex items-center gap-0.5"
             >
-              See All <ChevronRight className="w-3.5 h-3.5" />
+              See All Menu <ChevronRight className="w-3.5 h-3.5" />
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredRestaurants.map((resto) => (
+            {featuredKitchenStations.map((station) => (
               <div
-                key={resto.id}
-                onClick={() => setCustomerTab('menu')}
+                key={station.id}
+                onClick={() => {
+                  setSelectedCategory(station.id);
+                  setCustomerTab('menu');
+                }}
                 className="bg-white dark:bg-secondary border border-black/5 dark:border-white/10 rounded-3xl overflow-hidden shadow-ios-card hover:border-primary/50 transition cursor-pointer group"
               >
                 <div className="relative h-44 overflow-hidden">
                   <img 
-                    src={resto.image} 
-                    alt={resto.name} 
+                    src={station.image} 
+                    alt={station.name} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
-                  <div className="absolute top-3 right-3 bg-emerald-600 text-white text-[11px] font-black px-2.5 py-1 rounded-xl shadow-md flex items-center gap-1">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <span>{resto.rating}</span>
+                  <div className="absolute top-3 right-3 bg-gradient-to-r from-primary to-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-xl shadow-ios-orange uppercase tracking-wider">
+                    {station.badge}
                   </div>
                 </div>
 
-                <div className="p-4 space-y-2">
-                  <h4 className="font-extrabold text-base text-gray-900 dark:text-white group-hover:text-primary transition">
-                    {resto.name}
-                  </h4>
+                <div className="p-5 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-black text-base text-gray-900 dark:text-white group-hover:text-primary transition">
+                      {station.name}
+                    </h4>
+                    <span className="text-xs font-black text-amber-500">{station.rating}</span>
+                  </div>
                   <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                    {resto.cuisine}
+                    {station.cuisine}
                   </p>
 
-                  <div className="flex items-center gap-4 text-xs font-bold text-gray-700 dark:text-gray-300 pt-1 border-t border-gray-100 dark:border-white/5">
-                    <span className="flex items-center gap-1 text-primary">
-                      🛵 {resto.delivery}
+                  <div className="flex items-center gap-4 text-xs font-bold text-gray-700 dark:text-gray-300 pt-2 border-t border-gray-100 dark:border-white/5">
+                    <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-black">
+                      🛵 {station.delivery}
                     </span>
-                    <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                      <Clock className="w-3.5 h-3.5 text-primary" /> {resto.time}
+                    <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400 ml-auto">
+                      <Clock className="w-3.5 h-3.5 text-primary" /> {station.time}
                     </span>
                   </div>
                 </div>
