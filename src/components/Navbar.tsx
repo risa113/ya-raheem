@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-3 sm:gap-6">
           
-          {/* iOS Brand Logo */}
+          {/* Independent Brand Logo: Midnight Cravings */}
           <div 
             onClick={() => setCustomerTab('home')}
             className="flex items-center gap-2.5 cursor-pointer group select-none shrink-0"
@@ -134,14 +134,14 @@ export const Navbar: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-gray-900 dark:text-white font-sans">
-                  Food<span className="text-primary">.</span>
+                <span className="font-extrabold text-lg sm:text-2xl tracking-tight text-gray-900 dark:text-white font-sans">
+                  Midnight<span className="text-primary">Cravings</span>
                 </span>
                 <span className="hidden sm:inline-block text-[9px] bg-primary/10 text-primary border border-primary/30 px-1.5 py-0.5 rounded-full font-black uppercase tracking-wider">
-                  iOS UI Kit
+                  Tirunelveli
                 </span>
               </div>
-              <p className="hidden sm:block text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide">Food Delivery App</p>
+              <p className="hidden sm:block text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-wide">Late Night Food & Catering</p>
             </div>
           </div>
 

@@ -336,7 +336,7 @@ const AppContent: React.FC = () => {
 
         {/* Bottom Rights Bar */}
         <div className="max-w-7xl mx-auto border-t border-gray-100 dark:border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
-          <p className="text-center sm:text-left">© 2026 Food Delivery App. All rights reserved. 100% Halal Certified Preparation.</p>
+          <p className="text-center sm:text-left">© 2026 Midnight Cravings Tirunelveli. All rights reserved. 100% Halal Certified Preparation.</p>
           <p className="text-center sm:text-right text-gray-400 font-medium">Delivering to Melapalayam, Palayamkottai, Vannarpettai, Tirunelveli Town & High Ground.</p>
         </div>
       </footer>

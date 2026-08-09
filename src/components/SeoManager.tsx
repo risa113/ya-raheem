@@ -16,11 +16,11 @@ export const SeoManager: React.FC = () => {
 
   useEffect(() => {
     let metadata: PageSeoMetadata = {
-      title: 'Midnight Fuel | Late Night Food Delivery in Tirunelveli | Mandi & Biryani',
-      description: 'Order authentic Mandi, Biryani, Shawarma, Pizza, Fried Chicken, Burgers and Catering in Melapalayam, Tirunelveli. Late-night food delivery till 2 AM.',
-      keywords: 'food delivery in Tirunelveli, late night food delivery Tirunelveli, catering in Tirunelveli, Mandi in Tirunelveli, biryani delivery Tirunelveli, food delivery Melapalayam',
+      title: 'Midnight Cravings | Late Night Food Delivery & Catering in Tirunelveli',
+      description: 'Order authentic Mandi, Biryani, Shawarma, Pizza, Fried Chicken, Burgers and Catering in Melapalayam & Tirunelveli. Late-night food delivery till 2 AM.',
+      keywords: 'Midnight Cravings Tirunelveli, food delivery in Tirunelveli, late night food delivery Tirunelveli, catering in Tirunelveli, Mandi in Tirunelveli, biryani delivery Tirunelveli, food delivery Melapalayam',
       canonical: 'https://midnightfuel.in/',
-      ogTitle: 'Midnight Fuel | Late Night Food Delivery & Catering in Tirunelveli',
+      ogTitle: 'Midnight Cravings | Late Night Food Delivery & Catering in Tirunelveli',
       ogDescription: 'Tirunelveli #1 Late Night Food & Catering Service. Slow-cooked Arabian Mandi, dum biryani & gourmet food delivered hot until 2 AM in Melapalayam.',
     };
 
