@@ -26,14 +26,15 @@ export default {
           light: '#FFCE38',
         },
         secondary: {
-          DEFAULT: '#1E1E2C', // Deep Slate / Navy Surface for Dark Mode
-          light: '#28293D',
-          lighter: '#32344A',
-          soft: '#F4F5F7', // Light Mode Secondary Surface
+          DEFAULT: 'var(--color-secondary, #FFFFFF)',
+          light: 'var(--color-secondary-light, #F4F5F7)',
+          lighter: 'var(--color-secondary-lighter, #EBECEF)',
+          soft: 'var(--color-secondary-soft, #F4F5F7)',
         },
         lightbg: '#F8F9FA',
-        darkbg: '#14141E',
+        darkbg: 'var(--color-darkbg, #F8F9FA)',
         card: {
+          DEFAULT: 'var(--color-card, #FFFFFF)',
           light: '#FFFFFF',
           dark: '#1E1E2C',
         },
@@ -58,31 +59,6 @@ export default {
       backdropBlur: {
         xs: '2px',
         xl: '20px',
-      },
-      animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 4s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'shimmer': 'shimmer 2s linear infinite',
-        'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-8px)' },
-        },
-        glow: {
-          '0%': { boxShadow: '0 0 10px rgba(255, 100, 26, 0.2)' },
-          '100%': { boxShadow: '0 0 35px rgba(255, 100, 26, 0.7)' },
-        },
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-        bounceSoft: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' },
-        }
       }
     },
   },
