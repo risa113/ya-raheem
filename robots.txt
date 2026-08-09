@@ -5,6 +5,7 @@ User-agent: *
 Allow: /
 Allow: /index.html
 Allow: /#menu
+Allow: /#catering-tirunelveli
 Allow: /#mandi-tirunelveli
 Allow: /#biryani-tirunelveli
 Allow: /#midnight-food-tirunelveli
