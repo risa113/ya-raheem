@@ -1,81 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <!-- Dark Squircle Gradient -->
-    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1A1C29" />
-      <stop offset="50%" stop-color="#0F1017" />
-      <stop offset="100%" stop-color="#090A0F" />
+    <linearGradient id="tm-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0052D4" />
+      <stop offset="50%" stop-color="#4364F7" />
+      <stop offset="100%" stop-color="#00D2FF" />
     </linearGradient>
-
-    <!-- Outer Glow Border Gradient -->
-    <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF7A38" />
-      <stop offset="50%" stop-color="#FF641A" />
-      <stop offset="100%" stop-color="#D94300" />
+    <linearGradient id="tm-accent-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#003994" />
+      <stop offset="100%" stop-color="#2575FC" />
     </linearGradient>
-
-    <!-- Primary Flame Gradient -->
-    <linearGradient id="flame-grad-1" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#E5530D" />
-      <stop offset="50%" stop-color="#FF641A" />
-      <stop offset="100%" stop-color="#FFB800" />
-    </linearGradient>
-
-    <!-- Inner Flame Glow Gradient -->
-    <linearGradient id="flame-grad-2" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#FF641A" />
-      <stop offset="60%" stop-color="#FFB800" />
-      <stop offset="100%" stop-color="#FFF5C0" />
-    </linearGradient>
-
-    <!-- Crescent Moon Gradient -->
-    <linearGradient id="moon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFD700" />
-      <stop offset="100%" stop-color="#FF8C00" />
-    </linearGradient>
-
-    <!-- Shadow Filter -->
-    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#FF641A" flood-opacity="0.4" />
-    </filter>
-    
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="15" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0052D4" flood-opacity="0.3" />
     </filter>
   </defs>
 
-  <!-- Background Base (Squircle) -->
-  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#bg-grad)" stroke="url(#border-grad)" stroke-width="8" />
-
-  <!-- Ambient Glow Behind Icon -->
-  <circle cx="256" cy="270" r="140" fill="#FF641A" opacity="0.25" filter="url(#glow)" />
-
-  <!-- Crescent Moon Symbol (Midnight Theme) -->
-  <path d="M 230,120 C 310,120 375,185 375,265 C 375,335 325,394 258,407 C 278,382 290,350 290,315 C 290,227 218,155 130,155 C 112,155 95,158 79,164 C 111,137 168,120 230,120 Z" 
-        fill="url(#moon-grad)" 
-        opacity="0.95" />
-
-  <!-- Dynamic Flame (Cravings & Food Theme) -->
-  <g filter="url(#drop-shadow)">
-    <!-- Outer Flame -->
-    <path d="M 256,150 
-             C 275,210 330,240 330,305 
-             C 330,355 297,390 256,390 
-             C 215,390 182,355 182,305 
-             C 182,260 210,230 230,210 
-             C 220,245 240,265 250,265 
-             C 265,265 270,240 256,150 Z" 
-          fill="url(#flame-grad-1)" />
-
-    <!-- Inner Flame Core -->
-    <path d="M 256,225 
-             C 268,260 300,280 300,320 
-             C 300,350 280,372 256,372 
-             C 232,372 212,350 212,320 
-             C 212,290 230,270 242,255 
-             C 238,275 250,285 256,285 
-             C 264,285 266,270 256,225 Z" 
-          fill="url(#flame-grad-2)" />
+  <g filter="url(#subtle-shadow)">
+    <!-- Outer TM Monogram Structure -->
+    <!-- Left T Bar -->
+    <path d="M 64,100 L 230,100 L 230,160 L 128,160 L 128,412 L 64,412 Z" fill="url(#tm-blue-grad)" />
+    
+    <!-- Central Interlocking M Chevron -->
+    <path d="M 190,100 L 256,230 L 322,100 L 448,100 L 448,412 L 384,412 L 384,200 L 285,390 L 227,390 L 190,320 Z" fill="url(#tm-blue-grad)" />
+    
+    <!-- Right Accent Geometry -->
+    <path d="M 384,100 L 448,100 L 448,412 L 384,412 Z" fill="url(#tm-accent-grad)" opacity="0.95" />
   </g>
 </svg>
