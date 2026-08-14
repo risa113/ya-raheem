@@ -12,9 +12,9 @@ import {
   apiUpdateOrderStatus, apiClearOrdersBackend 
 } from '../services/api';
 import { 
-  saveOrderToFirebase, updateOrderStatusInFirebase, 
-  subscribeOrdersFromFirebase, clearAllOrdersFromFirebase, seedInitialOrdersToFirebase 
-} from '../firebaseClient';
+  apiNotifyAdminOrder, apiFetchOrders, apiCreateOrder, 
+  apiUpdateOrderStatus, apiClearOrdersBackend 
+} from '../services/api';
 import confetti from 'canvas-confetti';
 
 export type ThemeMode = 'light' | 'dark';
@@ -475,55 +475,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('mf_orders', JSON.stringify(orders));
   }, [orders]);
 
-  // Seed historical order data into Firebase Cloud Firestore on mount so past history is recovered
+  // Sync orders in real-time from MongoDB Backend database
   useEffect(() => {
-    seedInitialOrdersToFirebase(orders);
-  }, []);
-
-  // Sync orders in real-time from Firebase Cloud Firestore (works on GitHub Pages & live sites)
-  useEffect(() => {
-    const unsubscribe = subscribeOrdersFromFirebase((firebaseOrders) => {
-      if (Array.isArray(firebaseOrders) && firebaseOrders.length > 0) {
-        setOrders(prev => {
-          const existingMap = new Map(prev.map(o => [o.id || o.orderNumber, o]));
-          const newlyArrived: Order[] = [];
-
-          firebaseOrders.forEach((remoteOrder: Order) => {
-            const key = remoteOrder.id || remoteOrder.orderNumber;
-            if (!existingMap.has(key)) {
-              newlyArrived.push(remoteOrder);
-            }
-          });
-
-          if (newlyArrived.length > 0 && userRole === 'admin') {
-            setNewOrderAlert(newlyArrived[0]);
-            playSynthesizedChime();
-            triggerBrowserPushNotification(newlyArrived[0]);
-          }
-
-          const combinedMap = new Map<string, Order>();
-          firebaseOrders.forEach((remoteOrder: Order) => {
-            const key = remoteOrder.id || remoteOrder.orderNumber;
-            const existing = existingMap.get(key);
-            combinedMap.set(key, { ...existing, ...remoteOrder, id: key });
-          });
-
-          prev.forEach(localOrder => {
-            const key = localOrder.id || localOrder.orderNumber;
-            if (!combinedMap.has(key)) {
-              combinedMap.set(key, localOrder);
-            }
-          });
-
-          return Array.from(combinedMap.values());
-        });
-      } else {
-        // If Firebase is empty, upload initial sample order history
-        seedInitialOrdersToFirebase(orders);
-      }
-    });
-
-    // Also poll backend API fallback if running locally
     const syncBackendOrders = async () => {
       const res = await apiFetchOrders();
       if (res && res.success && Array.isArray(res.orders)) {
@@ -553,7 +506,6 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const intervalId = setInterval(syncBackendOrders, 5000);
 
     return () => {
-      if (typeof unsubscribe === 'function') unsubscribe();
       clearInterval(intervalId);
     };
   }, [userRole]);
@@ -749,10 +701,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setOrders(prev => [newOrder, ...prev]);
     setActiveOrder(newOrder);
 
-    // Save to Firebase Cloud Firestore (real-time sync across all devices on GitHub Pages & live web)
-    saveOrderToFirebase(newOrder);
-
-    // Save to shared backend database if server is running
+    // Save to shared MongoDB backend database if server is running
     apiCreateOrder(newOrder).catch(err => console.warn('Order sync note:', err));
 
     // Only trigger live screen pop-up alerts and audio chimes if user is an Admin
@@ -783,8 +732,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (activeOrder && (activeOrder.id === orderId || activeOrder.orderNumber === orderId)) {
       setActiveOrder(prev => prev ? { ...prev, status } : null);
     }
-    // Update status in Firebase Cloud & backend server
-    updateOrderStatusInFirebase(orderId, status);
+    // Update status in MongoDB backend server
     apiUpdateOrderStatus(orderId, status).catch(err => console.warn('Status update note:', err));
   };
 
@@ -793,8 +741,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setActiveOrder(null);
     setNewOrderAlert(null);
     localStorage.removeItem('mf_orders');
-    // Clear in Firebase Cloud & backend server
-    clearAllOrdersFromFirebase();
+    // Clear in MongoDB backend server
     apiClearOrdersBackend().catch(err => console.warn('Clear orders note:', err));
   };
 
