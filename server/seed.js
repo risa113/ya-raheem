@@ -281,16 +281,40 @@ async function seedDatabase() {
     await Coupon.insertMany(INITIAL_COUPONS);
     await Settings.create({});
     
-    // Seed Admin user
-    await User.create({
-      fullName: 'Midnight Admin',
-      phone: '9080139363',
-      email: 'admin@midnightfuel.com',
-      password: 'midnightfuels@123',
-      role: 'admin',
-    });
+    // Seed Admin and Customer users in MongoDB Atlas
+    await User.deleteMany({});
+    await User.create([
+      {
+        fullName: 'Midnight Admin',
+        phone: '9080139363',
+        email: 'admin@midnightfuel.com',
+        password: 'midnightfuels@123',
+        role: 'admin',
+      },
+      {
+        fullName: 'Mohamed Thariq',
+        phone: '8608724931',
+        email: 'mohamedthariq113@gmail.com',
+        password: 'password123',
+        role: 'customer',
+      },
+      {
+        fullName: 'Mohamed Aslam',
+        phone: '9080139364',
+        email: 'aslam@gmail.com',
+        password: 'password123',
+        role: 'customer',
+      },
+      {
+        fullName: 'Siddiq Rahman',
+        phone: '9876543210',
+        email: 'siddiq@gmail.com',
+        password: 'password123',
+        role: 'customer',
+      }
+    ]);
 
-    console.log('🎉 Successfully seeded MongoDB Atlas Database with initial Midnight Fuel data!');
+    console.log('🎉 Successfully seeded MongoDB Atlas Database with initial Midnight Fuel users & data!');
     process.exit(0);
   } catch (error) {
     console.error('❌ Database Seeding Error:', error);

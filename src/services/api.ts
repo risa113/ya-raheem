@@ -1,7 +1,3 @@
-import { 
-  saveUserToFirebase, fetchUsersFromFirebase, seedInitialUsersToFirebase 
-} from '../firebaseClient';
-
 const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 
   (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
     ? `${window.location.protocol}//${window.location.host}/api`
@@ -121,28 +117,8 @@ const getLocalUsers = (): LocalUser[] => {
   const defaultUsers: LocalUser[] = [
     {
       _id: 'usr-1',
-      fullName: 'Mohamed Aslam',
-      phone: '+91 90801 39363',
-      email: 'aslam@gmail.com',
-      role: 'admin',
-      createdAt: new Date().toISOString(),
-      totalOrders: 5,
-      totalSpent: 2840,
-    },
-    {
-      _id: 'usr-2',
-      fullName: 'Siddiq Rahman',
-      phone: '+91 98765 43210',
-      email: 'siddiq@gmail.com',
-      role: 'customer',
-      createdAt: new Date().toISOString(),
-      totalOrders: 3,
-      totalSpent: 1450,
-    },
-    {
-      _id: 'usr-3',
       fullName: 'Midnight Admin',
-      phone: '+91 90801 39363',
+      phone: '9080139363',
       email: 'admin@midnightfuel.com',
       role: 'admin',
       createdAt: new Date().toISOString(),
@@ -150,19 +126,38 @@ const getLocalUsers = (): LocalUser[] => {
       totalSpent: 0,
     },
     {
-      _id: 'usr-4',
+      _id: 'usr-2',
       fullName: 'Mohamed Thariq',
-      phone: '+918608724931',
+      phone: '8608724931',
       email: 'mohamedthariq113@gmail.com',
       role: 'customer',
       createdAt: new Date().toISOString(),
       totalOrders: 1,
       totalSpent: 450,
+    },
+    {
+      _id: 'usr-3',
+      fullName: 'Mohamed Aslam',
+      phone: '9080139364',
+      email: 'aslam@gmail.com',
+      role: 'customer',
+      createdAt: new Date().toISOString(),
+      totalOrders: 5,
+      totalSpent: 2840,
+    },
+    {
+      _id: 'usr-4',
+      fullName: 'Siddiq Rahman',
+      phone: '9876543210',
+      email: 'siddiq@gmail.com',
+      role: 'customer',
+      createdAt: new Date().toISOString(),
+      totalOrders: 3,
+      totalSpent: 1450,
     }
   ];
   try {
     localStorage.setItem('mf_registered_users', JSON.stringify(defaultUsers));
-    seedInitialUsersToFirebase(defaultUsers);
   } catch (e) {}
   return defaultUsers;
 };
@@ -173,54 +168,27 @@ const saveLocalUsers = (users: LocalUser[]) => {
   } catch (e) {}
 };
 
-// 2. Fetch All Registered Users across MongoDB, Firebase Cloud & Local Storage
+// 2. Fetch All Registered Users from MongoDB Database (with local fallback)
 export const apiFetchUsers = async () => {
-  let backendUsers: any[] = [];
   try {
     const res = await fetch(`${API_BASE_URL}/auth/users`);
     if (res.ok) {
       const data = await res.json();
       if (data.success && Array.isArray(data.users)) {
-        backendUsers = data.users;
+        return data;
       }
     }
+    throw new Error('Backend user sync offline');
   } catch (error) {
-    console.warn('Backend server offline for user sync, relying on Cloud & Local:', error);
+    console.warn('Backend server offline for MongoDB user sync, returning local customer data:', error);
+    return {
+      success: true,
+      users: getLocalUsers()
+    };
   }
-
-  const firebaseUsers = await fetchUsersFromFirebase();
-  const localUsers = getLocalUsers();
-
-  const userMap = new Map<string, any>();
-
-  localUsers.forEach(u => {
-    const key = u.phone?.replace(/[\s\-\+\(\)]/g, '') || u._id;
-    if (key) userMap.set(key, u);
-  });
-
-  firebaseUsers.forEach(u => {
-    const key = u.phone?.replace(/[\s\-\+\(\)]/g, '') || u._id || u.id;
-    if (key) {
-      const existing = userMap.get(key) || {};
-      userMap.set(key, { ...existing, ...u });
-    }
-  });
-
-  backendUsers.forEach(u => {
-    const key = u.phone?.replace(/[\s\-\+\(\)]/g, '') || u._id;
-    if (key) {
-      const existing = userMap.get(key) || {};
-      userMap.set(key, { ...existing, ...u });
-    }
-  });
-
-  return {
-    success: true,
-    users: Array.from(userMap.values())
-  };
 };
 
-// 2. Username / Phone / Email & Password Login via MongoDB API (with offline local fallback)
+// 3. Username / Phone / Email & Password Login via MongoDB API (with offline fallback)
 export const apiLogin = async (identifier: string, password: string) => {
   try {
     const res = await fetch(`${API_BASE_URL}/auth/login`, {
@@ -233,16 +201,13 @@ export const apiLogin = async (identifier: string, password: string) => {
       if (data.token) {
         localStorage.setItem('mf_jwt_token', data.token);
       }
-      if (data.user) {
-        saveUserToFirebase(data.user);
-      }
       return data;
     } else if (res.status === 400 || res.status === 401) {
       return data;
     }
     throw new Error(data.message || 'Server error during login');
   } catch (error) {
-    console.warn('Backend server offline, performing local fallback login:', error);
+    console.warn('MongoDB Backend server offline, performing local fallback login:', error);
     const cleanId = identifier.trim().toLowerCase();
     const cleanPhone = identifier.trim().replace(/[\s\-\+\(\)]/g, '');
     const users = getLocalUsers();
@@ -276,7 +241,6 @@ export const apiLogin = async (identifier: string, password: string) => {
       role,
     };
 
-    saveUserToFirebase(mockUser);
     localStorage.setItem('mf_jwt_token', 'mock_jwt_token_local');
     return {
       success: true,
@@ -287,20 +251,8 @@ export const apiLogin = async (identifier: string, password: string) => {
   }
 };
 
-// 3. User Registration via MongoDB API & Firebase Cloud Firestore
+// 4. User Registration via MongoDB Database (with offline local fallback)
 export const apiRegister = async (fullName: string, phone: string, email: string, password: string) => {
-  const newUserDoc = {
-    id: `usr_${Date.now()}`,
-    fullName: fullName.trim(),
-    phone: phone.trim(),
-    email: email ? email.trim().toLowerCase() : '',
-    role: 'customer',
-    createdAt: new Date().toISOString(),
-  };
-
-  // Always save to Firebase Cloud Firestore database instantly
-  saveUserToFirebase(newUserDoc);
-
   try {
     const res = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
@@ -318,7 +270,7 @@ export const apiRegister = async (fullName: string, phone: string, email: string
     }
     throw new Error(data.message || 'Server connection error');
   } catch (error) {
-    console.warn('Backend server offline, saving user locally and to Cloud DB:', error);
+    console.warn('MongoDB Backend server offline, saving user locally:', error);
     
     const cleanPhone = phone.trim().replace(/[\s\-\+\(\)]/g, '');
     const cleanEmail = email ? email.trim().toLowerCase() : '';
@@ -337,13 +289,13 @@ export const apiRegister = async (fullName: string, phone: string, email: string
     }
 
     const newUser: LocalUser = {
-      _id: newUserDoc.id,
-      fullName: newUserDoc.fullName,
-      phone: newUserDoc.phone,
-      email: newUserDoc.email,
+      _id: `usr_${Date.now()}`,
+      fullName: fullName.trim(),
+      phone: phone.trim(),
+      email: cleanEmail,
       password,
       role: 'customer',
-      createdAt: newUserDoc.createdAt,
+      createdAt: new Date().toISOString(),
       totalOrders: 0,
       totalSpent: 0,
     };
