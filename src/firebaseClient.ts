@@ -85,3 +85,52 @@ export const seedInitialOrdersToFirebase = async (initialOrders: any[]) => {
     console.warn('Firebase order seeding note:', err);
   }
 };
+
+// Save registered user to Firebase Cloud Firestore database so all devices receive it permanently
+export const saveUserToFirebase = async (userData: any) => {
+  try {
+    const userId = userData.id || userData._id || userData.phone?.replace(/[\s\-\+\(\)]/g, '') || `usr_${Date.now()}`;
+    const userDoc = {
+      _id: userId,
+      fullName: userData.fullName || 'Foodie Customer',
+      phone: userData.phone || '',
+      email: userData.email || '',
+      role: userData.role || 'customer',
+      createdAt: userData.createdAt || new Date().toISOString(),
+    };
+    await setDoc(doc(db, 'users', userId), userDoc, { merge: true });
+    console.log('🔥 Registered User saved to Firebase Cloud Firestore:', userId);
+  } catch (err) {
+    console.warn('Firebase save user note:', err);
+  }
+};
+
+// Fetch all registered users from Firebase Cloud Firestore
+export const fetchUsersFromFirebase = async (): Promise<any[]> => {
+  try {
+    const snapshot = await getDocs(collection(db, 'users'));
+    const usersList: any[] = [];
+    snapshot.forEach(docSnap => {
+      usersList.push(docSnap.data());
+    });
+    return usersList;
+  } catch (err) {
+    console.warn('Firebase fetch users error:', err);
+    return [];
+  }
+};
+
+// Seed initial users to Firebase Cloud Firestore so past accounts are saved in Cloud DB
+export const seedInitialUsersToFirebase = async (initialUsers: any[]) => {
+  try {
+    for (const user of initialUsers) {
+      const userId = user.id || user._id || user.phone?.replace(/[\s\-\+\(\)]/g, '');
+      if (userId) {
+        await setDoc(doc(db, 'users', userId), user, { merge: true });
+      }
+    }
+    console.log('🔥 Registered Users synced to Firebase Cloud Firestore');
+  } catch (err) {
+    console.warn('Firebase user seeding note:', err);
+  }
+};
