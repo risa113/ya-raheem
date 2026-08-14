@@ -281,9 +281,8 @@ async function seedDatabase() {
     await Coupon.insertMany(INITIAL_COUPONS);
     await Settings.create({});
     
-    // Seed Admin and Customer users in MongoDB Atlas
-    await User.deleteMany({});
-    await User.create([
+    // Seed Admin and Customer users safely without deleting existing users
+    const defaultUsers = [
       {
         fullName: 'Midnight Admin',
         phone: '9080139363',
@@ -312,7 +311,14 @@ async function seedDatabase() {
         password: 'password123',
         role: 'customer',
       }
-    ]);
+    ];
+
+    for (const u of defaultUsers) {
+      const exists = await User.findOne({ phone: u.phone });
+      if (!exists) {
+        await User.create(u);
+      }
+    }
 
     console.log('🎉 Successfully seeded MongoDB Atlas Database with initial Midnight Fuel users & data!');
     process.exit(0);
