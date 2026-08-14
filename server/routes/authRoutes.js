@@ -131,7 +131,19 @@ router.post('/register', async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({ success: false, message: 'An account with this phone number or email already exists.' });
+      const token = generateToken(existingUser._id, existingUser.role);
+      return res.json({
+        success: true,
+        message: 'Welcome back! Logged into your account.',
+        token,
+        user: {
+          id: existingUser._id,
+          fullName: existingUser.fullName,
+          phone: existingUser.phone,
+          email: existingUser.email || '',
+          role: existingUser.role,
+        },
+      });
     }
 
     const user = await User.create({

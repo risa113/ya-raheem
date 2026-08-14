@@ -157,8 +157,8 @@ const getLocalUsers = (): LocalUser[] => {
     },
     {
       _id: 'usr-5',
-      fullName: 'Motta',
-      phone: '9080139365',
+      fullName: 'motta',
+      phone: '6381586863',
       email: 'motta@gmail.com',
       role: 'customer',
       createdAt: new Date().toISOString(),
@@ -293,8 +293,16 @@ export const apiRegister = async (fullName: string, phone: string, email: string
 
     if (existingUser) {
       return {
-        success: false,
-        message: 'An account with this phone number or email already exists.',
+        success: true,
+        message: 'Welcome back! Logged into your account.',
+        token: 'mock_jwt_token_local',
+        user: {
+          id: existingUser._id,
+          fullName: existingUser.fullName,
+          phone: existingUser.phone,
+          email: existingUser.email,
+          role: existingUser.role,
+        },
       };
     }
 
