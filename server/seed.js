@@ -310,6 +310,13 @@ async function seedDatabase() {
         email: 'siddiq@gmail.com',
         password: 'password123',
         role: 'customer',
+      },
+      {
+        fullName: 'Motta',
+        phone: '9080139365',
+        email: 'motta@gmail.com',
+        password: 'password123',
+        role: 'customer',
       }
     ];
 

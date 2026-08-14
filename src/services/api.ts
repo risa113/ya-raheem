@@ -154,6 +154,16 @@ const getLocalUsers = (): LocalUser[] => {
       createdAt: new Date().toISOString(),
       totalOrders: 3,
       totalSpent: 1450,
+    },
+    {
+      _id: 'usr-5',
+      fullName: 'Motta',
+      phone: '9080139365',
+      email: 'motta@gmail.com',
+      role: 'customer',
+      createdAt: new Date().toISOString(),
+      totalOrders: 2,
+      totalSpent: 890,
     }
   ];
   try {
